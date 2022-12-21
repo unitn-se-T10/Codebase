@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "image": "/image1.jpg",
+        "fullName": "Ristorante da Luca Tecchio",
+        "address": "Via Martiri della Libertà, 80",
+        "phoneNumber": "338-982-3491",
+        "email": "ristorante.da.Luca@aziendaImportante.it"
+    },
+    {
+        "id": 2,
+        "image": "/image2.jpg",
+        "fullName": "Trattoria da Sarto",
+        "address": "Via Degli Alpini, 23",
+        "phoneNumber": "347-122-9091",
+        "email": "Trattoria.covolo@gmail.coms"   
+    }
+]
