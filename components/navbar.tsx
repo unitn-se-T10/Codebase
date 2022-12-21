@@ -34,8 +34,7 @@ import Link from "components/chakraNextLink";
 // import { ChakraNextImage } from "components/utils";
 import { useRouter } from "next/router";
 import { useState } from "react";
-// import type { UserHook } from "lib/hooks";
-// import type { User } from "lib/dbUser";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Searchbar: React.FC<BoxProps> = (props) => {
   const [search, setSearch] = useState("");
@@ -64,7 +63,8 @@ const Searchbar: React.FC<BoxProps> = (props) => {
   );
 };
 
-const UserMenu: React.FC<{ user /* : User */ }> = ({ user }) => {
+// TODO: set user type
+const UserMenu: React.FC<{ user }> = ({ user }) => {
   const router = useRouter();
 
   return (
@@ -85,32 +85,28 @@ const UserMenu: React.FC<{ user /* : User */ }> = ({ user }) => {
         </Center>
         <br />
         <Center>
-          <p>{user.username}</p>
+          <p>{user.name}</p>
         </Center>
         <br />
         <MenuDivider />
         <MenuItem onClick={() => router.push("/page1")}>Page 1</MenuItem>
         <MenuItem onClick={() => router.push("/page2")}>Page 2</MenuItem>
         <MenuItem onClick={() => router.push("/page3")}>Page 3</MenuItem>
-        <MenuItem onClick={() => router.push("/page4")}>Page 4</MenuItem>
+        <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
       </MenuList>
     </Menu>
   );
 };
 
-const ShowLogin: React.FC<{ user? /* : UserHook  */ }> = ({ user }) => {
-  // NOTE: This is needed otherwise next can't prender the page.
-  if (!user) return null;
+const ShowLogin: React.FC = () => {
+  const { data: session } = useSession();
 
-  const { data: userData, isLoading } = user;
-  if (isLoading) return <Spinner />;
+  if (session === undefined) return <Spinner />;
 
-  return userData ? (
-    <UserMenu user={userData} />
+  return session ? (
+    <UserMenu user={session.user} />
   ) : (
-    <Link href="/login" variant="solid">
-      Login
-    </Link>
+    <Button onClick={() => signIn()}>Sign in</Button>
   );
 };
 
@@ -133,10 +129,7 @@ const PagesList: React.FC<StackProps> = (props) => {
   );
 };
 
-const Navbar: React.FC<{ user? /* : UserHook  */ } & BoxProps> = ({
-  user,
-  ...rest
-}) => {
+const Navbar: React.FC<BoxProps> = (props) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const searchbar = useDisclosure();
   const menu = useDisclosure();
@@ -146,7 +139,7 @@ const Navbar: React.FC<{ user? /* : UserHook  */ } & BoxProps> = ({
       px={4}
       bg={useColorModeValue("yellow.300", "yellow.500")}
       shadow={useColorModeValue("xl", "xl-dark")}
-      {...rest}
+      {...props}
     >
       <Flex justify="space-between" h={16}>
         <Flex align="center" gap={2}>
@@ -197,7 +190,7 @@ const Navbar: React.FC<{ user? /* : UserHook  */ } & BoxProps> = ({
             <Searchbar />
           </Box>
 
-          <ShowLogin user={user} />
+          <ShowLogin />
         </HStack>
       </Flex>
 
