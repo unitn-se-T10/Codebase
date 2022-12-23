@@ -14,7 +14,7 @@ const Container: ComponentStyleConfig = {
       p: 4,
     }),
     footer: (props: StyleFunctionProps) => ({
-      bg: mode("blackAlpha.300", "blackAlpha.500")(props),
+      bg: mode("gray.200", "gray.600")(props),
       maxW: "100%",
       pos: "sticky",
       top: "100vh",

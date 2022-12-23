@@ -35,5 +35,5 @@ const overrides = {
 
 export default extendTheme(
   overrides,
-  withDefaultColorScheme({ colorScheme: "yellow" })
+  withDefaultColorScheme({ colorScheme: "orange" })
 );

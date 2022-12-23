@@ -6,8 +6,9 @@ import Head from "next/head";
 
 const Layout: React.FC<{
   children: React.ReactNode;
-  user /* : UserHook */?;
-}> = ({ children, user }) => {
+  showFooter?: boolean;
+  showHeader?: boolean;
+}> = ({ children, showFooter = true, showHeader = true }) => {
   return (
     <Box minH="100vh">
       <Head>
@@ -20,9 +21,9 @@ const Layout: React.FC<{
           )}
         />
       </Head>
-      <Navbar user={user} />
+      {showHeader ? <Navbar /> : null}
       <Box>{children}</Box>
-      <Footer />
+      {showFooter ? <Footer /> : null}
     </Box>
   );
 };

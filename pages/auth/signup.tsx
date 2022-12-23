@@ -6,7 +6,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { AuthLayout, FormFields } from "components/authentication";
+import { AuthLayout, FormField } from "components/authentication";
 import Layout from "components/layout";
 import { Form, Formik } from "formik";
 import { regSchema } from "lib/yupSchemas";
@@ -136,7 +136,15 @@ const Register: React.FC = () => {
           {(props) => (
             <Form>
               <VStack spacing={4}>
-                <FormFields list={formList} />
+                {formList.map((formItem) => (
+                  <FormField
+                    key={formItem.name}
+                    fieldName={formItem.name}
+                    label={formItem.label}
+                    type={formItem.type}
+                    placeholder={formItem.placeholder}
+                  />
+                ))}
                 <Spacer my={4} />
                 <Button w="100%" isLoading={props.isSubmitting} type="submit">
                   Register

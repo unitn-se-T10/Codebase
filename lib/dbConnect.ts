@@ -1,4 +1,4 @@
-/*import mongoose from "mongoose";
+import mongoose from "mongoose";
 
 // HACK: I don't think this is the right way to do this. Find mongoose types
 declare global {
@@ -24,7 +24,6 @@ if (!MONGODB_URI) {
  * in development. This prevents connections growing exponentially
  * during API Route usage.
  */
-/*
 let cached = global.mongoose;
 
 if (!cached) {
@@ -50,4 +49,3 @@ async function dbConnect() {
 }
 
 export default dbConnect;
-*/

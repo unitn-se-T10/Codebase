@@ -8,35 +8,85 @@ import {
   Stack,
   VStack,
   useColorModeValue,
+  InputGroup,
+  InputRightElement,
+  IconButton,
 } from "@chakra-ui/react";
 import { Field, FieldProps } from "formik";
+import { useState } from "react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-export type FormFieldsElement = {
-  name: string;
-  label: string;
+type FormFieldProps = {
+  fieldName: string;
+  label?: string;
   placeholder: string;
   type?: React.HTMLInputTypeAttribute;
 };
 
-export const FormFields: React.FC<{ list: FormFieldsElement[] }> = ({
-  list,
+export const FormField: React.FC<FormFieldProps> = ({
+  fieldName,
+  label,
+  placeholder,
+  type,
 }) => {
   return (
-    <>
-      {list.map(({ name, label, placeholder, type }) => (
-        <Field name={name} key={name}>
-          {({ field, form }: FieldProps) => (
-            <FormControl
-              isInvalid={(form.errors[name] && form.touched[name]) as boolean}
-            >
-              <FormLabel>{label}</FormLabel>
-              <Input {...field} placeholder={placeholder} type={type} />
-              <FormErrorMessage>{form.errors[name] as string}</FormErrorMessage>
-            </FormControl>
-          )}
-        </Field>
-      ))}
-    </>
+    <Field name={fieldName}>
+      {({ field, form }: FieldProps) => (
+        <FormControl
+          isInvalid={
+            (form.errors[fieldName] && form.touched[fieldName]) as boolean
+          }
+        >
+          {label ? <FormLabel>{label}</FormLabel> : null}
+          <Input {...field} placeholder={placeholder} type={type ?? "text"} />
+          <FormErrorMessage>
+            {form.errors[fieldName] as string}
+          </FormErrorMessage>
+        </FormControl>
+      )}
+    </Field>
+  );
+};
+
+export const PasswordInput: React.FC<{
+  showLabel?: boolean;
+  placeholder: string;
+  fieldName: string;
+}> = ({ showLabel, placeholder, fieldName }) => {
+  const [show, setShow] = useState(false);
+
+  return (
+    <Field name={fieldName}>
+      {({ field, form }: FieldProps) => (
+        <FormControl
+          isInvalid={
+            (form.errors[fieldName] && form.touched[fieldName]) as boolean
+          }
+        >
+          {showLabel ? <FormLabel>Password</FormLabel> : null}
+          <InputGroup>
+            <Input
+              {...field}
+              placeholder={placeholder}
+              type={show ? "text" : "password"}
+            />
+            <InputRightElement>
+              <IconButton
+                color="orange.300"
+                aria-label="Toggle password visibility"
+                bgColor="transparent"
+                icon={show ? <ViewIcon /> : <ViewOffIcon />}
+                onClick={() => setShow(!show)}
+                size="sm"
+              />
+            </InputRightElement>
+          </InputGroup>
+          <FormErrorMessage>
+            {form.errors[fieldName] as string}
+          </FormErrorMessage>
+        </FormControl>
+      )}
+    </Field>
   );
 };
 
@@ -57,7 +107,7 @@ export const AuthLayout: React.FC<{
         <Box
           px={{ base: "4", sm: "10" }}
           py={{ base: "0", sm: "8" }}
-          bg={{ sm: useColorModeValue("blackAlpha.200", "whiteAlpha.200") }}
+          bg={{ sm: useColorModeValue("gray.200", "gray.600") }}
           borderRadius={{ base: "none", sm: "xl" }}
           shadow={{ base: "none", sm: useColorModeValue("md", "md-dark") }}
         >

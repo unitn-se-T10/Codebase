@@ -31,10 +31,10 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Link from "components/chakraNextLink";
-// import { ChakraNextImage } from "components/utils";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
 const Searchbar: React.FC<BoxProps> = (props) => {
   const [search, setSearch] = useState("");
@@ -137,7 +137,7 @@ const Navbar: React.FC<BoxProps> = (props) => {
   return (
     <Box
       px={4}
-      bg={useColorModeValue("yellow.300", "yellow.500")}
+      bg={useColorModeValue("#be0b0b", "#640000")}
       shadow={useColorModeValue("xl", "xl-dark")}
       {...props}
     >
@@ -153,14 +153,9 @@ const Navbar: React.FC<BoxProps> = (props) => {
             }}
           />
 
-          {/* <Link href="/"> */}
-          {/*   <ChakraNextImage */}
-          {/*     width="40px" */}
-          {/*     height="40px" */}
-          {/*     alt="duck" */}
-          {/*     src="/images/duck.png" */}
-          {/*   /> */}
-          {/* </Link> */}
+          <Link href="/">
+            <Image src="/logo.png" alt="logo" width={75} height={75} />
+          </Link>
 
           <Box display={{ base: "none", lg: "flex" }} px={3}>
             <PagesList direction="row" spacing={6} />

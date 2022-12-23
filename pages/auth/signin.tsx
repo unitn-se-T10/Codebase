@@ -1,13 +1,20 @@
 import {
+  Box,
   Button,
   Checkbox,
+  Divider,
+  Flex,
   HStack,
   Heading,
   Spacer,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { AuthLayout, FormFields } from "components/authentication";
+import {
+  PasswordInput,
+  AuthLayout,
+  FormField,
+} from "components/authentication";
 import Link from "components/chakraNextLink";
 import Layout from "components/layout";
 import { Field, Form, Formik } from "formik";
@@ -17,6 +24,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import * as Yup from "yup";
 import { signIn, useSession } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc";
+import Image from "next/image";
 
 type LoginValues = {
   email: string;
@@ -46,80 +55,95 @@ const Login: React.FC = () => {
     if (!status.error) router.push(status.url);
   }
 
-  const formList = [
-    {
-      name: "email",
-      label: "Email",
-      placeholder: "Email",
-    },
-    {
-      name: "password",
-      label: "Password",
-      placeholder: "Password",
-      type: "password",
-    },
-  ];
+  async function handleGoogleLogin() {
+    await signIn("google", { callbackUrl: "/" });
+  }
 
   return (
-    <Layout>
-      <Head>
-        <title>Login</title>
-      </Head>
-      <AuthLayout
-        title={<Heading>Log in to your account</Heading>}
-        bottom={
+    <Box
+      bgImage="/sfondo2.jpg"
+      bgSize="cover"
+      bgPosition="center"
+      bgRepeat="no-repeat"
+    >
+      <Layout /* showHeader={false} */>
+        <Head>
+          <title>Login</title>
+        </Head>
+        <AuthLayout
+          title={<Image alt="logo" width={150} height={150} src="/logo.png" />}
+        >
+          <Heading mb="4" size="lg">
+            Accedi
+          </Heading>
+          <Formik
+            validationSchema={Yup.object().shape({
+              email: loginSchema.email.test(
+                "Server",
+                () => errorFromServer,
+                () => !errorFromServer
+              ),
+
+              password: loginSchema.password.test(
+                "Server",
+                () => errorFromServer,
+                () => !errorFromServer
+              ),
+            })}
+            initialValues={{ email: "", password: "", remember: false }}
+            onSubmit={async (values, actions) => {
+              await handleSubmit(values);
+              await actions.validateForm();
+              errorFromServer = null;
+              actions.setSubmitting(false);
+            }}
+          >
+            {(props) => (
+              <Form>
+                <VStack spacing={4}>
+                  <FormField fieldName="email" placeholder="Email" />
+                  <PasswordInput fieldName="password" placeholder="Password" />
+                  <HStack alignItems="center" justify="space-between" w="100%">
+                    <Field as={Checkbox} name="remember">
+                      Ricordami
+                    </Field>
+                    <Link href="/auth/recover" size="sm" variant="link">
+                      Password dimenticata?
+                    </Link>
+                  </HStack>
+                  <Spacer my={4} />
+                  <Button w="100%" isLoading={props.isSubmitting} type="submit">
+                    Accedi
+                  </Button>
+                </VStack>
+              </Form>
+            )}
+          </Formik>
+          <Spacer my={4} />
           <HStack justify="center">
-            <Text>Don&apos;t have an account?</Text>
+            <Text>Non hai un account?</Text>
             <Link href="/auth/signup" variant="link">
-              Register
+              Registrati
             </Link>
           </HStack>
-        }
-      >
-        <Formik
-          validationSchema={Yup.object().shape({
-            email: loginSchema.email.test(
-              "Server",
-              () => errorFromServer,
-              () => !errorFromServer
-            ),
-
-            password: loginSchema.password.test(
-              "Server",
-              () => errorFromServer,
-              () => !errorFromServer
-            ),
-          })}
-          initialValues={{ email: "", password: "", remember: false }}
-          onSubmit={async (values, actions) => {
-            await handleSubmit(values);
-            await actions.validateForm();
-            errorFromServer = null;
-            actions.setSubmitting(false);
-          }}
-        >
-          {(props) => (
-            <Form>
-              <VStack spacing={4}>
-                <FormFields list={formList} />
-                <HStack alignItems="center" justify="space-between" w="100%">
-                  <Field as={Checkbox} name="remember">
-                    Remember me?
-                  </Field>
-                  <Link href="/auth/recover" size="sm" variant="link">
-                    Forgot password?
-                  </Link>
-                </HStack>
-                <Spacer my={4} />
-                <Button w="100%" isLoading={props.isSubmitting} type="submit">
-                  Login
-                </Button>
-              </VStack>
-            </Form>
-          )}
-        </Formik>
-      </AuthLayout>
-    </Layout>
+          <Flex align="center">
+            <Divider borderColor="black" />
+            <Text p="2">o</Text>
+            <Divider borderColor="black" />
+          </Flex>
+          <Spacer my={4} />
+          <Button
+            w="100%"
+            color="black"
+            leftIcon={<FcGoogle />}
+            onClick={handleGoogleLogin}
+            variant="outline"
+          >
+            Accedi con Google
+          </Button>
+        </AuthLayout>
+      </Layout>
+    </Box>
   );
 };
 
