@@ -1,107 +1,103 @@
 import Layout from "components/layout";
 import React, { useState } from "react";
-import data from "public/mock-data.json";
-import typo from "public/tipologie.json";
-import {ChakraNextImage} from "components/utils"
-import { Button, Text, Stack, Box, HStack, VStack, StackDivider } from '@chakra-ui/react' 
-import { Menu, MenuButton, MenuList, MenuItem, MenuItemOption, MenuGroup, MenuOptionGroup, MenuDivider} from '@chakra-ui/react'
-import { GoLocation } from 'react-icons/go'
-import { FaPhoneAlt } from 'react-icons/fa'
-import { MdEmail, MdFastfood } from 'react-icons/md'
-import { AiOutlineDown } from 'react-icons/ai'
-import { CgOptions } from 'react-icons/cg'
-import { ChevronDownIcon } from '@chakra-ui/icons'
+import { Button, Flex, Text, Stack, Box, HStack, VStack, 
+    StackDivider, ChakraProvider, Image, Textarea, InputGroup, InputRightElement } from '@chakra-ui/react' 
+import { Input, Divider, FormControl, FormLabel, FormErrorMessage, FormHelperText } from '@chakra-ui/react'
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { Checkbox, Link, CheckboxGroup } from '@chakra-ui/react'
+import { FcGoogle } from "react-icons/fc"
 
-const ProvaStack = () => { // Vstack (contente per riga un ristorante) + HStack con Vstack
-  const [contacts, setContacts] = useState(data);
-  const [typos, setTypos] = useState(typo);
-  const [tipologia, setTipologia] = useState("Tipologia");
 
-  return(
-  <HStack shadow="md" spacing={10} align="top" p={10}> {/*Stack Che contiene il tutto*/}
+const Login = () => {
     
-    <VStack shadow="md" spacing={2}> {/*Stack per la suddivisione dei ristoranti*/}
-      
-      <HStack spacing={5}> {/*Stack suddividi per ordine alfabetico*/}
-        <MdFastfood/>
-        <Text fontSize={20}>Suddividi i ristoranti</Text>
-        <Button size="s" p={2} colorScheme="yellow" borderRadius={10}>Reset</Button>
-      </HStack>
-      
-      <Button _hover={{ bg: 'yellow.100' }} size="s" width="full" p={5} variant='outline' colorScheme="black" borderRadius={10}>Ordine Alfabetico Crescente (A,Z)</Button>
-      <Button _hover={{ bg: 'yellow.100' }} size="s" width="full" p={5} variant='outline' colorScheme="black" borderRadius={10}>Ordine Alfabetico Decrescente (Z,A)</Button>
+    const Background = "/Sfondo1.jpg"
+    const Logo = "/Logo.png"
+    const [show, setShow] = React.useState(false)
+    const handleClick = () => setShow(!show)
+    const [text, setText] = React.useState("Indirizzo Email")
+    const textClear = () => setText("")
+    const textAppear = () => setText("Indirizzo Email")
+    const [password, setPassword] = React.useState("Password")
+    const passClear = () => setPassword("")
+    const passAppear = () => setPassword("Password")
+    const [textDecoration, setDecoration] = React.useState("underline")
+    const decorationClear = () => setDecoration("underline")
+    const decorationAppear = () => setDecoration("")
 
-      <HStack spacing={5}> {/*Stack suddividi per tipologia*/}
-        <CgOptions/>
-        <Text fontSize={20}>Filtri</Text>
-        <Button onClick = {() => setTipologia("Tipologia")} size="s" p={2} colorScheme="yellow" borderRadius={10}>Reset</Button>
-      </HStack>
+    return (
+        <VStack p={20} spacing={5} bgImg={Background}>
+            <Image boxSize={120} src={Logo}/>
+            <VStack borderRadius={20} p={10} align="left" spacing={5} bgColor="gray.200">
+                <Text fontWeight="bold" fontSize={24}>Accedi</Text>
+                <FormControl>
+                    <Input
+                        borderColor="black.100"
+                        bgColor="orange.400" 
+                        placeholder={text}
+                        _placeholder={{opacity : 2, color : "black", fontWeight : "bold"}}
+                        type='email'
+                        onMouseEnter={textClear}
+                        onMouseLeave={textAppear}
+                    />
+                </FormControl>
+                
+                <FormControl>
+                    <InputGroup>
+                        <Input 
+                            borderColor="black.100"
+                            bgColor="orange.400" 
+                            placeholder={password} 
+                            _placeholder={{opacity : 2, color : "black", fontWeight : "bold"}}
+                            type={show ? 'text' : 'password'}
+                            onMouseEnter={passClear}
+                            onMouseLeave={passAppear}
+                        />
+                        <InputRightElement children={<AiOutlineEyeInvisible/>}>
+                        <Button bgColor="transparent" size='sm' onClick={handleClick}>
+                            {show ? <AiOutlineEye/> : <AiOutlineEyeInvisible/>}
+                        </Button>
+                        </InputRightElement>
+                    </InputGroup>
+                </FormControl>
 
-      <Menu>
-        <MenuButton 
-            px={4}
-            py={2}
-            fontWeight="bold"
-            width="full"
-            transition='all 0.2s'
-            borderRadius='md'
-            borderWidth='1px'
-            _hover={{ bg: 'yellow.100' }}
-            _expanded={{ bg: 'yellow.400' }}
-            _focus={{ boxShadow: 'outline' }}>
-              {tipologia} <ChevronDownIcon/> </MenuButton>
-        <MenuList>
-          {
-            typos.map((tipo) => (
-              <MenuItem onClick = {() => setTipologia(tipo.name)} >{tipo.name}</MenuItem>
-            ))
-          }
-      </MenuList>
-    </Menu>
+                <HStack spacing={10}>
+                    <Checkbox>Ricordami</Checkbox>
+                    <Link textDecorationLine={textDecoration} color='red.500' href='recuperaPassword'
+                    onMouseOver={decorationAppear}
+                    onMouseOut={decorationClear}>
+                    Password dimenticata?
+                    </Link>
+                </HStack>
+                
+                <Button opacity={0.8}bgColor="orangered">Connettiti</Button>
+                
+                <StackDivider/>
+                <VStack divider={<StackDivider borderColor='black' />}>
+                <></><></>
+                </VStack>
+                <StackDivider/>
 
-    </VStack>
+                <Button
+                    leftIcon={<FcGoogle/>}
+                    p={4}
+                    textColor="black"
+                    variant='outline'>
+                    Login with Google
+                </Button>
 
-    <VStack
-    divider={<StackDivider borderColor='gray.200' />} 
-    shadow="md" spacing={5} align="self-start" p={10}> 
-      {contacts.map((contact)=> ( 
-        <HStack spacing={3}>
-          <ChakraNextImage borderRadius={20} src={contact.image} width={200} height={200}/>
-          <VStack align="start">
-             <Box h={10} fontStyle="oblique" fontWeight="bold">
-              {contact.fullName}
-             </Box>
-             <HStack>
-              <GoLocation w={3} h={3}/>
-              <Box h={5}>
-                {contact.address}
-              </Box>
-             </HStack>
-             <HStack>
-              <FaPhoneAlt w={3} h={3}/>
-              <Box h={5}>
-                {contact.phoneNumber}
-              </Box>
-             </HStack>
-             <HStack>
-              <MdEmail w={3} h={3}/>
-              <Box h={5}>
-                {contact.email}
-              </Box>
-             </HStack>
-          </VStack>
-        </HStack>
-      ))}
-    </VStack>
-  </HStack>
-  
-  );
+                <HStack align="center" spacing={10}>
+                    <Text>Non hai un account?</Text>
+                    <Link href="Registrati" color="darkblue">Registrati</Link>
+                </HStack>
+            </VStack>
+        </VStack>
+    );
 }
 
 export default function Home() {
-  return (
-    <Layout>
-        <ProvaStack/>
-    </Layout>
-  );
-}
+    return (
+      <Layout> 
+        <Login />  
+      </Layout>
+    );
+  }
