@@ -7,7 +7,7 @@ import {
   models,
 } from "mongoose";
 import Pietanza from "lib/models/pietanza";
-import { Tipologia } from "lib/typing";
+import { Tipologia } from "lib/typings";
 
 const RistoranteSchema = new Schema({
   id: { type: String, required: true },

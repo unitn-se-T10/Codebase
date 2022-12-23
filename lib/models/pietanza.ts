@@ -6,7 +6,7 @@ import {
   model,
   models,
 } from "mongoose";
-import { Allergene } from "lib/typing";
+import { Allergene } from "lib/typings";
 
 const PietanzaSchema = new Schema({
   id: { type: String, required: true },

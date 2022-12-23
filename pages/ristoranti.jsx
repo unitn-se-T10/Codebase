@@ -1,7 +1,6 @@
 import Layout from "components/layout";
 import React, { useState } from "react";
 import data from "public/mock-data.json";
-import typo from "public/tipologie.json";
 import { ChakraNextImage } from "components/utils";
 import {
   Button,
@@ -17,6 +16,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail, MdFastfood } from "react-icons/md";
 import { CgOptions } from "react-icons/cg";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { Tipologia } from "lib/typings";
 
 const RestaurantCard = ({ contact }) => (
   <HStack spacing={3}>
@@ -75,8 +75,6 @@ const ResetButton = ({ onClick }) => (
 const ProvaStack = () => {
   // FIXME: fetch from API
   const [contacts, setContacts] = useState(data);
-  // FIXME: use enum
-  const [typos, setTypos] = useState(typo);
   const [tipologia, setTipologia] = useState("Tipologia");
 
   return (
@@ -114,9 +112,9 @@ const ProvaStack = () => {
             &gt; {tipologia} <ChevronDownIcon />{" "}
           </MenuButton>
           <MenuList>
-            {typos.map((tipo) => (
-              <MenuItem key={tipo.name} onClick={() => setTipologia(tipo.name)}>
-                {tipo.name}
+            {Object.values(Tipologia).map((tipo) => (
+              <MenuItem key={tipo} onClick={() => setTipologia(tipo)}>
+                {tipo}
               </MenuItem>
             ))}
           </MenuList>

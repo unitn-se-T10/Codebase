@@ -112,7 +112,7 @@ const ShowLogin: React.FC = () => {
 
 const PagesList: React.FC<StackProps> = (props) => {
   const links = [
-    { href: "/page1", text: "Page 1" },
+    { href: "/ristoranti", text: "Ristoranti" },
     { href: "/page2", text: "Page 2" },
     { href: "/page3", text: "Page 3" },
     { href: "/page4", text: "Page 4" },
