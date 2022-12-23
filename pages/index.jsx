@@ -34,7 +34,7 @@ const Login = () => {
                         borderColor="black.100"
                         bgColor="orange.400" 
                         placeholder={text}
-                        _placeholder={{opacity : 2, color : "black", fontWeight : "bold"}}
+                        _placeholder={{opacity : 2, color : "black"}}
                         type='email'
                         onMouseEnter={textClear}
                         onMouseLeave={textAppear}
@@ -47,7 +47,7 @@ const Login = () => {
                             borderColor="black.100"
                             bgColor="orange.400" 
                             placeholder={password} 
-                            _placeholder={{opacity : 2, color : "black", fontWeight : "bold"}}
+                            _placeholder={{opacity : 2, color : "black"}}
                             type={show ? 'text' : 'password'}
                             onMouseEnter={passClear}
                             onMouseLeave={passAppear}
