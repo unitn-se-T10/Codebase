@@ -10,40 +10,17 @@ import { v4 as uuidv4 } from "uuid";
 //
 // if (!BASE_URI) throw new Error("BASE_URI local variable not set");
 
-export async function createUser({
-  name,
-  surname,
-  email,
-  password,
-}: {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
-}) {
-  await dbConnect();
+type Data = {
+  error?: string;
+  success: boolean;
+};
 
-  const hypoteticUser = await UserSchema.findOne({ email });
-  if (hypoteticUser && hypoteticUser.email === email) {
-    throw new Error("Email already in use");
-  }
-  const isUnitn = email.endsWith("@studenti.unitn.it");
-
-  await UserSchema.create({
-    id: uuidv4(),
-    name,
-    surname,
-    email,
-    password: await hash(password, 12),
-    isUnitn,
-  });
-}
-
-async function signupHandler(req: NextApiRequest, res: NextApiResponse) {
+async function signupHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
   if (req.method !== "POST") {
-    return res
-      .status(500)
-      .send({ message: "HTTP method not valid only POST Accepted" });
+    return res.status(405).send({
+      success: false,
+      error: "HTTP method not valid only POST Accepted",
+    });
   }
 
   const schema = Yup.object().shape({
@@ -62,7 +39,27 @@ async function signupHandler(req: NextApiRequest, res: NextApiResponse) {
   try {
     await schema.validate(req.body);
 
-    await createUser(req.body);
+    const { name, surname, email, password } = req.body;
+    await dbConnect();
+
+    const hypoteticUser = await UserSchema.findOne({ email }).exec();
+    if (hypoteticUser && hypoteticUser.email === email) {
+      return res.status(409).send({
+        success: false,
+        error: "Email already in use",
+      });
+    }
+    const isUnitn = email.endsWith("@studenti.unitn.it");
+
+    await UserSchema.create({
+      id: uuidv4(),
+      name,
+      surname,
+      email,
+      password: await hash(password, 12),
+      isUnitn,
+    });
+    // await createUser(req.body);
 
     // const encodedUsername = encodeURIComponent(username);
     // const encodedVerifyEmail = encodeURIComponent(verifyEmail);
@@ -73,9 +70,11 @@ async function signupHandler(req: NextApiRequest, res: NextApiResponse) {
     //   await sendVerifyMail(req.body.email, { username, verificationLink });
     // } else console.log("Email verification link: " + verificationLink);
 
-    return res.status(200).send({ done: true });
+    return res.status(201).send({ success: true });
   } catch (error) {
-    return res.status(500).send((error as Error).message);
+    return res
+      .status(500)
+      .send({ success: false, error: (error as Error).message });
   }
 }
 
