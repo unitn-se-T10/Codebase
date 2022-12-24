@@ -11,8 +11,9 @@ import { v4 as uuidv4 } from "uuid";
 // if (!BASE_URI) throw new Error("BASE_URI local variable not set");
 
 type Data = {
-  error?: string;
   success: boolean;
+  error?: string;
+  isUnitn?: boolean;
 };
 
 async function signupHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -51,6 +52,7 @@ async function signupHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
     }
     const isUnitn = email.endsWith("@studenti.unitn.it");
 
+    // TODO: implementare register del gestore
     await UserSchema.create({
       id: uuidv4(),
       name,
@@ -70,7 +72,7 @@ async function signupHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
     //   await sendVerifyMail(req.body.email, { username, verificationLink });
     // } else console.log("Email verification link: " + verificationLink);
 
-    return res.status(201).send({ success: true });
+    return res.status(201).send({ success: true, isUnitn });
   } catch (error) {
     return res
       .status(500)

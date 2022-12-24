@@ -1,11 +1,19 @@
 import { compare } from "bcrypt";
 import dbConnect from "lib/dbConnect";
 import UserSchema from "lib/models/user";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, {
+  Account,
+  NextAuthOptions,
+  Profile,
+  Session,
+  User,
+} from "next-auth";
+import { AdapterUser } from "next-auth/adapters";
+import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
@@ -43,6 +51,19 @@ const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    async session({ session, token }) {
+      session.user.isGestore = token.isGestore;
+
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.isGestore = user.isGestore;
+      }
+      return token;
+    },
+  },
   pages: {
     signIn: "/auth/signin",
   },

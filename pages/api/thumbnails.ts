@@ -8,6 +8,7 @@ type Ristorante = {
   indirizzo: string;
   telefono: string;
   email: string;
+  immagine: Buffer;
 };
 
 type Data = {
@@ -23,7 +24,7 @@ async function thumbnailsHandler(
   if (req.method !== "GET") {
     return res.status(405).send({
       success: false,
-      error: "HTTP method not valid only POST Accepted",
+      error: "HTTP method not valid only GET Accepted",
     });
   }
   const numStart = req.body.numStart;
@@ -41,11 +42,11 @@ async function thumbnailsHandler(
       indirizzo: ristorante.indirizzo,
       telefono: ristorante.telefono,
       email: ristorante.email,
+      immagine: ristorante.immagine,
     };
   });
 
-  console.log(numToDisplay);
-  res.status(200).json({ success: true, ristoranti: ristorantiData });
+  return res.status(200).json({ success: true, ristoranti: ristorantiData });
 }
 
 export default thumbnailsHandler;

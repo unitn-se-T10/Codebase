@@ -14,6 +14,7 @@ const UserSchema = new Schema({
   isUnitn: { type: Boolean, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  isGestore: { type: Boolean, required: true },
 });
 
 type UserSchemaType = InferSchemaType<typeof UserSchema>;

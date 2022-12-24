@@ -15,7 +15,7 @@ export enum Allergene {
   UOVA_E_DERIVATI = "uova e derivati",
 }
 
-export enum Tipologia {
+export enum TipologiaRistorante {
   RISTORANTE = "ristorante",
   PIZZERIA = "pizzeria",
   GIAPPONESE = "giapponese",
@@ -25,4 +25,12 @@ export enum Tipologia {
   POKE = "poke",
   KEBAB = "kebab",
   FAST_FOOD = "fast food",
+}
+
+export enum TipologiaMenu {
+  PRIMO = "primo",
+  SECONDO = "secondo",
+  CONTORNO = "contorno",
+  DOLCE = "dolce",
+  BEVANDA = "bevanda",
 }
