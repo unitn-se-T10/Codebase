@@ -67,6 +67,9 @@ const RistorantePage = ({ risto, menu, dish }) => {
         size="md"
         variant="soft-rounded"
       >
+        {
+          // FIXME: Mettere a posto tutte le tab list, al momento sono statiche e fatte a mano
+        }
         <TabList>
           <Tab>Antipasti</Tab>
           <Tab>Primi piatti</Tab>
