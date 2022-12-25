@@ -1,19 +1,256 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import dbConnect from "lib/dbConnect";
+import RistoranteSchema, { RistoranteDocType } from "lib/models/ristorante";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "./auth/[...nextauth]";
+import { v4 as uuidv4 } from "uuid";
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     RistoranteDocType:
+ *       properties:
+ *         id:
+ *           type: uuid
+ *           description: The auto-generated id of the restaurant
+ *         nome:
+ *           type: string
+ *           description: The name of the restaurant
+ *         immagine:
+ *           type: binary
+ *           description: The image of the restaurant
+ *         indirizzo:
+ *           type: string
+ *           description: The address of the restaurant
+ *         orariApertura:
+ *           type: string
+ *           description: The opening hours of the restaurant
+ *         telefono:
+ *           type: string
+ *           description: The phone number of the restaurant
+ *         sito:
+ *           type: string
+ *           description: The website of the restaurant
+ *           format: url
+ *         email:
+ *           type: string
+ *           description: The email of the restaurant
+ *           format: email
+ *         descrizione:
+ *           type: string
+ *           description: The description of the restaurant
+ *         tipologia:
+ *           type: string
+ *           description: The type of the restaurant
+ *         gestoreId:
+ *           type: string
+ *           description: The id of the restaurant manager
+ *           format: uuid
+ *         valutazione:
+ *           type: number
+ *           description: The rating of the restaurant
+ *         menuIds:
+ *           type: array
+ *           description: The ids of the menus of the restaurant
+ *           items:
+ *             type: string
+ *             format: uuid
+ */
 type Data = {
   success: boolean;
   error?: string;
+  ristoranteId?: string;
+  ristorante?: RistoranteDocType;
 };
 
+/**
+ * @swagger
+ * /api/restaurant:
+ *   get:
+ *     description: Get the info of a restaurant
+ *     parameters:
+ *       - name: id
+ *         in: query
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: The restaurant info
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Success of the request
+ *                 risotante:
+ *                   $ref: '#/components/schemas/RistoranteDocType'
+ *       400:
+ *         description: id not provided
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Menu not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 async function getRestaurantInfo(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  // TODO: implement
+  const { id } = req.query;
+  if (!id) {
+    return res.status(400).send({
+      success: false,
+      error: "Missing id",
+    });
+  }
+
+  dbConnect();
+  const restaurant = await RistoranteSchema.findOne({ id: id });
+  if (!restaurant) {
+    return res.status(404).send({
+      success: false,
+      error: "Restaurant not found",
+    });
+  }
+
+  return res.status(200).send({ success: true, ristorante: restaurant });
 }
 
+/**
+ * @swagger
+ * /api/restaurant:
+ *   post:
+ *     description: Add a new restaurant
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nome:
+ *                 type: string
+ *                 description: The name of the restaurant
+ *               indirizzo:
+ *                 type: string
+ *                 description: The address of the restaurant
+ *               orariApertura:
+ *                 type: string
+ *                 description: The opening hours of the restaurant
+ *               telefono:
+ *                 type: string
+ *                 description: The phone number of the restaurant
+ *               sito:
+ *                 type: string
+ *                 description: The website of the restaurant
+ *                 format: url
+ *               email:
+ *                 type: string
+ *                 description: The email of the restaurant
+ *                 format: email
+ *               descrizione:
+ *                 type: string
+ *                 description: The description of the restaurant
+ *               tipologia:
+ *                 type: string
+ *                 description: The type of the restaurant
+ *     responses:
+ *       200:
+ *         description: Menu added
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Success of the request
+ *                 ristoranteId:
+ *                   type: string
+ *                   description: The id of the restaurant
+ *                   format: uuid
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: Unauthorized or menu not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 async function addRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
-  // TODO: implement
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session?.user?.isGestore) {
+    return res.status(401).send({
+      success: false,
+      error: "Unauthorized",
+    });
+  }
+
+  const {
+    nome,
+    indirizzo,
+    orariApertura,
+    telefono,
+    sito,
+    email,
+    descrizione,
+    tipologia,
+  } = req.body;
+  // NOTE: should use YUP
+  if (
+    !nome ||
+    !indirizzo ||
+    !orariApertura ||
+    !telefono ||
+    !sito ||
+    !email ||
+    !descrizione ||
+    !tipologia
+  ) {
+    return res.status(400).send({
+      success: false,
+      error: "Missing fields",
+    });
+  }
+
+  dbConnect();
+  try {
+    const restaurant = await RistoranteSchema.create({
+      id: uuidv4(),
+      nome,
+      indirizzo,
+      orariApertura,
+      telefono,
+      sito,
+      email,
+      descrizione,
+      tipologia,
+      gestoreId: session.user.uid,
+      valutazione: 0,
+      menuIds: [],
+    });
+    return res.status(200).send({ success: true, ristoranteId: restaurant.id });
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      error: error.message,
+    });
+  }
 }
 
 async function editRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {

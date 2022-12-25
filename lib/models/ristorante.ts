@@ -11,16 +11,16 @@ import { TipologiaRistorante } from "lib/typings";
 const RistoranteSchema = new Schema({
   id: { type: String, unique: true, required: true },
   nome: { type: String, required: true },
-  immagine: { type: Buffer, required: true },
+  immagine: { type: Buffer, required: false },
   indirizzo: { type: String, required: true },
-  orariApertura: { type: Date, required: true },
+  orariApertura: { type: String, required: true },
   telefono: { type: String, required: true },
   sito: { type: String, required: true },
   email: { type: String, required: true },
   descrizione: { type: String, required: true },
   tipologia: { type: String, enum: TipologiaRistorante, required: true },
   gestoreId: { type: String, required: true },
-  valutazione: { type: Number },
+  valutazione: { type: Number, required: true },
   menuIds: { type: [String], required: true },
 });
 
