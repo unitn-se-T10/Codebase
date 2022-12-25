@@ -61,7 +61,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.isGestore = user.isGestore;
-        token.uid = user.uid;
+        token.uid = user.id;
       }
       return token;
     },

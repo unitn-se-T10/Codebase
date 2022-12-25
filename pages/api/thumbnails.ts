@@ -31,9 +31,6 @@ import RistoranteSchema from "lib/models/ristorante";
  *         success:
  *           type: boolean
  *           description: Success of the request
- *         error:
- *           type: string
- *           description: Error message
  *         ristoranti:
  *           type: array
  *           description: Array of restaurants
@@ -80,8 +77,10 @@ type Data = {
  *     responses:
  *       200:
  *         description: List of restaurants
- *         schema:
- *           $ref: '#/components/schemas/ThumbnailsResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ThumbnailsResponse'
  */
 async function thumbnailsHandler(
   req: NextApiRequest,

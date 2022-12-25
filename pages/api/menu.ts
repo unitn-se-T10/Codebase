@@ -12,21 +12,7 @@ import { Session } from "next-auth";
  * @swagger
  * components:
  *   schemas:
- *     MenuResponse:
- *       properties:
- *         success:
- *           type: boolean
- *           description: Success of the request
- *         error:
- *           type: string
- *           description: Error message
- *         menuId:
- *           type: string
- *           description: Id of the menu
- *         menu:
- *           type: object
- *           description: Menu object
- *     Dish:
+ *     PietanzaDocType:
  *       properties:
  *         nome:
  *           type: string
@@ -51,7 +37,27 @@ import { Session } from "next-auth";
  *         isDisponibile:
  *           type: boolean
  *           description: Availability of the dish
- *
+ *     MenuDocType:
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: Id of the menu
+ *           format: uuid
+ *         nome:
+ *           type: string
+ *           description: Name of the menu
+ *         ristoranteId:
+ *           type: string
+ *           description: Id of the restaurant
+ *           format: uuid
+ *         tipologia:
+ *           type: string
+ *           description: Type of the menu
+ *         piatti:
+ *           type: array
+ *           description: Array of dishes
+ *           items:
+ *             $ref: '#/components/schemas/PietanzaDocType'
  */
 type Data = {
   success: boolean;
@@ -93,16 +99,28 @@ async function checkPermission(
  *     responses:
  *       200:
  *         description: Menu found
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Success of the request
+ *                 menu:
+ *                   $ref: '#/components/schemas/MenuDocType'
  *       400:
  *         description: id not provided
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       404:
  *         description: Menu not found
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 async function getMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
   const { id } = req.query;
@@ -147,20 +165,33 @@ async function getMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
  *                 type: array
  *                 description: Array of dishes
  *                 items:
- *                   $ref: '#/components/schemas/Dish'
+ *                   $ref: '#/components/schemas/PietanzaDocType'
  *     responses:
  *       200:
  *         description: Menu added
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Success of the request
+ *                 menuId:
+ *                   type: string
+ *                   description: Id of the menu
  *       400:
  *         description: Bad request
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       401:
  *         description: Unauthorized or menu not found
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 async function addMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
   const session = await unstable_getServerSession(req, res, authOptions);
@@ -233,20 +264,32 @@ async function addMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
  *                 type: array
  *                 description: Array of dishes
  *                 items:
- *                   $ref: '#/components/schemas/Dish'
+ *                   $ref: '#/components/schemas/PietanzaDocType'
  *     responses:
  *       200:
  *         description: Menu updated
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Success of the request
+ *                 menu:
+ *                   $ref: '#/components/schemas/MenuDocType'
  *       400:
  *         description: Bad request
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       401:
  *         description: Unauthorized or menu not found
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 async function editMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
   const session = await unstable_getServerSession(req, res, authOptions);
@@ -289,16 +332,26 @@ async function editMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
  *     responses:
  *       200:
  *         description: Menu deleted
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Success of the request
  *       400:
  *         description: Bad request
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       401:
  *         description: Unauthorized or menu not found
- *         schema:
- *           $ref: '#/components/schemas/MenuResponse'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 async function deleteMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
   const session = await unstable_getServerSession(req, res, authOptions);
