@@ -1,6 +1,4 @@
 import Layout from "components/layout";
-import React, { useState } from "react";
-import { Grid, GridItem } from "@chakra-ui/react";
 import {
   VStack,
   Box,
@@ -8,17 +6,8 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  useColorModeValue,
-  Center,
-  InputLeftElement,
   Flex,
-} from "@chakra-ui/react";
-import {
   Button,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
 } from "@chakra-ui/react";
 
 const RenderHome = () => {

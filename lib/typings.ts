@@ -28,9 +28,9 @@ export enum TipologiaRistorante {
 }
 
 export enum TipologiaMenu {
-  PRIMO = "primo",
-  SECONDO = "secondo",
-  CONTORNO = "contorno",
-  DOLCE = "dolce",
-  BEVANDA = "bevanda",
+  PRIMI = "primi",
+  SECONDI = "secondi",
+  CONTORNI = "contorni",
+  DOLCI = "dolci",
+  BEVANDE = "bevande",
 }

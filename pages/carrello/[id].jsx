@@ -1,11 +1,9 @@
 import Layout from "components/layout";
-import React, { useState } from "react";
 import {
   TriangleDownIcon,
   TriangleUpIcon,
   DeleteIcon,
   ArrowForwardIcon,
-  ArrowLeftIcon,
   ArrowBackIcon,
 } from "@chakra-ui/icons";
 import {
@@ -15,10 +13,7 @@ import {
   Box,
   Stack,
   Image,
-  Card,
-  CardBody,
   Heading,
-  CardFooter,
   Input,
   Button,
   VStack,
@@ -27,17 +22,14 @@ import {
   Container,
   StackDivider,
   Divider,
-  Icon,
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
+  IconButton,
 } from "@chakra-ui/react";
 import { SlPaypal } from "react-icons/sl";
 import { RiVisaFill } from "react-icons/ri";
 import { FaCcMastercard } from "react-icons/fa";
 import { SiAmericanexpress } from "react-icons/si";
-import { IconContext } from "react-icons/lib";
 
 const Copertina = ({ dish }) => {
   return (
@@ -91,55 +83,39 @@ const Copertina = ({ dish }) => {
   );
 };
 
-const TipoPagamento = ({ logo }) => {
+const TipoPagamento = () => {
+  const paymentMethods = {
+    mastercard: <FaCcMastercard />,
+    visa: <RiVisaFill />,
+    paypal: <SlPaypal />,
+    americanexpress: <SiAmericanexpress />,
+  };
+
   return (
-    <Button w={20} h={12} bgColor="#7376DA" size="lg">
-      {logo.img}
-    </Button>
+    <Flex justify="space-around">
+      {Object.entries(paymentMethods).map(([key, value]) => (
+        <IconButton
+          key={key}
+          w={20}
+          h={12}
+          bgColor="#7376DA"
+          icon={value}
+          size="lg"
+        />
+      ))}
+    </Flex>
   );
 };
 
-const NormalText = ({ testo }) => {
+const NormalText = ({ children }) => {
   return (
     <Text color="white" fontFamily="Arial" fontSize={18}>
-      {testo}
+      {children}
     </Text>
   );
 };
 
 const Pagamento = () => {
-  const mastercard = {
-    img: (
-      <IconContext.Provider value={{ color: "black", size: "3.5rem" }}>
-        <FaCcMastercard />
-      </IconContext.Provider>
-    ),
-  };
-
-  const visa = {
-    img: (
-      <IconContext.Provider value={{ color: "black", size: "3.5rem" }}>
-        <RiVisaFill />
-      </IconContext.Provider>
-    ),
-  };
-
-  const rupay = {
-    img: (
-      <IconContext.Provider value={{ color: "black", size: "3.5rem" }}>
-        <SiAmericanexpress />
-      </IconContext.Provider>
-    ),
-  };
-
-  const paypal = {
-    img: (
-      <IconContext.Provider value={{ color: "black", size: "3.5rem" }}>
-        <SlPaypal />
-      </IconContext.Provider>
-    ),
-  };
-
   return (
     <Container shadow="md" bgColor="#565ABB" rounded={20}>
       <VStack alignItems="left" p={5}>
@@ -157,17 +133,8 @@ const Pagamento = () => {
           ></Image>
         </Flex>
         <StackDivider />
-        <StackDivider />
-        <NormalText testo={"Tipologia Carta"} />
-        <Flex>
-          <TipoPagamento logo={mastercard} />
-          <Spacer />
-          <TipoPagamento logo={visa} />
-          <Spacer />
-          <TipoPagamento logo={rupay} />
-          <Spacer />
-          <TipoPagamento logo={paypal} />
-        </Flex>
+        <NormalText>Tipologia Carta</NormalText>
+        <TipoPagamento />
 
         <FormControl>
           <FormLabel color="white" fontFamily="Arial" fontSize={18}>
@@ -232,27 +199,27 @@ const Pagamento = () => {
           {
             // FIXME: Fetchare le API per il totale
           }
-          <NormalText testo={"SubTotal"} />
+          <NormalText>Subtotal</NormalText>
           <Spacer />
-          <NormalText testo={"1000€"} />
+          <NormalText>1000€</NormalText>
         </Flex>
 
         <Flex>
           {
             // FIXME: Fetchare le API per il totale
           }
-          <NormalText testo={"Sconto"} />
+          <NormalText>Sconto</NormalText>
           <Spacer />
-          <NormalText testo={"1€"} />
+          <NormalText>1€</NormalText>
         </Flex>
 
         <Flex>
           {
             // FIXME: Fetchare le API per il totale
           }
-          <NormalText testo={"Totale"} />
+          <NormalText>Totale</NormalText>
           <Spacer />
-          <NormalText testo={"999€"} />
+          <NormalText>999€</NormalText>
         </Flex>
 
         <Divider borderColor="#565ABB" />
@@ -269,9 +236,9 @@ const Pagamento = () => {
             {
               // FIXME: Fetchare le API per il totale
             }
-            <NormalText testo={"999€"} />
+            <NormalText>999€</NormalText>
             <Spacer />
-            <NormalText testo={"Checkout"} />
+            <NormalText>Checkout</NormalText>
           </Flex>
         </Button>
       </VStack>

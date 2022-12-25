@@ -1,24 +1,33 @@
 import Layout from "components/layout";
-import React, { useState } from "react";
-import { Grid, GridItem, StackDivider } from "@chakra-ui/react";
 import {
   VStack,
   Box,
   HStack,
   Text,
   Divider,
-  Flex,
-  Spacer,
   Center,
-  Container,
-  Button,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { GiEggClutch, GiWheat } from "react-icons/gi";
 import { StarIcon, TriangleDownIcon } from "@chakra-ui/icons";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { TipologiaMenu, Allergene } from "lib/typings";
+import { DishCard } from "components/dish";
 
-const RistorantePage = ({ risto, menu, dish }) => {
+const DishList = ({ menu }) =>
+  menu ? (
+    <Wrap justify="space-evenly" p={5} spacing={10}>
+      {menu.piatti.map((dish) => (
+        <WrapItem key={dish.id}>
+          <DishCard dish={dish} />
+        </WrapItem>
+      ))}
+    </Wrap>
+  ) : (
+    <Text>Non ci sono piatti in questo menu</Text>
+  );
+
+const RistorantePage = ({ risto, menus }) => {
   return (
     <Center>
       <VStack alignItems="center" p={4} spacing={4}>
@@ -71,151 +80,24 @@ const RistorantePage = ({ risto, menu, dish }) => {
           size="md"
           variant="soft-rounded"
         >
-          {
-            // FIXME: Mettere a posto tutte le tab list, al momento sono statiche e fatte a mano
-          }
           <TabList>
-            <Tab>Antipasti</Tab>
-            <Tab>Primi piatti</Tab>
-            <Tab>Secondi piatti</Tab>
-            <Tab>Contorni</Tab>
-            <Tab>Dessert</Tab>
+            {Object.values(TipologiaMenu).map((tipologia) => (
+              <Tab key={tipologia}>{tipologia}</Tab>
+            ))}
           </TabList>
 
           <TabPanels>
-            <TabPanel>
-              <Text>Da riempire</Text>
-            </TabPanel>
-            <TabPanel>
-              <VStack spacing={10}>
-                <HStack spacing={10}>
-                  <DishCard dish={dish} />
-                  <DishCard dish={dish} />
-                </HStack>
-                <HStack spacing={10}>
-                  <LT dish={dish} />
-                  <LT dish={dish} />
-                </HStack>
-                <HStack spacing={10}>
-                  <DishCard dish={dish} />
-                  <DishCard dish={dish} />
-                </HStack>
-              </VStack>
-            </TabPanel>
+            {Object.values(TipologiaMenu).map((tipologia) => (
+              <TabPanel key={tipologia}>
+                <DishList
+                  menu={menus.find((menu) => menu.tipologia === tipologia)}
+                />
+              </TabPanel>
+            ))}
           </TabPanels>
         </Tabs>
       </VStack>
     </Center>
-  );
-};
-
-const Allergene = ({ icona }) => {
-  return (
-    <VStack>
-      {icona.icon}
-      <Text fontSize={10}>{icona.text}</Text>
-    </VStack>
-  );
-};
-
-const LT = ({ dish }) => {
-  const uova = {
-    icon: <GiEggClutch size="1.75em" />,
-    text: "Uova",
-  };
-
-  const grano = {
-    icon: <GiWheat size="1.75em" />,
-    text: "Grano",
-  };
-
-  return (
-    <Box
-      w={400}
-      p={5}
-      shadow="0px 0px 5px 1px gainsboro"
-      bgColor="white"
-      rounded={50}
-    >
-      <Flex>
-        <Box
-          w={100}
-          h={100}
-          bgImage={dish.image}
-          bgSize="cover"
-          bgPosition="center"
-          bgRepeat="no-repeat"
-          rounded={50}
-        ></Box>
-        <Spacer />
-        <VStack>
-          <Text>{dish.nome}</Text>
-          <Divider borderColor="black" />
-          <HStack>
-            {/* FIXME: Mettere tutti gli allergeni della pietanza*/}
-            <Allergene icona={uova} />
-            <Allergene icona={grano} />
-          </HStack>
-        </VStack>
-        <Spacer />
-        <Box w={70} h={70} fontSize={20} borderWidth="1px" borderRadius={50}>
-          <Flex align="center" direction="column" h="70%">
-            <Spacer />
-            {dish.prezzo} €
-          </Flex>
-        </Box>
-      </Flex>
-    </Box>
-  );
-};
-
-const DishCard = ({ dish }) => {
-  const uova = {
-    icon: <GiEggClutch size="1.75em" />,
-    text: "Uova",
-  };
-
-  const grano = {
-    icon: <GiWheat size="1.75em" />,
-    text: "Grano",
-  };
-
-  return (
-    <Box w={400} p={5} borderRadius={50} bgColor="yellow.200">
-      <Flex>
-        <Box
-          w={100}
-          h={100}
-          bgImage={dish.image}
-          bgSize="cover"
-          bgPosition="center"
-          bgRepeat="no-repeat"
-          borderRadius={50}
-        ></Box>
-        <Spacer />
-        <VStack>
-          <Text>{dish.nome}</Text>
-          <Divider borderColor="black" />
-          <HStack>
-            {/* FIXME: Mettere tutti gli allergeni della pietanza*/}
-            <VStack>
-              <Allergene icona={uova} />
-            </VStack>
-
-            <VStack>
-              <Allergene icona={grano} />
-            </VStack>
-          </HStack>
-        </VStack>
-        <Spacer />
-        <Box w={70} h={70} fontSize={20} borderRadius={50} bgColor="green.300">
-          <Flex align="center" direction="column" h="70%">
-            <Spacer />
-            {dish.prezzo} €
-          </Flex>
-        </Box>
-      </Flex>
-    </Box>
   );
 };
 
@@ -226,6 +108,16 @@ export default function Ristorante() {
     nome: "Pasta alla carbonara",
     prezzo: 6,
     image: "/carbonara.jpg",
+    allergeni: [Allergene.UOVA_E_DERIVATI, Allergene.LATTE_E_DERIVATI],
+    isDisponibile: true,
+  };
+  const piatto2 = {
+    id: "2",
+    nome: "Bistecca",
+    prezzo: 666,
+    image: "/visa.png",
+    allergeni: [Allergene.GLUTINE, Allergene.PESCE],
+    isDisponibile: false,
   };
 
   // TODO: Da fetchare dalle APIs
@@ -240,11 +132,20 @@ export default function Ristorante() {
   };
 
   // TODO: Da fetchare dalle APIs
-  const menu = {};
+  const menus = [
+    {
+      tipologia: TipologiaMenu.PRIMI,
+      piatti: [piatto, piatto, piatto],
+    },
+    {
+      tipologia: TipologiaMenu.SECONDI,
+      piatti: [piatto2, piatto2, piatto2],
+    },
+  ];
 
   return (
     <Layout>
-      <RistorantePage risto={ristorante} menu={menu} dish={piatto} />
+      <RistorantePage risto={ristorante} menus={menus} />
     </Layout>
   );
 }
