@@ -317,18 +317,14 @@ async function editMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
  * @swagger
  * /api/menu:
  *   delete:
- *     description: Update a menu
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               id:
- *                 type: string
- *                 description: Id of the menu
- *                 format: uuid
+ *     description: Delete a menu
+ *     parameters:
+ *       - name: id
+ *         in: query
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
  *     responses:
  *       200:
  *         description: Menu deleted
