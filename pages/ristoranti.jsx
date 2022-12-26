@@ -14,7 +14,6 @@ import {
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { IconContext } from "react-icons/lib";
 import { MdFastfood } from "react-icons/md";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { CgOptions } from "react-icons/cg";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { TipologiaRistorante } from "lib/typings";
