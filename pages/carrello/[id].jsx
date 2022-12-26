@@ -1,4 +1,5 @@
 import Layout from "components/layout";
+import React, { useState } from "react";
 import {
   TriangleDownIcon,
   TriangleUpIcon,
@@ -26,12 +27,26 @@ import {
   FormLabel,
   IconButton,
 } from "@chakra-ui/react";
+import { IconContext } from "react-icons/lib";
 import { SlPaypal } from "react-icons/sl";
 import { RiVisaFill } from "react-icons/ri";
 import { FaCcMastercard } from "react-icons/fa";
 import { SiAmericanexpress } from "react-icons/si";
 
-const Copertina = ({ dish }) => {
+const piatto = {
+  image: "/carbonara.jpg",
+  nome: "Pasta alla carbonara",
+  quantita: 3,
+  prezzo: 6,
+  extra: "Senza uova, senza pancetta",
+};
+
+const carrello = ["Pasta", "Bistecca", "Canial"];
+
+const Copertina = ({ dish, id, setPietanze, pietanze }) => {
+  const [quantita, setQuantita] = useState(dish.quantita);
+  const [prezzo, setPrezzo] = useState(dish.prezzo);
+
   return (
     <Box w={750} shadow="0px 0px 2px 1px gainsboro" rounded={20}>
       <Flex p={5}>
@@ -56,11 +71,21 @@ const Copertina = ({ dish }) => {
         <Center>
           <HStack>
             <Text mt={2} fontSize={30}>
-              {dish.quantita}
+              {quantita}
             </Text>
             <VStack spacing={1}>
-              <TriangleUpIcon />
-              <TriangleDownIcon />
+              <TriangleUpIcon
+                onClick={function () {
+                  setPrezzo(prezzo);
+                  setQuantita(quantita + 1);
+                }}
+              />
+              <TriangleDownIcon
+                onClick={function () {
+                  setPrezzo(prezzo);
+                  setQuantita(Math.max(1, quantita - 1));
+                }}
+              />
             </VStack>
           </HStack>
         </Center>
@@ -69,14 +94,18 @@ const Copertina = ({ dish }) => {
 
         <Center>
           <Text mt={2} fontSize={30}>
-            {dish.prezzo * dish.quantita}€
+            {prezzo * quantita}€
           </Text>
         </Center>
 
         <Spacer />
 
         <Center>
-          <DeleteIcon color="red.600" boxSize={7} />
+          <DeleteIcon
+            color="red.600"
+            boxSize={7}
+            onClick={() => setPietanze(pietanze.filter((_, i) => id !== i))}
+          />
         </Center>
       </Flex>
     </Box>
@@ -85,10 +114,26 @@ const Copertina = ({ dish }) => {
 
 const TipoPagamento = () => {
   const paymentMethods = {
-    mastercard: <FaCcMastercard />,
-    visa: <RiVisaFill />,
-    paypal: <SlPaypal />,
-    americanexpress: <SiAmericanexpress />,
+    mastercard: (
+      <IconContext.Provider value={{ color: "white", size: "50px" }}>
+        <FaCcMastercard />
+      </IconContext.Provider>
+    ),
+    visa: (
+      <IconContext.Provider value={{ color: "white", size: "50px" }}>
+        <RiVisaFill />
+      </IconContext.Provider>
+    ),
+    paypal: (
+      <IconContext.Provider value={{ color: "white", size: "40px" }}>
+        <SlPaypal />
+      </IconContext.Provider>
+    ),
+    americanexpress: (
+      <IconContext.Provider value={{ color: "white", size: "40px" }}>
+        <SiAmericanexpress />
+      </IconContext.Provider>
+    ),
   };
 
   return (
@@ -247,13 +292,7 @@ const Pagamento = () => {
 };
 
 const CarrelloPage = () => {
-  const piatto = {
-    image: "/carbonara.jpg",
-    nome: "Pasta alla carbonara",
-    quantita: 3,
-    prezzo: 6,
-    extra: "Senza uova, senza pancetta",
-  };
+  const [pietanze, setPietanze] = useState(carrello);
 
   return (
     <Stack alignItems="center" direction={{ base: "column", lg: "row" }} p={10}>
@@ -275,13 +314,19 @@ const CarrelloPage = () => {
             Carrello
           </Text>
           <Text fontSize={14} fontStyle="Arial">
-            Hai 3 elementi nel carrello
+            Hai {pietanze.length} elementi nel carrello
           </Text>
         </VStack>
         <Divider borderColor="white" />
-        <Copertina dish={piatto} />
-        <Copertina dish={piatto} />
-        <Copertina dish={piatto} />
+        {pietanze.map((pietanzaId, i) => (
+          <Copertina
+            dish={piatto}
+            pietanze={pietanze}
+            key={pietanzaId}
+            id={i}
+            setPietanze={setPietanze}
+          />
+        ))}
       </VStack>
       <Spacer />
       <Pagamento />

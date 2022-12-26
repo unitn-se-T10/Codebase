@@ -16,7 +16,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail, MdFastfood } from "react-icons/md";
 import { CgOptions } from "react-icons/cg";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { Tipologia } from "lib/typings";
+import { TipologiaRistorante } from "lib/typings";
 
 const RestaurantCard = ({ contact }) => (
   <HStack spacing={3}>
@@ -112,7 +112,7 @@ const ProvaStack = () => {
             &gt; {tipologia} <ChevronDownIcon />{" "}
           </MenuButton>
           <MenuList>
-            {Object.values(Tipologia).map((tipo) => (
+            {Object.values(TipologiaRistorante).map((tipo) => (
               <MenuItem key={tipo} onClick={() => setTipologia(tipo)}>
                 {tipo}
               </MenuItem>

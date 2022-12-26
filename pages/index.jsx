@@ -51,7 +51,7 @@ const RenderHome = () => {
 export default function Home() {
   return (
     <Box
-      bgImage="/sfondo1.png"
+      bgImage="/sfondo2.jpg"
       bgSize="cover"
       bgPosition="center"
       bgRepeat="no-repeat"
