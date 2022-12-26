@@ -58,7 +58,7 @@ type Data = {
  *   get:
  *     description: Get list data of restaurants
  *     parameters:
- *       - name: numStart
+ *       - name: start
  *         description: Number of the first restaurant to get
  *         in: query
  *         required: true
@@ -66,7 +66,7 @@ type Data = {
  *           type: number
  *           format: int
  *           minimum: 0
- *       - name: numToDisplay
+ *       - name: num
  *         description: Number of restaurants to get
  *         in: query
  *         required: true
@@ -92,13 +92,13 @@ async function thumbnailsHandler(
       error: "HTTP method not valid only GET Accepted",
     });
   }
-  const numStart = req.body.numStart;
-  const numToDisplay = req.body.numToDisplay;
+  const start = parseInt(req.query.start as string);
+  const num = parseInt(req.query.num as string);
 
   dbConnect();
   const ristoranti = await RistoranteSchema.find({})
-    .skip(numStart)
-    .limit(numToDisplay)
+    .skip(start)
+    .limit(num)
     .exec();
   const ristorantiData = ristoranti.map((ristorante) => {
     return {

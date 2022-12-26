@@ -1,6 +1,5 @@
 import Layout from "components/layout";
-import React, { useState } from "react";
-import data from "public/mock-data.json";
+import { useState } from "react";
 import { ChakraNextImage } from "components/utils";
 import {
   Button,
@@ -11,7 +10,7 @@ import {
   StackDivider,
   Spacer,
   Flex,
-  Divider,
+  Spinner,
 } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { IconContext } from "react-icons/lib";
@@ -21,6 +20,8 @@ import { MdEmail, MdFastfood } from "react-icons/md";
 import { CgOptions } from "react-icons/cg";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { TipologiaRistorante } from "lib/typings";
+import useSWR from "swr";
+import NextLink from "next/link";
 
 const ChooseRestaurants = () => {
   const [tipologia, setTipologia] = useState("Tipologia");
@@ -92,32 +93,34 @@ const ChooseRestaurants = () => {
   );
 };
 
-const RestaurantCard = ({ contact }) => (
-  <HStack spacing={3}>
-    <ChakraNextImage
-      borderRadius={20}
-      src={contact.image}
-      width={200}
-      height={200}
-    />
-    <VStack align="start">
-      <Box h={10} fontWeight="bold" fontStyle="oblique">
-        {contact.fullName}
-      </Box>
-      <HStack>
-        <GoLocation w={3} h={3} />
-        <Box h={5}>{contact.address}</Box>
-      </HStack>
-      <HStack>
-        <FaPhoneAlt w={3} h={3} />
-        <Box h={5}>{contact.phoneNumber}</Box>
-      </HStack>
-      <HStack>
-        <MdEmail w={3} h={3} />
-        <Box h={5}>{contact.email}</Box>
-      </HStack>
-    </VStack>
-  </HStack>
+const RestaurantCard = ({ thumbnail }) => (
+  <NextLink href={`/ristorante/${thumbnail.id}`}>
+    <HStack spacing={3}>
+      <ChakraNextImage
+        borderRadius={20}
+        src={thumbnail.immagine}
+        width={200}
+        height={200}
+      />
+      <VStack align="start">
+        <Box h={10} fontWeight="bold" fontStyle="oblique">
+          {thumbnail.nome}
+        </Box>
+        <HStack>
+          <GoLocation w={3} h={3} />
+          <Box h={5}>{thumbnail.indirizzo}</Box>
+        </HStack>
+        <HStack>
+          <FaPhoneAlt w={3} h={3} />
+          <Box h={5}>{thumbnail.telefono}</Box>
+        </HStack>
+        <HStack>
+          <MdEmail w={3} h={3} />
+          <Box h={5}>{thumbnail.email}</Box>
+        </HStack>
+      </VStack>
+    </HStack>
+  </NextLink>
 );
 
 const OrderButton = ({ children, ...props }) => (
@@ -146,33 +149,21 @@ const ResetButton = ({ onClick }) => (
   </Button>
 );
 
-const ProvaStack = () => {
-  // FIXME: fetch from API
-  const [contacts, setContacts] = useState(data);
-
-  return (
-    <HStack align="top" p={10} spacing={20}>
-      {/*Stack Che contiene il tutto*/}
-      <ChooseRestaurants />
-      <VStack
-        align="self-start"
-        w="full"
-        p={10}
-        shadow="1px 1px 5px 1px gray"
-        bgColor="white"
-        divider={<StackDivider borderColor="gray.200" />}
-        rounded={20}
-        spacing={5}
-      >
-        {contacts.map((contact) => (
-          <RestaurantCard key={contact.id} contact={contact} />
-        ))}
-      </VStack>
-    </HStack>
-  );
-};
-
 export default function Home() {
+  const start = 0;
+  const num = 10;
+
+  const fetcher = (url) =>
+    fetch(url)
+      .then((r) => r.json())
+      .then((j) => j.ristoranti);
+
+  const { data: thumbnails } = useSWR(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/thumbnails?start=${start}&num=${num}`,
+    fetcher
+  );
+  console.log(thumbnails);
+
   return (
     <Box
       bgImage="/sfondo2.jpg"
@@ -181,7 +172,27 @@ export default function Home() {
       bgRepeat="no-repeat"
     >
       <Layout>
-        <ProvaStack />
+        <HStack align="top" p={10} spacing={20}>
+          <ChooseRestaurants />
+          <VStack
+            align="self-start"
+            w="full"
+            p={10}
+            shadow="1px 1px 5px 1px gray"
+            bgColor="white"
+            divider={<StackDivider borderColor="gray.200" />}
+            rounded={20}
+            spacing={5}
+          >
+            {thumbnails ? (
+              thumbnails.map((thumbnail) => (
+                <RestaurantCard key={thumbnail.id} thumbnail={thumbnail} />
+              ))
+            ) : (
+              <Spinner />
+            )}
+          </VStack>
+        </HStack>
       </Layout>
     </Box>
   );
