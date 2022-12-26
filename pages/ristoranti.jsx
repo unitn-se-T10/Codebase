@@ -9,14 +9,88 @@ import {
   HStack,
   VStack,
   StackDivider,
+  Spacer,
+  Flex,
+  Divider,
 } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { IconContext } from "react-icons/lib";
 import { GoLocation } from "react-icons/go";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail, MdFastfood } from "react-icons/md";
 import { CgOptions } from "react-icons/cg";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { TipologiaRistorante } from "lib/typings";
+
+const ChooseRestaurants = () => {
+  const [tipologia, setTipologia] = useState("Tipologia");
+  const [ordine, setOrdine] = useState("None");
+
+  return (
+    <Flex
+      justify="space-evenly"
+      direction="column"
+      p={5}
+      shadow="1px 1px 5px 1px gray"
+      bgColor="white"
+      rounded={20}
+    >
+      <Flex align="center">
+        <IconContext.Provider value={{ size: "20px" }}>
+          <MdFastfood />
+        </IconContext.Provider>
+        <Spacer />
+        <Text fontSize={20}>Suddividi i ristoranti</Text>
+        <Spacer />
+        <ResetButton onClick={() => setOrdine("None")} />
+      </Flex>
+      <OrderButton
+        bgColor={ordine === "Crescente" ? "yellow.300" : "white"}
+        onClick={() => setOrdine("Crescente")}
+      >
+        Ordine Alfabetico Crescente (A,Z)
+      </OrderButton>
+      <OrderButton
+        bgColor={ordine === "Decrescente" ? "yellow.300" : "white"}
+        onClick={() => setOrdine("Decrescente")}
+      >
+        Ordine Alfabetico Decrescente (Z,A)
+      </OrderButton>
+      <Flex align="center">
+        <IconContext.Provider value={{ size: "22px" }}>
+          <CgOptions />
+        </IconContext.Provider>
+        <Spacer />
+        <Text fontSize={20}>Filtri</Text>
+        <Spacer />
+        <ResetButton onClick={() => setTipologia("Tipologia")} />
+      </Flex>
+      <Menu>
+        <MenuButton
+          w="full"
+          px={4}
+          py={2}
+          fontWeight="bold"
+          borderWidth="1px"
+          borderRadius="md"
+          _hover={{ bg: "yellow.100" }}
+          _focus={{ boxShadow: "outline" }}
+          _expanded={{ bg: "yellow.400" }}
+          transition="all 0.2s"
+        >
+          {tipologia} <ChevronDownIcon />{" "}
+        </MenuButton>
+        <MenuList>
+          {Object.values(TipologiaRistorante).map((tipo) => (
+            <MenuItem key={tipo} onClick={() => setTipologia(tipo)}>
+              {tipo}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Menu>
+    </Flex>
+  );
+};
 
 const RestaurantCard = ({ contact }) => (
   <HStack spacing={3}>
@@ -46,15 +120,15 @@ const RestaurantCard = ({ contact }) => (
   </HStack>
 );
 
-const OrderButton = ({ children }) => (
+const OrderButton = ({ children, ...props }) => (
   <Button
     w="full"
     p={5}
     borderRadius={10}
-    _hover={{ bg: "yellow.100" }}
     colorScheme="black"
     size="s"
     variant="outline"
+    {...props}
   >
     {children}
   </Button>
@@ -75,56 +149,19 @@ const ResetButton = ({ onClick }) => (
 const ProvaStack = () => {
   // FIXME: fetch from API
   const [contacts, setContacts] = useState(data);
-  const [tipologia, setTipologia] = useState("Tipologia");
 
   return (
-    <HStack align="top" p={10} shadow="md" spacing={10}>
+    <HStack align="top" p={10} spacing={20}>
       {/*Stack Che contiene il tutto*/}
-      <VStack shadow="md" spacing={2}>
-        {/*Stack per la suddivisione dei ristoranti*/}
-        <HStack spacing={5}>
-          {/*Stack suddividi per ordine alfabetico*/}
-          <MdFastfood />
-          <Text fontSize={20}>Suddividi i ristoranti</Text>
-          <ResetButton onClick={null} />
-        </HStack>
-        <OrderButton>Ordine Alfabetico Crescente (A,Z)</OrderButton>
-        <OrderButton>Ordine Alfabetico Decrescente (Z,A)</OrderButton>
-        <HStack spacing={5}>
-          {/*Stack suddividi per tipologia*/}
-          <CgOptions />
-          <Text fontSize={20}>Filtri</Text>
-          <ResetButton onClick={() => setTipologia("Tipologia")} />
-        </HStack>
-        <Menu>
-          <MenuButton
-            w="full"
-            px={4}
-            py={2}
-            fontWeight="bold"
-            borderWidth="1px"
-            borderRadius="md"
-            _hover={{ bg: "yellow.100" }}
-            _focus={{ boxShadow: "outline" }}
-            _expanded={{ bg: "yellow.400" }}
-            transition="all 0.2s"
-          >
-            &gt; {tipologia} <ChevronDownIcon />{" "}
-          </MenuButton>
-          <MenuList>
-            {Object.values(TipologiaRistorante).map((tipo) => (
-              <MenuItem key={tipo} onClick={() => setTipologia(tipo)}>
-                {tipo}
-              </MenuItem>
-            ))}
-          </MenuList>
-        </Menu>
-      </VStack>
+      <ChooseRestaurants />
       <VStack
         align="self-start"
+        w="full"
         p={10}
-        shadow="md"
+        shadow="1px 1px 5px 1px gray"
+        bgColor="white"
         divider={<StackDivider borderColor="gray.200" />}
+        rounded={20}
         spacing={5}
       >
         {contacts.map((contact) => (
@@ -137,8 +174,15 @@ const ProvaStack = () => {
 
 export default function Home() {
   return (
-    <Layout>
-      <ProvaStack />
-    </Layout>
+    <Box
+      bgImage="/sfondo2.jpg"
+      bgSize="cover"
+      bgPosition="center"
+      bgRepeat="no-repeat"
+    >
+      <Layout>
+        <ProvaStack />
+      </Layout>
+    </Box>
   );
 }

@@ -1,8 +1,10 @@
 import {
   Button,
   HStack,
+  Box,
   Heading,
   Spacer,
+  Image,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -59,13 +61,13 @@ const Register: React.FC = () => {
   const formList = [
     {
       name: "name",
-      label: "Name",
+      label: "Nome",
       type: "text",
       placeholder: "John",
     },
     {
       name: "surname",
-      label: "Surname",
+      label: "Cognome",
       type: "text",
       placeholder: "Doe",
     },
@@ -83,78 +85,82 @@ const Register: React.FC = () => {
     },
     {
       name: "passwordConfirm",
-      label: "Confirm Password",
+      label: "Conferma Password",
       type: "password",
       placeholder: "Confirm strong password",
     },
   ];
 
   return (
-    <Layout>
-      <Head>
-        <title>Register</title>
-      </Head>
-      <AuthLayout
-        title={<Heading>Register</Heading>}
-        bottom={
-          <HStack justify="center">
-            <Text>Already have an account?</Text>
-            <Button onClick={() => signIn()} variant="link">
-              Login
-            </Button>
-          </HStack>
-        }
-      >
-        <Formik
-          validationSchema={Yup.object().shape({
-            name: regSchema.name,
-            surname: regSchema.name,
-            email: regSchema.email.test(
-              "Server",
-              () => emailUsedError,
-              () => !emailUsedError
-            ),
-            password: regSchema.password,
-            passwordConfirm: Yup.string()
-              .required("This field is very important.")
-              .oneOf([Yup.ref("password")], "Passwords don't match!"),
-          })}
-          initialValues={{
-            name: "",
-            surname: "",
-            email: "",
-            password: "",
-            passwordConfirm: "",
-          }}
-          onSubmit={async (values, actions) => {
-            await handleSubmit(values);
-            await actions.validateForm();
-            emailUsedError = null;
-            actions.setSubmitting(false);
-          }}
-        >
-          {(props) => (
-            <Form>
-              <VStack spacing={4}>
-                {formList.map((formItem) => (
-                  <FormField
-                    key={formItem.name}
-                    fieldName={formItem.name}
-                    label={formItem.label}
-                    type={formItem.type}
-                    placeholder={formItem.placeholder}
-                  />
-                ))}
-                <Spacer my={4} />
-                <Button w="100%" isLoading={props.isSubmitting} type="submit">
-                  Register
-                </Button>
-              </VStack>
-            </Form>
-          )}
-        </Formik>
-      </AuthLayout>
-    </Layout>
+    <Box
+      bgImage="/sfondo2.jpg"
+      bgSize="cover"
+      bgPosition="center"
+      bgRepeat="no-repeat"
+    >
+      <Layout>
+        <Head>
+          <title>Register</title>
+        </Head>
+        <AuthLayout title={<></>}>
+          <Formik
+            validationSchema={Yup.object().shape({
+              name: regSchema.name,
+              surname: regSchema.name,
+              email: regSchema.email.test(
+                "Server",
+                () => emailUsedError,
+                () => !emailUsedError
+              ),
+              password: regSchema.password,
+              passwordConfirm: Yup.string()
+                .required("This field is very important.")
+                .oneOf([Yup.ref("password")], "Passwords don't match!"),
+            })}
+            initialValues={{
+              name: "",
+              surname: "",
+              email: "",
+              password: "",
+              passwordConfirm: "",
+            }}
+            onSubmit={async (values, actions) => {
+              await handleSubmit(values);
+              await actions.validateForm();
+              emailUsedError = null;
+              actions.setSubmitting(false);
+            }}
+          >
+            {(props) => (
+              <Form>
+                <VStack spacing={4}>
+                  <Heading>Registrati</Heading>
+                  {formList.map((formItem) => (
+                    <FormField
+                      key={formItem.name}
+                      fieldName={formItem.name}
+                      label={formItem.label}
+                      type={formItem.type}
+                      placeholder={formItem.placeholder}
+                    />
+                  ))}
+                  <Spacer my={4} />
+                  <Button w="100%" isLoading={props.isSubmitting} type="submit">
+                    Registrati
+                  </Button>
+                  <HStack justify="center">
+                    <Text>Hai già un account?</Text>
+                    <Button onClick={() => signIn()} variant="link">
+                      Login
+                    </Button>
+                  </HStack>
+                </VStack>
+              </Form>
+            )}
+          </Formik>
+        </AuthLayout>
+      </Layout>
+    </Box>
   );
 };
 

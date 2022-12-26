@@ -101,8 +101,16 @@ const Login: React.FC = () => {
             {(props) => (
               <Form>
                 <VStack spacing={4}>
-                  <FormField fieldName="email" placeholder="Email" />
-                  <PasswordInput fieldName="password" placeholder="Password" />
+                  <FormField
+                    label="Email"
+                    fieldName="email"
+                    placeholder="youremail@host.tld"
+                  />
+                  <PasswordInput
+                    showLabel={true}
+                    fieldName="password"
+                    placeholder="Use your password"
+                  />
                   <HStack alignItems="center" justify="space-between" w="100%">
                     <Field as={Checkbox} name="remember">
                       Ricordami

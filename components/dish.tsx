@@ -21,20 +21,20 @@ import { Allergene } from "lib/typings";
 
 export const AllergeneIcon = ({ allergene }: { allergene: Allergene }) => {
   const icons = {
-    [Allergene.ARACHIDI_E_DERIVATI]: <GiPeanut size="3.5rem" />,
+    [Allergene.ARACHIDI_E_DERIVATI]: <GiPeanut size="2.25rem" />,
     [Allergene.FRUTTA_A_GUSCIO]: "",
-    [Allergene.LATTE_E_DERIVATI]: <GiMilkCarton size="3.5rem" />,
-    [Allergene.MOLLUSCHI]: <GiSwirledShell size="3.5rem" />,
-    [Allergene.PESCE]: <GiFriedFish size="3.5rem" />,
-    [Allergene.SESAMO]: <GiSesame size="3.5rem" />,
+    [Allergene.LATTE_E_DERIVATI]: <GiMilkCarton size="2.25rem" />,
+    [Allergene.MOLLUSCHI]: <GiSwirledShell size="2.25rem" />,
+    [Allergene.PESCE]: <GiFriedFish size="2.25rem" />,
+    [Allergene.SESAMO]: <GiSesame size="2.25rem" />,
     [Allergene.SOIA]: "", // TODO: find icon
-    [Allergene.CROSTACEI]: <GiSadCrab size="3.5rem" />,
-    [Allergene.GLUTINE]: <GiWheat size="3.5rem" />,
+    [Allergene.CROSTACEI]: <GiSadCrab size="2.25rem" />,
+    [Allergene.GLUTINE]: <GiWheat size="2.25rem" />,
     [Allergene.LUPINI]: "", // TODO: find icon
     [Allergene.SENAPE]: "", // TODO: find icon
     [Allergene.SEDANO]: "", // TODO: find icon
     [Allergene.ANIDRIDE_SOLFOROSA_E_SOLFITI]: "", // TODO: find icon
-    [Allergene.UOVA_E_DERIVATI]: <GiBigEgg size="3.5rem" />,
+    [Allergene.UOVA_E_DERIVATI]: <GiBigEgg size="2.25rem" />,
   };
 
   return (
@@ -49,9 +49,10 @@ export const DishCard = ({ dish }) => (
   <Box
     w={400}
     p={5}
+    opacity={dish.isDisponibile ? "1" : "0.3"}
     borderRadius={50}
-    shadow="lg"
-    bgColor={dish.isDisponibile ? "yellow.200" : "gray.300"}
+    shadow="0px 0px 5px 0px gainsboro"
+    bgColor={dish.isDisponibile ? "white" : "gray.300"}
   >
     <Flex>
       <Box
@@ -74,7 +75,14 @@ export const DishCard = ({ dish }) => (
         </HStack>
       </VStack>
       <Spacer />
-      <Box w={70} h={70} fontSize={20} borderRadius={50} bgColor="green.300">
+      <Box
+        w={70}
+        h={70}
+        fontSize={20}
+        borderWidth="1px"
+        borderColor="orange.300"
+        borderRadius={50}
+      >
         <Flex align="center" direction="column" h="70%">
           <Spacer />
           {dish.prezzo} €
