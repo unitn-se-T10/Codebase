@@ -1,6 +1,5 @@
 import Layout from "components/layout";
 import React, { useState } from "react";
-import data from "public/mock-data.json";
 import { ChakraNextImage } from "components/utils";
 import {
   Button,
@@ -13,7 +12,15 @@ import {
   Flex,
   Divider,
   Stack,
+  Link,
   Center,
+} from "@chakra-ui/react";
+import {
+  ButtonGroup,
+  IconButton,
+  Editable,
+  EditablePreview,
+  EditableInput,
 } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { IconContext } from "react-icons/lib";
@@ -32,15 +39,24 @@ const user = {
 };
 
 const LabelText = ({ label, txt }) => {
+  const [NotEditable, setNotEditable] = useState(true);
+
   return (
     <VStack alignItems="left">
       <Text fontSize={15} fontWeight="semibold">
         {label}
       </Text>
       <Flex>
-        <Text color="gray">{txt}</Text>
+        <Editable color="gray" defaultValue={txt} isDisabled={NotEditable}>
+          <EditablePreview />
+          <EditableInput />
+        </Editable>
         <Spacer />
-        <EditIcon />
+        <EditIcon
+          onClick={() => {
+            setNotEditable(!NotEditable);
+          }}
+        />
       </Flex>
       <Divider borderColor="gray.400" />
       <Divider borderColor="white" />
@@ -48,7 +64,7 @@ const LabelText = ({ label, txt }) => {
   );
 };
 
-const ModificaText = ({ label, txt }) => {
+const ModificaText = ({ label, txt, nextLink }) => {
   return (
     <VStack alignItems="left">
       <Text fontSize={15} fontWeight="semibold">
@@ -57,11 +73,13 @@ const ModificaText = ({ label, txt }) => {
       <Flex align="center">
         <Text color="gray">{txt}</Text>
         <Spacer />
-        <Button bgColor="#FF3D00">
-          <Text color="white" fontSize={15} fontWeight="semibold">
-            Modifica
-          </Text>
-        </Button>
+        <Link href={nextLink}>
+          <Button bgColor="#FF3D00">
+            <Text color="white" fontSize={15} fontWeight="semibold">
+              Modifica
+            </Text>
+          </Button>
+        </Link>
       </Flex>
       <Divider borderColor="gray.400" />
       <Divider borderColor="white" />
@@ -77,8 +95,16 @@ const PaginaUtente = () => {
       </Text>
       <LabelText label={"Nome"} txt={user.nome} />
       <LabelText label={"Cognome"} txt={user.cognome} />
-      <ModificaText label={"Email"} txt={user.email} />
-      <ModificaText label={"Password"} txt={user.password} />
+      <ModificaText
+        label={"Email"}
+        txt={user.email}
+        nextLink={"http://localhost:3000/utente/modificaemail/1"}
+      />
+      <ModificaText
+        label={"Password"}
+        txt={user.password}
+        nextLink={"http://localhost:3000/utente/modificapassword/1"}
+      />
       <Text
         align="center"
         color="whiteAlpha.100"
