@@ -80,7 +80,7 @@ const Modifica = ({ email }) => {
         Il mio profilo
       </Text>
       <HStack justify="center" spacing={10}>
-        <Button bgColor="tomato">Applica modifiche</Button>
+        <Button bgColor="#FF3D00">Applica modifiche</Button>
         <Button _hover={{ bgColor: "black" }} bgColor="gray.500">
           Annulla
         </Button>
