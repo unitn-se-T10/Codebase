@@ -31,6 +31,7 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Link,
   Divider,
 } from "@chakra-ui/react";
 
@@ -50,11 +51,10 @@ const Number = () => {
       keepWithinRange={true}
       max={24}
       min={0}
-      placeholder="XX:XX"
       precision={2}
       size="sm"
     >
-      <NumberInputField />
+      <NumberInputField placeholder="00.00" />
       <NumberInputStepper>
         <NumberIncrementStepper />
         <NumberDecrementStepper />
@@ -159,6 +159,7 @@ const TipoRistorante = () => {
           _hover={{ bg: "tomato" }}
           _expanded={{ bg: "tomato" }}
           transition="all 0.2s"
+          bgColor={tipologia === "Tipologia" ? "white" : "tomato"}
         >
           {tipologia} <ChevronDownIcon />{" "}
         </MenuButton>
@@ -256,9 +257,11 @@ const AddRistorante = () => {
       <Spacer />
       <HStack justify="center" spacing={10}>
         <Button bgColor="tomato">Applica modifiche</Button>
-        <Button _hover={{ bgColor: "black" }} bgColor="gray.500">
-          Annulla
-        </Button>
+        <Link href="/gestore/1">
+          <Button _hover={{ bgColor: "black" }} bgColor="gray.500">
+            Annulla
+          </Button>
+        </Link>
       </HStack>
     </Flex>
   );

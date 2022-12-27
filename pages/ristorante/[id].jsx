@@ -3,17 +3,22 @@ import {
   VStack,
   HStack,
   Text,
+  Button,
   Divider,
   Center,
   Wrap,
   WrapItem,
+  Flex,
   Spinner,
+  Link,
+  Spacer,
 } from "@chakra-ui/react";
-import { StarIcon, TriangleDownIcon } from "@chakra-ui/icons";
+import { StarIcon } from "@chakra-ui/icons";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { TipologiaMenu } from "lib/typings";
 import { DishCard } from "components/dish";
 import { ChakraNextImage } from "components/utils";
+import { useSession } from "next-auth/react";
 import useSWR from "swr";
 
 const DishList = ({ menu }) =>
@@ -43,6 +48,14 @@ const MenuTabs = ({ menus }) => {
   );
 };
 
+const ModificaRistorante = () => {
+  return (
+    <Link href="http://localhost:3000/gestore/aggiungiristorante">
+      <Button bgColor="tomato">Modifica</Button>
+    </Link>
+  );
+};
+
 export default function Ristorante({ ristorante }) {
   function arrayFetcher(...urlArr) {
     const f = (u) => fetch(u).then((r) => r.json().then((j) => j.menu));
@@ -54,11 +67,13 @@ export default function Ristorante({ ristorante }) {
   );
   const { data: menus } = useSWR(menuUrls, arrayFetcher);
 
+  const { data: session } = useSession();
+
   return (
     <Layout>
       <Center>
         <VStack alignItems="center" p={4} spacing={4}>
-          <HStack spacing={5}>
+          <Flex align="center">
             <ChakraNextImage
               borderRadius={20}
               alt={ristorante.nome}
@@ -66,6 +81,7 @@ export default function Ristorante({ ristorante }) {
               width={200}
               height={200}
             />
+            <Spacer />
             <VStack alignItems="start">
               <Text fontSize={20} fontWeight="bold">
                 {ristorante.nome}
@@ -90,17 +106,17 @@ export default function Ristorante({ ristorante }) {
                     // TODO: Mettere aperto o chiuso in base al current time e alle informazioni reperite tramite API
                   }
                 </Text>
-                <Text>Chiude alle ore:</Text>
                 <Text>
                   {
                     // TODO: Mettere gli orari prese dall'API
                   }
                 </Text>
-                <TriangleDownIcon />
               </HStack>
               <Text>Telefono: {ristorante.telefono}</Text>
             </VStack>
-          </HStack>
+            <Spacer />
+            {session?.user?.isGestore ? <ModificaRistorante /> : null}
+          </Flex>
           <Divider borderColor="black" />
           <Tabs
             align="center"
