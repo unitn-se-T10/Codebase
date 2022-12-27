@@ -166,7 +166,7 @@ export default function Home() {
               borderBottomLeftRadius={4}
             >
               <Center>
-                <Link href="http://localhost:3000/gestore/aggiungiristorante/1">
+                <Link href="http://localhost:3000/gestore/aggiungiristorante">
                   <Button
                     mt={10}
                     color="black"
