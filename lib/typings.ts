@@ -34,3 +34,12 @@ export enum TipologiaMenu {
   DOLCI = "dolci",
   BEVANDE = "bevande",
 }
+
+export type RistoranteThumbnail = {
+  id: string;
+  nome: string;
+  indirizzo: string;
+  telefono: string;
+  email: string;
+  immagine: string;
+};

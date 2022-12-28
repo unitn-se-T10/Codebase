@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "lib/dbConnect";
 import RistoranteSchema from "lib/models/ristorante";
+import { RistoranteThumbnail } from "lib/typings";
 
 /**
  * @swagger
@@ -37,19 +38,10 @@ import RistoranteSchema from "lib/models/ristorante";
  *           items:
  *             $ref: '#/components/schemas/RistoranteThumbnail'
  */
-type Ristorante = {
-  id: string;
-  nome: string;
-  indirizzo: string;
-  telefono: string;
-  email: string;
-  immagine: string;
-};
-
 type Data = {
   success: boolean;
   error?: string;
-  ristoranti?: Ristorante[];
+  ristoranti?: RistoranteThumbnail[];
 };
 
 /**

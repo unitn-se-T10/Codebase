@@ -1,6 +1,5 @@
 import Layout from "components/layout";
 import { useState } from "react";
-import { ChakraNextImage } from "components/utils";
 import {
   Button,
   Text,
@@ -14,15 +13,12 @@ import {
 } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { IconContext } from "react-icons/lib";
-import { GoLocation } from "react-icons/go";
-import { FaPhoneAlt } from "react-icons/fa";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { MdEmail, MdFastfood } from "react-icons/md";
+import { MdFastfood } from "react-icons/md";
 import { CgOptions } from "react-icons/cg";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { TipologiaRistorante } from "lib/typings";
 import useSWR from "swr";
-import NextLink from "next/link";
+import { RestaurantCard } from "components/restaurant";
 
 const ChooseRestaurants = () => {
   const [tipologia, setTipologia] = useState("Tipologia");
@@ -94,39 +90,6 @@ const ChooseRestaurants = () => {
   );
 };
 
-const RestaurantCard = ({ thumbnail }) => (
-  <HStack alignItems="top" spacing={3}>
-    <ChakraNextImage
-      borderRadius={20}
-      alt={thumbnail.nome}
-      src={`data:image/jpg;base64,${thumbnail.immagine}`}
-      width={200}
-      height={200}
-    />
-    <VStack align="start">
-      <NextLink href={`/ristorante/${thumbnail.id}`}>
-        <Box h={10} fontWeight="bold" fontStyle="oblique">
-          {thumbnail.nome}
-        </Box>
-        <HStack>
-          <GoLocation w={3} h={3} />
-          <Box h={5}>{thumbnail.indirizzo}</Box>
-        </HStack>
-        <HStack>
-          <FaPhoneAlt w={3} h={3} />
-          <Box h={5}>{thumbnail.telefono}</Box>
-        </HStack>
-        <HStack>
-          <MdEmail w={3} h={3} />
-          <Box h={5}>{thumbnail.email}</Box>
-        </HStack>
-      </NextLink>
-    </VStack>
-
-    <Preferiti />
-  </HStack>
-);
-
 const OrderButton = ({ children, ...props }) => (
   <Button
     w="full"
@@ -140,20 +103,6 @@ const OrderButton = ({ children, ...props }) => (
     {children}
   </Button>
 );
-
-const Preferiti = ({}) => {
-  const [isPressed, setIsPressed] = useState(false);
-
-  return isPressed ? (
-    <IconContext.Provider value={{ color: "tomato", size: "30px" }}>
-      <AiFillHeart onClick={() => setIsPressed(!isPressed)} />
-    </IconContext.Provider>
-  ) : (
-    <IconContext.Provider value={{ size: "30px" }}>
-      <AiOutlineHeart onClick={() => setIsPressed(!isPressed)} />
-    </IconContext.Provider>
-  );
-};
 
 const ResetButton = ({ onClick }) => (
   <Button

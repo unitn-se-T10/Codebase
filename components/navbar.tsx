@@ -1,10 +1,4 @@
-import {
-  CloseIcon,
-  HamburgerIcon,
-  MoonIcon,
-  SearchIcon,
-  SunIcon,
-} from "@chakra-ui/icons";
+import { SearchIcon } from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
@@ -14,7 +8,6 @@ import {
   Collapse,
   Flex,
   HStack,
-  IconButton,
   Input,
   InputGroup,
   InputRightElement,
@@ -26,7 +19,6 @@ import {
   Spinner,
   Stack,
   StackProps,
-  useColorMode,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -89,7 +81,7 @@ const UserMenu: React.FC<{ user }> = ({ user }) => {
         </Center>
         <br />
         <MenuDivider />
-        <MenuItem onClick={() => router.push("http://localhost:3000/utente/1")}>
+        <MenuItem onClick={() => router.push("/utente")}>
           Il mio profilo
         </MenuItem>
         {/*<MenuItem onClick={() => router.push("/page2")}>Page 2</MenuItem>
@@ -133,7 +125,6 @@ const PagesList: React.FC<StackProps> = (props) => {
 };
 
 const Navbar: React.FC<BoxProps> = (props) => {
-  const { colorMode, toggleColorMode } = useColorMode();
   const searchbar = useDisclosure();
   const menu = useDisclosure();
 
@@ -146,51 +137,11 @@ const Navbar: React.FC<BoxProps> = (props) => {
     >
       <Flex justify="space-between" h={16}>
         <Flex align="center" gap={2}>
-          {/*
-          <IconButton
-            {...menu.getButtonProps()}
-            display={{ lg: "none" }}
-            icon={menu.isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            onClick={() => {
-              menu.onToggle();
-              searchbar.onClose();
-            }}
-          />
-          */}
           <Link href="/">
             <Image src="/logo.png" alt="logo" width={75} height={75} />
           </Link>
-          {/*
-          <Box display={{ base: "none", lg: "flex" }} px={3}>
-            <PagesList direction="row" spacing={6} />
-          </Box>
-          */}
         </Flex>
         <HStack spacing={3}>
-          {/*
-        
-          <IconButton
-            aria-label="toggleColorMode"
-            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-            isRound
-            onClick={toggleColorMode}
-            variant="ghost"
-          />
-
-          <IconButton
-            {...searchbar.getButtonProps()}
-            display={{ md: "none" }}
-            icon={searchbar.isOpen ? <CloseIcon /> : <SearchIcon />}
-            onClick={() => {
-              searchbar.onToggle();
-              menu.onClose();
-            }}
-          />
-
-          <Box display={{ base: "none", md: "flex" }}>
-            <Searchbar />
-          </Box>
-        */}
           <ShowLogin />
         </HStack>
       </Flex>
