@@ -12,7 +12,7 @@ const PietanzaSchema = new Schema({
   id: { type: String, unique: true, required: true },
   nome: { type: String, required: true },
   prezzo: { type: Number, required: true },
-  immagine: { type: Buffer, required: false },
+  immagine: { type: String, required: true },
   allergeni: { type: [String], enum: Allergene, required: true },
   calorie: { type: Number, required: true },
   ingredienti: { type: [String], required: true },

@@ -211,6 +211,7 @@ async function addRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
     email,
     descrizione,
     tipologia,
+    immagine,
   } = req.body;
   // NOTE: should use YUP
   if (
@@ -221,7 +222,8 @@ async function addRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
     !sito ||
     !email ||
     !descrizione ||
-    !tipologia
+    !tipologia ||
+    !immagine
   ) {
     return res.status(400).send({
       success: false,
@@ -242,6 +244,7 @@ async function addRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
       descrizione,
       tipologia,
       gestoreId: session.user.uid,
+      immagine,
       valutazione: 0,
       menuIds: [],
     });
@@ -345,6 +348,7 @@ async function editRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
     email,
     descrizione,
     tipologia,
+    immagine,
     valutazione,
   } = req.body;
   if (!session?.user?.isGestore) {
@@ -380,6 +384,7 @@ async function editRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
   if (descrizione) restaurant.descrizione = descrizione;
   if (tipologia) restaurant.tipologia = tipologia;
   if (valutazione) restaurant.valutazione = valutazione;
+  if (immagine) restaurant.immagine = immagine;
   await restaurant.save();
 
   return res.status(200).send({ success: true, ristorante: restaurant });

@@ -43,7 +43,7 @@ type Ristorante = {
   indirizzo: string;
   telefono: string;
   email: string;
-  immagine: Buffer;
+  immagine: string;
 };
 
 type Data = {

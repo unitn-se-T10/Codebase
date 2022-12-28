@@ -1,7 +1,6 @@
 import Layout from "components/layout";
 import {
   VStack,
-  Box,
   HStack,
   Text,
   Divider,
@@ -14,6 +13,7 @@ import { StarIcon, TriangleDownIcon } from "@chakra-ui/icons";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { TipologiaMenu } from "lib/typings";
 import { DishCard } from "components/dish";
+import { ChakraNextImage } from "components/utils";
 import useSWR from "swr";
 
 const DishList = ({ menu }) =>
@@ -59,14 +59,12 @@ export default function Ristorante({ ristorante }) {
       <Center>
         <VStack alignItems="center" p={4} spacing={4}>
           <HStack spacing={5}>
-            <Box
-              w={200}
-              h={200}
-              bgImage={ristorante.immagine}
-              bgSize="cover"
-              bgPosition="center"
-              bgRepeat="no-repeat"
+            <ChakraNextImage
               borderRadius={20}
+              alt={ristorante.nome}
+              src={`data:image/jpg;base64,${ristorante.immagine}`}
+              width={200}
+              height={200}
             />
             <VStack alignItems="start">
               <Text fontSize={20} fontWeight="bold">

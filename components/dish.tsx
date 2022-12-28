@@ -18,6 +18,7 @@ import {
   GiWheat,
 } from "react-icons/gi";
 import { Allergene } from "lib/typings";
+import { ChakraNextImage } from "components/utils";
 
 export const AllergeneIcon = ({ allergene }: { allergene: Allergene }) => {
   const icons = {
@@ -55,15 +56,13 @@ export const DishCard = ({ dish }) => (
     bgColor={dish.isDisponibile ? "white" : "gray.300"}
   >
     <Flex>
-      <Box
-        w={100}
-        h={100}
-        bgImage={dish.image}
-        bgSize="cover"
-        bgPosition="center"
-        bgRepeat="no-repeat"
+      <ChakraNextImage
         borderRadius={50}
-      ></Box>
+        alt={dish.nome}
+        src={`data:image/jpg;base64,${dish.immagine}`}
+        width={100}
+        height={100}
+      />
       <Spacer />
       <VStack>
         <Text>{dish.nome}</Text>

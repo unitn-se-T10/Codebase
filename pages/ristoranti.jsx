@@ -98,7 +98,8 @@ const RestaurantCard = ({ thumbnail }) => (
     <HStack spacing={3}>
       <ChakraNextImage
         borderRadius={20}
-        src={thumbnail.immagine}
+        alt={thumbnail.nome}
+        src={`data:image/jpg;base64,${thumbnail.immagine}`}
         width={200}
         height={200}
       />
@@ -162,7 +163,6 @@ export default function Home() {
     `${process.env.NEXT_PUBLIC_SITE_URL}/api/thumbnails?start=${start}&num=${num}`,
     fetcher
   );
-  console.log(thumbnails);
 
   return (
     <Box
