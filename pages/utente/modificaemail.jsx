@@ -16,6 +16,7 @@ import {
   HStack,
   InputRightElement,
   InputGroup,
+  Link,
   IconButton,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -54,7 +55,7 @@ const PasswordForm = ({ label }) => {
 
 const Modifica = ({ email }) => {
   return (
-    <Flex direction="column" w="65%" p={10} bgColor="white" rounded={40}>
+    <Flex direction="column" w="35%" p={10} bgColor="white" rounded={40}>
       <Text align="center" p={2} color="black" fontSize={40} fontWeight="bold">
         Modifica Email
       </Text>
@@ -81,9 +82,11 @@ const Modifica = ({ email }) => {
       </Text>
       <HStack justify="center" spacing={10}>
         <Button bgColor="#FF3D00">Applica modifiche</Button>
-        <Button _hover={{ bgColor: "black" }} bgColor="gray.500">
-          Annulla
-        </Button>
+        <Link href="http://localhost:3000/utente/1">
+          <Button _hover={{ bgColor: "black" }} bgColor="gray.500">
+            Annulla
+          </Button>
+        </Link>
       </HStack>
     </Flex>
   );

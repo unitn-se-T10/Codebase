@@ -51,7 +51,7 @@ export const DishCard = ({ dish }) => (
     w={400}
     p={5}
     opacity={dish.isDisponibile ? "1" : "0.3"}
-    borderRadius={50}
+    borderRadius={10}
     shadow="0px 0px 5px 0px gainsboro"
     bgColor={dish.isDisponibile ? "white" : "gray.300"}
   >

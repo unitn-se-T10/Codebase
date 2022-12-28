@@ -101,11 +101,17 @@ const Copertina = ({ dish, id, setPietanze, pietanze }) => {
         <Spacer />
 
         <Center>
-          <DeleteIcon
-            color="red.600"
-            boxSize={7}
-            onClick={() => setPietanze(pietanze.filter((_, i) => id !== i))}
-          />
+          <Button
+            _hover={{ bgColor: "transparent" }}
+            _active={{ bgColor: "gainsboro" }}
+            bgColor="transparent"
+          >
+            <DeleteIcon
+              color="red.600"
+              boxSize={7}
+              onClick={() => setPietanze(pietanze.filter((_, i) => id !== i))}
+            />
+          </Button>
         </Center>
       </Flex>
     </Box>

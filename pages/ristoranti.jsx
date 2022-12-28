@@ -16,6 +16,7 @@ import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { IconContext } from "react-icons/lib";
 import { GoLocation } from "react-icons/go";
 import { FaPhoneAlt } from "react-icons/fa";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { MdEmail, MdFastfood } from "react-icons/md";
 import { CgOptions } from "react-icons/cg";
 import { ChevronDownIcon } from "@chakra-ui/icons";
@@ -94,16 +95,16 @@ const ChooseRestaurants = () => {
 };
 
 const RestaurantCard = ({ thumbnail }) => (
-  <NextLink href={`/ristorante/${thumbnail.id}`}>
-    <HStack spacing={3}>
-      <ChakraNextImage
-        borderRadius={20}
-        alt={thumbnail.nome}
-        src={`data:image/jpg;base64,${thumbnail.immagine}`}
-        width={200}
-        height={200}
-      />
-      <VStack align="start">
+  <HStack alignItems="top" spacing={3}>
+    <ChakraNextImage
+      borderRadius={20}
+      alt={thumbnail.nome}
+      src={`data:image/jpg;base64,${thumbnail.immagine}`}
+      width={200}
+      height={200}
+    />
+    <VStack align="start">
+      <NextLink href={`/ristorante/${thumbnail.id}`}>
         <Box h={10} fontWeight="bold" fontStyle="oblique">
           {thumbnail.nome}
         </Box>
@@ -119,9 +120,11 @@ const RestaurantCard = ({ thumbnail }) => (
           <MdEmail w={3} h={3} />
           <Box h={5}>{thumbnail.email}</Box>
         </HStack>
-      </VStack>
-    </HStack>
-  </NextLink>
+      </NextLink>
+    </VStack>
+
+    <Preferiti />
+  </HStack>
 );
 
 const OrderButton = ({ children, ...props }) => (
@@ -137,6 +140,20 @@ const OrderButton = ({ children, ...props }) => (
     {children}
   </Button>
 );
+
+const Preferiti = ({}) => {
+  const [isPressed, setIsPressed] = useState(false);
+
+  return isPressed ? (
+    <IconContext.Provider value={{ color: "tomato", size: "30px" }}>
+      <AiFillHeart onClick={() => setIsPressed(!isPressed)} />
+    </IconContext.Provider>
+  ) : (
+    <IconContext.Provider value={{ size: "30px" }}>
+      <AiOutlineHeart onClick={() => setIsPressed(!isPressed)} />
+    </IconContext.Provider>
+  );
+};
 
 const ResetButton = ({ onClick }) => (
   <Button
@@ -172,7 +189,7 @@ export default function Home() {
       bgRepeat="no-repeat"
     >
       <Layout>
-        <HStack align="top" p={10} spacing={20}>
+        <HStack align="top" w="80%" p={10} spacing={20}>
           <ChooseRestaurants />
           <VStack
             align="self-start"

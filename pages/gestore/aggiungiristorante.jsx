@@ -202,21 +202,21 @@ const AddRistorante = () => {
         <TipoRistorante />
       </VStack>
       <Spacer />
-      <Flex direction="row-reverse">
+      <Flex direction="row">
         <LabelForm
           label={"Indirizzo"}
           type="text"
-          width={"100%"}
+          width={"90%"}
           placeholder="Inserire l'indirizzo"
         />
         <Spacer />
         <LabelForm width={"30%"} label={"N°"} type="number" placeholder="" />
       </Flex>
       <Spacer />
-      <Flex direction="row-reverse">
+      <Flex direction="row">
         <LabelForm
           label={"Comune"}
-          width="100%"
+          width="90%"
           type="text"
           placeholder="Inserire il nome del comune"
         />

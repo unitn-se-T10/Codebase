@@ -17,13 +17,20 @@ const RenderHome = () => {
       px={{ base: "0", sm: "8" }}
       py={{ base: "16", md: "32" }}
     >
-      <Box w={550} h={500} p={5} borderRadius={20} shadow="dark-lg">
+      <Box
+        w={550}
+        h={500}
+        p={5}
+        borderRadius={20}
+        shadow="-3px -3px 10px 0.5px white, 3px 3px 10px 0.5px white"
+      >
         <VStack alignItems="center">
           <Text
             align="center"
             mt="20"
             p="6"
             textColor="white"
+            fontFamily="Avantgarde"
             fontSize={50}
             fontWeight="bold"
           >
@@ -33,6 +40,7 @@ const RenderHome = () => {
             <Input
               pr="4.5rem"
               borderRadius={20}
+              _focus={{ bgColor: "white" }}
               placeholder="Indrizzo di consegna"
               type="type"
             />

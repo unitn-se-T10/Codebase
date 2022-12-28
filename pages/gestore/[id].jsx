@@ -30,6 +30,7 @@ import { MdEmail, MdFastfood } from "react-icons/md";
 import { CgOptions } from "react-icons/cg";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { TipologiaRistorante } from "lib/typings";
+import { DeleteIcon } from "@chakra-ui/icons";
 import useSWR from "swr";
 import NextLink from "next/link";
 
@@ -39,10 +40,18 @@ function AlertDialogExample() {
 
   return (
     <>
-      <Button align="top" colorScheme="red" onClick={onOpen}>
+      {/*<Button align="top" colorScheme="red" onClick={onOpen}>
         X
       </Button>
+      */}
 
+      <Button
+        _hover={{ bgColor: "transparent" }}
+        _active={{ bgColor: "gainsboro" }}
+        bgColor="transparent"
+      >
+        <DeleteIcon color="red.600" boxSize={7} />
+      </Button>
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
@@ -168,7 +177,9 @@ export default function Home() {
               <Center>
                 <Link href="http://localhost:3000/gestore/aggiungiristorante">
                   <Button
-                    mt={10}
+                    w={100}
+                    h={100}
+                    mt={3}
                     color="black"
                     fontSize={40}
                     _hover={{ color: "gainsboro" }}

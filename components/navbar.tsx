@@ -89,9 +89,12 @@ const UserMenu: React.FC<{ user }> = ({ user }) => {
         </Center>
         <br />
         <MenuDivider />
-        <MenuItem onClick={() => router.push("/page1")}>Page 1</MenuItem>
-        <MenuItem onClick={() => router.push("/page2")}>Page 2</MenuItem>
+        <MenuItem onClick={() => router.push("http://localhost:3000/utente/1")}>
+          Il mio profilo
+        </MenuItem>
+        {/*<MenuItem onClick={() => router.push("/page2")}>Page 2</MenuItem>
         <MenuItem onClick={() => router.push("/page3")}>Page 3</MenuItem>
+        */}
         <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
       </MenuList>
     </Menu>
@@ -143,6 +146,7 @@ const Navbar: React.FC<BoxProps> = (props) => {
     >
       <Flex justify="space-between" h={16}>
         <Flex align="center" gap={2}>
+          {/*
           <IconButton
             {...menu.getButtonProps()}
             display={{ lg: "none" }}
@@ -152,17 +156,19 @@ const Navbar: React.FC<BoxProps> = (props) => {
               searchbar.onClose();
             }}
           />
-
+          */}
           <Link href="/">
             <Image src="/logo.png" alt="logo" width={75} height={75} />
           </Link>
-
+          {/*
           <Box display={{ base: "none", lg: "flex" }} px={3}>
             <PagesList direction="row" spacing={6} />
           </Box>
+          */}
         </Flex>
-
         <HStack spacing={3}>
+          {/*
+        
           <IconButton
             aria-label="toggleColorMode"
             icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
@@ -184,7 +190,7 @@ const Navbar: React.FC<BoxProps> = (props) => {
           <Box display={{ base: "none", md: "flex" }}>
             <Searchbar />
           </Box>
-
+        */}
           <ShowLogin />
         </HStack>
       </Flex>

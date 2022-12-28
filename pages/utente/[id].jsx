@@ -89,7 +89,7 @@ const ModificaText = ({ label, txt, nextLink }) => {
 
 const PaginaUtente = () => {
   return (
-    <Flex direction="column" w="70%" p={10} bgColor="white" rounded={40}>
+    <Flex direction="column" w="35%" p={10} bgColor="white" rounded={40}>
       <Text align="center" fontSize={30} fontWeight="bold">
         Il mio profilo
       </Text>
@@ -98,12 +98,12 @@ const PaginaUtente = () => {
       <ModificaText
         label={"Email"}
         txt={user.email}
-        nextLink={"http://localhost:3000/utente/modificaemail/1"}
+        nextLink={"http://localhost:3000/utente/modificaemail"}
       />
       <ModificaText
         label={"Password"}
         txt={user.password}
-        nextLink={"http://localhost:3000/utente/modificapassword/1"}
+        nextLink={"http://localhost:3000/utente/modificapassword"}
       />
       <Text
         align="center"
