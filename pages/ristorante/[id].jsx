@@ -19,6 +19,7 @@ import { TipologiaMenu } from "lib/typings";
 import { DishCard } from "components/dish";
 import { ChakraNextImage } from "components/utils";
 import { useSession } from "next-auth/react";
+import { ChakraNextImage } from "components/utils";
 import useSWR from "swr";
 
 const DishList = ({ menu }) =>
