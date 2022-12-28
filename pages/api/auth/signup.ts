@@ -16,6 +16,61 @@ type Data = {
   isUnitn?: boolean;
 };
 
+/**
+ * @swagger
+ * /api/auth/signup:
+ *   post:
+ *     description: Sign up a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The user's name
+ *               surname:
+ *                 type: string
+ *                 description: The user's surname
+ *               email:
+ *                 type: string
+ *                 description: The user's email
+ *               password:
+ *                 type: string
+ *                 description: The user's password
+ *                 format: password
+ *               isGestore:
+ *                 type: boolean
+ *                 description: Whether the user is a gestore or not
+ *     responses:
+ *       201:
+ *         description: User created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Success of the request
+ *                 isUnitn:
+ *                   type: boolean
+ *                   description: Whether the user is a unitn student or not
+ *       409:
+ *         description: User already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 async function signupHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
   if (req.method !== "POST") {
     return res.status(405).send({
@@ -40,7 +95,7 @@ async function signupHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
   try {
     await schema.validate(req.body);
 
-    const { name, surname, email, password } = req.body;
+    const { name, surname, email, password, isGestore } = req.body;
     await dbConnect();
 
     const hypoteticUser = await UserSchema.findOne({ email }).exec();
@@ -59,6 +114,7 @@ async function signupHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
       surname,
       email,
       password: await hash(password, 12),
+      isGestore,
       isUnitn,
     });
     // await createUser(req.body);

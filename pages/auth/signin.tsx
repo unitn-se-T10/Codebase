@@ -10,11 +10,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import {
-  PasswordInput,
-  AuthLayout,
-  FormField,
-} from "components/authentication";
+import { AuthLayout, FormField } from "components/authentication";
 import Link from "components/chakraNextLink";
 import Layout from "components/layout";
 import { Field, Form, Formik } from "formik";
@@ -59,6 +55,21 @@ const Login: React.FC = () => {
     await signIn("google", { callbackUrl: "/" });
   }
 
+  const formList = [
+    {
+      label: "Email",
+      fieldName: "email",
+      placeholder: "youremail@host.tld",
+      type: "email",
+    },
+    {
+      label: "Password",
+      fieldName: "password",
+      placeholder: "Use your password",
+      type: "password",
+    },
+  ];
+
   return (
     <Box
       bgImage="/sfondo2.jpg"
@@ -101,16 +112,9 @@ const Login: React.FC = () => {
             {(props) => (
               <Form>
                 <VStack spacing={4}>
-                  <FormField
-                    label="Email"
-                    fieldName="email"
-                    placeholder="youremail@host.tld"
-                  />
-                  <PasswordInput
-                    showLabel={true}
-                    fieldName="password"
-                    placeholder="Use your password"
-                  />
+                  {formList.map((formItem) => (
+                    <FormField key={formItem.fieldName} {...formItem} />
+                  ))}
                   <HStack alignItems="center" justify="space-between" w="100%">
                     <Field as={Checkbox} name="remember">
                       Ricordami

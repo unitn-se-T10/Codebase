@@ -29,30 +29,6 @@ export const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   type,
 }) => {
-  return (
-    <Field name={fieldName}>
-      {({ field, form }: FieldProps) => (
-        <FormControl
-          isInvalid={
-            (form.errors[fieldName] && form.touched[fieldName]) as boolean
-          }
-        >
-          {label ? <FormLabel>{label}</FormLabel> : null}
-          <Input {...field} placeholder={placeholder} type={type ?? "text"} />
-          <FormErrorMessage>
-            {form.errors[fieldName] as string}
-          </FormErrorMessage>
-        </FormControl>
-      )}
-    </Field>
-  );
-};
-
-export const PasswordInput: React.FC<{
-  showLabel?: boolean;
-  placeholder: string;
-  fieldName: string;
-}> = ({ showLabel, placeholder, fieldName }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -63,24 +39,28 @@ export const PasswordInput: React.FC<{
             (form.errors[fieldName] && form.touched[fieldName]) as boolean
           }
         >
-          {showLabel ? <FormLabel>Password</FormLabel> : null}
-          <InputGroup>
-            <Input
-              {...field}
-              placeholder={placeholder}
-              type={show ? "text" : "password"}
-            />
-            <InputRightElement>
-              <IconButton
-                color="orange.300"
-                aria-label="Toggle password visibility"
-                bgColor="transparent"
-                icon={show ? <ViewIcon /> : <ViewOffIcon />}
-                onClick={() => setShow(!show)}
-                size="sm"
+          {label ? <FormLabel>{label}</FormLabel> : null}
+          {type === "password" ? (
+            <InputGroup>
+              <Input
+                {...field}
+                placeholder={placeholder}
+                type={show ? "text" : "password"}
               />
-            </InputRightElement>
-          </InputGroup>
+              <InputRightElement>
+                <IconButton
+                  color="orange.300"
+                  aria-label="Toggle password visibility"
+                  bgColor="transparent"
+                  icon={show ? <ViewIcon /> : <ViewOffIcon />}
+                  onClick={() => setShow(!show)}
+                  size="sm"
+                />
+              </InputRightElement>
+            </InputGroup>
+          ) : (
+            <Input {...field} placeholder={placeholder} type={type ?? "text"} />
+          )}
           <FormErrorMessage>
             {form.errors[fieldName] as string}
           </FormErrorMessage>
@@ -92,7 +72,7 @@ export const PasswordInput: React.FC<{
 
 export const AuthLayout: React.FC<{
   children: React.ReactNode;
-  title: React.ReactElement;
+  title?: React.ReactElement;
   bottom?: React.ReactElement;
 }> = ({ children, title, bottom }) => {
   return (

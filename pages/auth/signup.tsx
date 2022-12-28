@@ -4,13 +4,13 @@ import {
   Box,
   Heading,
   Spacer,
-  Image,
   Text,
   VStack,
+  Checkbox,
 } from "@chakra-ui/react";
 import { AuthLayout, FormField } from "components/authentication";
 import Layout from "components/layout";
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { regSchema } from "lib/yupSchemas";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -23,6 +23,7 @@ type FormValues = {
   surname: string;
   email: string;
   password: string;
+  isGestore: boolean;
 };
 
 const Register: React.FC = () => {
@@ -60,31 +61,31 @@ const Register: React.FC = () => {
 
   const formList = [
     {
-      name: "name",
+      fieldName: "name",
       label: "Nome",
       type: "text",
       placeholder: "John",
     },
     {
-      name: "surname",
+      fieldName: "surname",
       label: "Cognome",
       type: "text",
       placeholder: "Doe",
     },
     {
-      name: "email",
+      fieldName: "email",
       label: "Email",
       type: "email",
       placeholder: "yourname@host.tld",
     },
     {
-      name: "password",
+      fieldName: "password",
       label: "Password",
       type: "password",
       placeholder: "Please make me strong",
     },
     {
-      name: "passwordConfirm",
+      fieldName: "passwordConfirm",
       label: "Conferma Password",
       type: "password",
       placeholder: "Confirm strong password",
@@ -102,7 +103,7 @@ const Register: React.FC = () => {
         <Head>
           <title>Register</title>
         </Head>
-        <AuthLayout title={<></>}>
+        <AuthLayout>
           <Formik
             validationSchema={Yup.object().shape({
               name: regSchema.name,
@@ -123,6 +124,7 @@ const Register: React.FC = () => {
               email: "",
               password: "",
               passwordConfirm: "",
+              isGestore: false,
             }}
             onSubmit={async (values, actions) => {
               await handleSubmit(values);
@@ -136,14 +138,11 @@ const Register: React.FC = () => {
                 <VStack spacing={4}>
                   <Heading>Registrati</Heading>
                   {formList.map((formItem) => (
-                    <FormField
-                      key={formItem.name}
-                      fieldName={formItem.name}
-                      label={formItem.label}
-                      type={formItem.type}
-                      placeholder={formItem.placeholder}
-                    />
+                    <FormField key={formItem.fieldName} {...formItem} />
                   ))}
+                  <Field as={Checkbox} name="isGestore">
+                    Registrati come Gestore
+                  </Field>
                   <Spacer my={4} />
                   <Button w="100%" isLoading={props.isSubmitting} type="submit">
                     Registrati
