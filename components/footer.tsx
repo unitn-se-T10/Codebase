@@ -5,8 +5,8 @@ const Footer: React.FC = () => {
   return (
     <Container as="footer" role="contentinfo" variant="footer">
       <Stack
-        alignItems={{ base: "left", md: "center" }}
-        justify={{ base: "left", md: "space-around" }}
+        alignItems={{ base: "center", md: "center" }}
+        justify={{ base: "center", md: "space-around" }}
         direction={{ base: "column", md: "row" }}
         py={4}
       >

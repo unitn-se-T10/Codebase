@@ -84,9 +84,11 @@ const UserMenu: React.FC<{ user }> = ({ user }) => {
         <MenuItem onClick={() => router.push("/utente")}>
           Il mio profilo
         </MenuItem>
-        {/*<MenuItem onClick={() => router.push("/page2")}>Page 2</MenuItem>
-        <MenuItem onClick={() => router.push("/page3")}>Page 3</MenuItem>
-        */}
+        <MenuItem onClick={() => router.push("/utente/preferiti")}>
+          I miei Preferiti
+        </MenuItem>
+        {/*<MenuItem onClick={() => router.push("/page3")}>Page 3</MenuItem>
+         */}
         <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
       </MenuList>
     </Menu>

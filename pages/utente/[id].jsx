@@ -20,6 +20,7 @@ import {
   IconButton,
   Editable,
   EditablePreview,
+  Icon,
   EditableInput,
 } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
@@ -28,7 +29,7 @@ import { GoLocation } from "react-icons/go";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail, MdFastfood } from "react-icons/md";
 import { CgOptions } from "react-icons/cg";
-import { ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
+import { CheckIcon, EditIcon } from "@chakra-ui/icons";
 import { TipologiaRistorante } from "lib/typings";
 
 const user = {
@@ -47,16 +48,44 @@ const LabelText = ({ label, txt }) => {
         {label}
       </Text>
       <Flex>
-        <Editable color="gray" defaultValue={txt} isDisabled={NotEditable}>
+        <Editable
+          w="full"
+          color="gray"
+          defaultValue={txt}
+          isDisabled={NotEditable}
+          selectAllOnFocus={NotEditable}
+        >
           <EditablePreview />
           <EditableInput />
         </Editable>
         <Spacer />
-        <EditIcon
-          onClick={() => {
-            setNotEditable(!NotEditable);
-          }}
-        />
+        {NotEditable ? (
+          <Button
+            _hover="transparent"
+            _active="transparent"
+            bgColor="transparent"
+          >
+            <EditIcon
+              color="black"
+              onClick={() => {
+                setNotEditable(!NotEditable);
+              }}
+            />
+          </Button>
+        ) : (
+          <Button
+            _hover="transparent"
+            _active="transparent"
+            bgColor="transparent"
+          >
+            <CheckIcon
+              color="black"
+              onClick={() => {
+                setNotEditable(!NotEditable);
+              }}
+            ></CheckIcon>
+          </Button>
+        )}
       </Flex>
       <Divider borderColor="gray.400" />
       <Divider borderColor="white" />
