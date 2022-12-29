@@ -1,5 +1,6 @@
 import Layout from "components/layout";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { TipologiaRistorante } from "lib/typings";
 import {
@@ -45,18 +46,6 @@ type addValues = {
 };
 
 let errorFromServer = null;
-
-async function handleSubmit(values: addValues) {
-  //copia incollata, non so come modificarla
-  const status = await signIn("credentials", {
-    redirect: false,
-    email: values.email,
-    password: values.password,
-    callbackUrl: "/",
-  });
-  errorFromServer = status.error;
-  if (!status.error) router.push(status.url);
-}
 
 const Number = () => {
   return (
@@ -186,6 +175,8 @@ const TipoRistorante = () => {
 };
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <Box
       bgImage="/sfondo2.jpg"
@@ -260,7 +251,7 @@ export default function Home() {
                 remember: false,
               }}
               onSubmit={async (values, actions) => {
-                await handleSubmit(values);
+                //await handleSubmit(values);
                 await actions.validateForm();
                 actions.setSubmitting(false);
               }}
@@ -335,7 +326,7 @@ export default function Home() {
                       <Button
                         _hover={{ bgColor: "black" }}
                         bgColor="gray.500"
-                        onClick={() => router.push("/utente")}
+                        onClick={() => router.push("/utente/ristoranti")}
                       >
                         Annulla
                       </Button>

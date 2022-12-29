@@ -75,6 +75,7 @@ export default function Home() {
                     mt={3}
                     color="black"
                     fontSize={40}
+                    _active={{ bgColor: "transparent" }}
                     _hover={{ color: "gainsboro" }}
                     bgColor="white"
                   >

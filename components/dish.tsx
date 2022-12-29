@@ -5,9 +5,23 @@ import {
   Text,
   Divider,
   Flex,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  Checkbox,
+  ModalFooter,
+  Center,
+  ModalBody,
+  ModalCloseButton,
+  Input,
   Spacer,
   Icon,
 } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react';
+import { useSession } from "next-auth/react";
+import { useNumberInput } from "@chakra-ui/react";
 import {
   GiBigEgg,
   GiFriedFish,
@@ -16,11 +30,14 @@ import {
   GiSadCrab,
   GiAcid,
   GiSesame,
+  GiShoppingCart,
   GiSwirledShell,
   GiWheat,
 } from "react-icons/gi";
 import { Allergene } from "lib/typings";
+import { useDisclosure } from "@chakra-ui/react";
 import { ChakraNextImage } from "components/utils";
+import { IconContext } from "react-icons";
 
 const Frutta_a_guscio = (props) => (
   <Icon viewBox="500px 500px 500px 500px" {...props}>
@@ -107,47 +124,137 @@ export const AllergeneIcon = ({ allergene }: { allergene: Allergene }) => {
   );
 };
 
-export const DishCard = ({ dish }) => (
-  <Box
-    w={400}
-    p={5}
-    opacity={dish.isDisponibile ? "1" : "0.3"}
-    borderRadius={10}
-    shadow="0px 0px 5px 0px gainsboro"
-    bgColor={dish.isDisponibile ? "white" : "gray.300"}
-  >
-    <Flex>
-      <ChakraNextImage
-        borderRadius={50}
-        alt={dish.nome}
-        src={`data:image/jpg;base64,${dish.immagine}`}
-        width={100}
-        height={100}
-      />
-      <Spacer />
-      <VStack>
-        <Text>{dish.nome}</Text>
-        <Divider borderColor="black" />
-        <HStack>
-          {dish.allergeni.map((allergene: Allergene) => (
-            <AllergeneIcon key={allergene} allergene={allergene} />
-          ))}
-        </HStack>
-      </VStack>
-      <Spacer />
-      <Box
-        w={70}
-        h={70}
-        fontSize={20}
-        borderWidth="1px"
-        borderColor="orange.300"
-        borderRadius={50}
-      >
-        <Flex align="center" direction="column" h="70%">
+function HookUsage() {
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+    useNumberInput({
+      defaultValue: 1,
+      min: 1,
+      step: 1,
+    })
+
+  const inc = getIncrementButtonProps()
+  const dec = getDecrementButtonProps()
+  const input = getInputProps()
+
+  return (
+    <HStack maxW='320px'>
+      <Button {...dec}>-</Button>
+      <Input _focusVisible={{bgColor:"gray.100"}} textAlign="center" {...input} />
+      <Button {...inc}>+</Button>
+    </HStack>
+  )
+}
+
+function BasicUsage( {dish}) {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const toast = useToast()
+  return (
+    <Button bgColor="transparent" _hover={{bgColor:"transparent"}} _active={{bgColor:"transparent"}}>
+    <IconContext.Provider value={{ color: "tomato", size: "2.25rem" }}>
+      <GiShoppingCart onClick={onOpen} />
+    </IconContext.Provider>
+    
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader textAlign="center">{dish.nome}</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <VStack alignItems="left">
+                <Divider borderColor="black" />
+                <Text fontSize="xl" fontWeight="bold" >Rimuovi ingredienti</Text>
+                <VStack alignItems="left">
+                  {dish.ingredienti.map((ingredienti: String) => (
+                  <HStack>
+                    <Checkbox colorScheme='red' />
+                    <Text>{ingredienti}</Text>
+                  </HStack>
+                ))}
+                </VStack>
+                <Divider borderColor="black" />
+                <Text fontSize="xl" fontWeight="bold" >Aggiungi ingredienti</Text>
+                <VStack alignItems="left">
+                  <HStack>
+                    <Checkbox colorScheme='red' />
+                    <Text>grana gadano</Text>
+                  </HStack>
+                  <HStack>
+                    <Checkbox colorScheme='red' />
+                    <Text>pancetta</Text>
+                  </HStack>
+                </VStack>
+                <Divider borderColor="black" />
+                <HookUsage />
+              </VStack>
+            </ModalBody>
+
+            <ModalFooter>         
+              <Button onClick={() => {
+                toast({
+                  title: 'Pietanza aggiunta.',
+                  description: "La pietanza è stata aggiunta al carrello.",
+                  status: 'success',
+                  duration: 9000,
+                  isClosable: true,
+                }) 
+                onClose()} 
+                }>
+                  Aggiungi al carrello</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+        </Button>
+  )
+}
+
+export const DishCard = ({ dish, session }) => {
+
+  return(
+    <Box
+      w={400}
+      p={5}
+      opacity={dish.isDisponibile ? "1" : "0.3"}
+      borderRadius={10}
+      shadow="0px 0px 5px 0px gainsboro"
+      bgColor={dish.isDisponibile ? "white" : "gray.300"}
+    >
+      <Flex>
+        <ChakraNextImage
+          borderRadius={50}
+          alt={dish.nome}
+          src={`data:image/jpg;base64,${dish.immagine}`}
+          width={100}
+          height={100}
+        />
+        <Spacer />
+        <VStack>
+          <Text>{dish.nome}</Text>
+          <Divider borderColor="black" />
+          <HStack>
+            {dish.allergeni.map((allergene: Allergene) => (
+              <AllergeneIcon key={allergene} allergene={allergene} />
+            ))}
+          </HStack>
+        </VStack>
+        <Spacer />
+        <Flex direction="column" align="left">
+          <Box
+            w={70}
+            h={70}
+            fontSize={20}
+            borderWidth="1px"
+            borderColor="orange.300"
+            borderRadius={50}
+          >
+            <Flex align="center" direction="column" h="70%">
+              <Spacer />
+              {dish.prezzo} €
+            </Flex>
+          </Box>
           <Spacer />
-          {dish.prezzo} €
+          {session?.user?.isGestore ? null : <BasicUsage dish={dish}/>}
         </Flex>
-      </Box>
-    </Flex>
-  </Box>
-);
+      </Flex>
+    </Box>
+  )
+}

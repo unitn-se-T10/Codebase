@@ -20,7 +20,9 @@ import {
   Spinner,
   Stack,
   StackProps,
+  Text,
   useColorMode,
+  VStack,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -61,22 +63,39 @@ const Searchbar: React.FC<BoxProps> = (props) => {
 // TODO: set user type
 const UserMenu: React.FC<{ user: Session["user"] }> = ({ user }) => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   return (
     <Menu>
       <MenuButton as={Button} minW={0} rounded="full" variant="link">
-        <Avatar
-          size="sm"
-          src="https://avatars.dicebear.com/api/male/username.svg"
-        />
+      {session?.user?.isGestore ?
+          <Avatar
+            size="sm"
+            src="https://avatars.dicebear.com/api/male/beard/white/surprised03/username.svg"
+          /> :
+          <Avatar
+            size="sm"
+            src="https://avatars.dicebear.com/api/male/username.svg"
+          />}
       </MenuButton>
       <MenuList alignItems={"center"}>
         <br />
         <Center>
+          <VStack>
+          {session?.user?.isGestore ? 
+          <Text fontWeight="bold" fontSize={20} textAlign="center">Gestore</Text> 
+          : <Text fontWeight="bold" fontSize={20} textAlign="center">Cliente</Text>} 
+          
+          {session?.user?.isGestore ?
+          <Avatar
+            size="2xl"
+            src="https://avatars.dicebear.com/api/male/beard/white/surprised03/username.svg"
+          /> :
           <Avatar
             size="2xl"
             src="https://avatars.dicebear.com/api/male/username.svg"
-          />
+          />}
+          </VStack>
         </Center>
         <br />
         <Center>
@@ -87,10 +106,17 @@ const UserMenu: React.FC<{ user: Session["user"] }> = ({ user }) => {
         <MenuItem onClick={() => router.push("/utente")}>
           Il mio profilo
         </MenuItem>
-        <MenuItem onClick={() => router.push("/utente/preferiti")}>
-          I miei Preferiti
-        </MenuItem>
-        <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
+        {session?.user?.isGestore ? <MenuItem onClick={() => router.push("/utente/ristoranti")}>
+          I miei ristoranti
+        </MenuItem> : <MenuItem onClick={() => router.push("/utente/preferiti")}>
+          I miei preferiti
+        </MenuItem>}
+        {session?.user?.isGestore ? null
+        : <MenuItem onClick={() => router.push("/carrello/1")}> Carrello </MenuItem>}
+        <MenuItem onClick={() => {
+                signOut() 
+                router.push("/")} 
+                }>Sign out</MenuItem>
       </MenuList>
     </Menu>
   );

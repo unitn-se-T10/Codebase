@@ -9,7 +9,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import useSWR from "swr";
-import { RestaurantCard } from "components/restaurant";
+import { RestaurantPreferitiCard } from "components/restaurant";
 
 export default function Home() {
   // TODO: cambiare l'API
@@ -56,7 +56,7 @@ export default function Home() {
               </Text>
               {thumbnails ? (
                 thumbnails.map((thumbnail) => (
-                  <RestaurantCard key={thumbnail.id} thumbnail={thumbnail} />
+                  <RestaurantPreferitiCard key={thumbnail.id} thumbnail={thumbnail} />
                 ))
               ) : (
                 <Spinner />
