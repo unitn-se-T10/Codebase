@@ -97,7 +97,7 @@ import GoogleProvider from "next-auth/providers/google";
  *                     surname:
  *                       type: string
  *                       description: Surname
- *                     uid:
+ *                     id:
  *                       type: string
  *                       description: UID
  *                       format: uuid
@@ -149,7 +149,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, token }) {
       session.user.isGestore = token.isGestore;
-      session.user.uid = token.uid;
+      session.user.id = token.id;
       session.user.surname = token.surname;
 
       return session;
@@ -158,7 +158,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.isGestore = user.isGestore;
         token.surname = user.surname;
-        token.uid = user.id;
+        token.id = user.id;
       }
       return token;
     },

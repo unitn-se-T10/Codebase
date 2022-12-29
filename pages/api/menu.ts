@@ -73,7 +73,7 @@ async function checkPermission(
 ) {
   dbConnect();
   const ristorante = await RistoranteSchema.findOne({
-    gestoreId: session.user.uid,
+    gestoreId: session.user.id,
     menuIds: menuId,
   }).exec();
   if (!ristorante) {
@@ -364,7 +364,7 @@ async function deleteMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
   dbConnect();
   await MenuSchema.deleteOne({ id }).exec();
   await RistoranteSchema.updateOne(
-    { gestoreId: session.user.uid },
+    { gestoreId: session.user.id },
     { $pull: { menuIds: id } }
   ).exec();
   return res.status(200).send({ success: true });

@@ -243,7 +243,7 @@ async function addRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
       email,
       descrizione,
       tipologia,
-      gestoreId: session.user.uid,
+      gestoreId: session.user.id,
       immagine,
       valutazione: 0,
       menuIds: [],
@@ -367,7 +367,7 @@ async function editRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
   dbConnect();
   const restaurant = await RistoranteSchema.findOne({
     id,
-    gestoreId: session.user.uid,
+    gestoreId: session.user.id,
   });
   if (!restaurant) {
     return res.status(404).send({
@@ -455,7 +455,7 @@ async function deleteRestaurant(
   dbConnect();
   const restaurant = await RistoranteSchema.findOne({
     id,
-    gestoreId: session.user.uid,
+    gestoreId: session.user.id,
   });
   if (!restaurant) {
     return res.status(404).send({

@@ -127,7 +127,7 @@ async function myrestaurantHandler(
 
   dbConnect();
   const ristoranti = await RistoranteSchema.find({
-    gestoreId: session.user.uid,
+    gestoreId: session.user.id,
   }).exec();
 
   return res.status(200).json({ success: true, ristoranti });

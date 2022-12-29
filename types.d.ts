@@ -4,16 +4,24 @@ declare module "next-auth" {
   interface Session {
     user?: DefaultUser & {
       isGestore: boolean;
-      uid: string;
+      id: string;
       surname: string;
     };
+  }
+}
+
+declare module "next-auth" {
+  interface User {
+    isGestore: boolean;
+    id: string;
+    surname: string;
   }
 }
 
 declare module "next-auth/jwt/types" {
   interface JWT {
     isGestore: boolean;
-    uid: string;
+    id: string;
     surname: string;
   }
 }
