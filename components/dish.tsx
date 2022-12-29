@@ -184,6 +184,11 @@ function BasicUsage( {dish}) {
                   </HStack>
                 </VStack>
                 <Divider borderColor="black" />
+                  <HStack>
+                    <Text fontSize="xl" fontWeight="bold">Kcal:</Text>
+                    <Text fontSize="xl" fontWeight="bold" color="red.500">{dish.calorie}</Text>
+                  </HStack>
+                <Divider borderColor="black" />
                 <HookUsage />
               </VStack>
             </ModalBody>

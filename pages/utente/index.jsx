@@ -190,6 +190,7 @@ export default function Home() {
                     />
                     <Spacer my={4} />
                     <HStack justify="center" spacing={10}>
+                      <Link href="/utente">
                       <Button
                         bgColor="#FF3D00"
                         isLoading={props.isSubmitting}
@@ -197,6 +198,8 @@ export default function Home() {
                       >
                         Applica modifiche
                       </Button>
+                      </Link>
+                      <Link href="/">
                       <Button
                         _hover={{ bgColor: "black" }}
                         bgColor="gray.500"
@@ -204,6 +207,7 @@ export default function Home() {
                       >
                         Annulla
                       </Button>
+                      </Link>
                     </HStack>
                   </VStack>
                 </Form>

@@ -34,11 +34,11 @@ export default function Home() {
       bgRepeat="no-repeat"
     >
       <Layout>
-        <Center mt={20}>
-          <Flex direction="column" w="70%">
+
+          <Flex mt={10} ml={64} align="center" direction="column" w="70%">
             <VStack
-              align="left"
-              w="full"
+              align="self-start"
+              w="70%"
               p={10}
               shadow="1px 1px 5px 1px gray"
               bgColor="white"
@@ -48,7 +48,7 @@ export default function Home() {
             >
               <Text
                 color="black"
-                fontSize={30}
+                fontSize={20}
                 fontWeight="bold"
                 textAlign="center"
               >
@@ -63,7 +63,6 @@ export default function Home() {
               )}
             </VStack>
           </Flex>
-        </Center>
       </Layout>
     </Box>
   );

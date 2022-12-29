@@ -22,9 +22,11 @@ import {
   Center,
   Container,
   StackDivider,
+  Avatar,
   Divider,
   FormControl,
   FormLabel,
+  Link,
   IconButton,
 } from "@chakra-ui/react";
 import { IconContext } from "react-icons/lib";
@@ -41,7 +43,7 @@ const piatto = {
   extra: "Senza uova, senza pancetta",
 };
 
-const carrello = ["Pasta", "Bistecca", "Canial"];
+const carrello = [piatto, piatto, piatto];
 
 const Copertina = ({ dish, id, setPietanze, pietanze }) => {
   const [quantita, setQuantita] = useState(dish.quantita);
@@ -74,18 +76,22 @@ const Copertina = ({ dish, id, setPietanze, pietanze }) => {
               {quantita}
             </Text>
             <VStack spacing={1}>
-              <TriangleUpIcon
+              <Button size="xs" _active={{ bgColor: "transparent"}} _hover={{ bgColor: "transparent" }} bgColor="transparent">
+              <TriangleUpIcon color="black"
                 onClick={function () {
                   setPrezzo(prezzo);
                   setQuantita(quantita + 1);
                 }}
               />
-              <TriangleDownIcon
+              </Button>
+              <Button size="xs" _active={{ bgColor: "transparent"}} _hover={{ bgColor: "transparent" }} bgColor="transparent">
+              <TriangleDownIcon color="black"
                 onClick={function () {
                   setPrezzo(prezzo);
                   setQuantita(Math.max(1, quantita - 1));
                 }}
               />
+              </Button>
             </VStack>
           </HStack>
         </Center>
@@ -166,7 +172,12 @@ const NormalText = ({ children }) => {
   );
 };
 
-const Pagamento = () => {
+const Pagamento = ({total}) => {
+  const subTotale = total;
+  const sconto = 0;
+  const totale = subTotale-sconto;
+  console.log(total)
+
   return (
     <Container shadow="md" bgColor="#565ABB" rounded={20}>
       <VStack alignItems="left" p={5}>
@@ -175,13 +186,10 @@ const Pagamento = () => {
             Dettagli Carta
           </Text>
           <Spacer />
-          <Image // FIXME: Fetchare le API per l'immagine utente
-            maxW={{ base: "30%", sm: "50px" }}
-            objectFit="cover"
-            alt="img"
-            rounded={10}
-            src="/profile.png"
-          ></Image>
+          <Avatar
+            size="lg"
+            src="https://avatars.dicebear.com/api/male/username.svg"
+          />
         </Flex>
         <StackDivider />
         <NormalText>Tipologia Carta</NormalText>
@@ -252,7 +260,7 @@ const Pagamento = () => {
           }
           <NormalText>Subtotal</NormalText>
           <Spacer />
-          <NormalText>1000€</NormalText>
+          <NormalText>{subTotale}€</NormalText>
         </Flex>
 
         <Flex>
@@ -261,7 +269,7 @@ const Pagamento = () => {
           }
           <NormalText>Sconto</NormalText>
           <Spacer />
-          <NormalText>1€</NormalText>
+          <NormalText>{sconto}€</NormalText>
         </Flex>
 
         <Flex>
@@ -270,7 +278,7 @@ const Pagamento = () => {
           }
           <NormalText>Totale</NormalText>
           <Spacer />
-          <NormalText>999€</NormalText>
+          <NormalText>{totale}€</NormalText>
         </Flex>
 
         <Divider borderColor="#565ABB" />
@@ -287,7 +295,7 @@ const Pagamento = () => {
             {
               // FIXME: Fetchare le API per il totale
             }
-            <NormalText>999€</NormalText>
+            <NormalText>{totale}€</NormalText>
             <Spacer />
             <NormalText>Checkout</NormalText>
           </Flex>
@@ -299,12 +307,17 @@ const Pagamento = () => {
 
 const CarrelloPage = () => {
   const [pietanze, setPietanze] = useState(carrello);
-
+  const tot = pietanze.reduce((acc, curr) => acc + curr.prezzo*curr.quantita, 0); 
+  console.log(tot)
   return (
-    <Stack alignItems="center" direction={{ base: "column", lg: "row" }} p={10}>
-      <VStack alignItems="left" p={5} spacing={3}>
+    <Stack w="95%" alignItems="center" direction={{ base: "column", lg: "row" }} p={10}>
+      <VStack bgColor="white" rounded={20} alignItems="left" p={5} spacing={3}>
         <HStack>
-          <ArrowBackIcon boxSize={5} />
+          <Link href="http://localhost:3000/ristorante/6d87b60f-1c65-4406-948f-3046a0a0d5de">
+            <Button bgColor={"white"} _hover={{color:"transparent"}} _active={{color:"transparent"}}>
+              <ArrowBackIcon boxSize={5} color="black" _hover={{color:"gray"}}/>
+            </Button>
+          </Link>
           <Text as="b" fontSize={18} fontStyle="Arial">
             Torna al ristorante
           </Text>
@@ -325,6 +338,7 @@ const CarrelloPage = () => {
         </VStack>
         <Divider borderColor="white" />
         {pietanze.map((pietanzaId, i) => (
+          //setTotale(totale + piatto.prezzo * piatto.quantita),
           <Copertina
             dish={piatto}
             pietanze={pietanze}
@@ -335,15 +349,22 @@ const CarrelloPage = () => {
         ))}
       </VStack>
       <Spacer />
-      <Pagamento />
+      <Pagamento total={tot}/>
     </Stack>
   );
 };
 
 export default function Ristorante() {
   return (
+    <Box
+      bgImage="/sfondo2.jpg"
+      bgSize="cover"
+      bgPosition="center"
+      bgRepeat="no-repeat"
+    >
     <Layout>
       <CarrelloPage />
     </Layout>
+    </Box>
   );
 }

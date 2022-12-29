@@ -34,7 +34,8 @@ export default function Home() {
       bgRepeat="no-repeat"
     >
       <Layout>
-        <HStack align="top" p={10} spacing={20}>
+        <Center>
+        <HStack w="60%" align="top" p={10} spacing={20}>
           <VStack
             align="self-start"
             w="full"
@@ -45,8 +46,8 @@ export default function Home() {
             rounded={20}
             spacing={5}
           >
-            <Text fontSize={20} fontWeight="semibold">
-              I miei ristoranti
+            <Text fontSize={20} fontWeight="bold">
+              I miei Ristoranti
             </Text>
             {thumbnails ? (
               thumbnails.map((thumbnail) => (
@@ -86,6 +87,7 @@ export default function Home() {
             </Box>
           </VStack>
         </HStack>
+        </Center>
       </Layout>
     </Box>
   );

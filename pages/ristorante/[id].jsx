@@ -99,7 +99,7 @@ export default function Ristorante({ ristorante }) {
         mt={10} 
         rounded={20} 
         alignItems="center" 
-        w="80%" 
+        w="55%" 
         p={4} 
         spacing={4}>
           <HStack spacing={5}>
