@@ -115,7 +115,7 @@ const UserMenu: React.FC<{ user: Session["user"] }> = ({ user }) => {
         : <MenuItem onClick={() => router.push("/carrello/1")}> Carrello </MenuItem>}
         <MenuItem onClick={() => {
                 signOut() 
-                router.push("/")} 
+                router.push("/")} // FIXME: redirect to homepage
                 }>Sign out</MenuItem>
       </MenuList>
     </Menu>
