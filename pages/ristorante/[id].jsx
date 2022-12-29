@@ -32,7 +32,7 @@ const DishList = ({ menu, sessione }) =>
     <Wrap justify="space-evenly" p={5} spacing={10}>
       {menu.piatti.map((dish) => (
         <WrapItem key={dish.id}>
-          <DishCard dish={dish} session={sessione}/>
+          <DishCard dish={dish} session={sessione} />
         </WrapItem>
       ))}
     </Wrap>
@@ -41,13 +41,15 @@ const DishList = ({ menu, sessione }) =>
   );
 
 const MenuTabs = ({ menus, data }) => {
-
   if (!menus) return <Spinner />;
   return (
     <TabPanels>
       {Object.values(TipologiaMenu).map((tipologia) => (
         <TabPanel key={tipologia}>
-          <DishList sessione={data} menu={menus.find((menu) => menu.tipologia === tipologia)} />
+          <DishList
+            sessione={data}
+            menu={menus.find((menu) => menu.tipologia === tipologia)}
+          />
         </TabPanel>
       ))}
     </TabPanels>
@@ -65,10 +67,18 @@ const ModificaRistorante = () => {
 const ReturnIcon = () => {
   return (
     <Link href="/ristoranti">
-      <Button bgColor="transparent" _active={{bgColor:"transparent"}} _hover={{color : "gray"}}>
-        <ArrowBackIcon _hover={{color:"gainsboro"}} boxSize={6} color="black"/>
+      <Button
+        _hover={{ color: "gray" }}
+        _active={{ bgColor: "transparent" }}
+        bgColor="transparent"
+      >
+        <ArrowBackIcon
+          _hover={{ color: "gainsboro" }}
+          boxSize={6}
+          color="black"
+        />
       </Button>
-    </Link> 
+    </Link>
   );
 };
 
@@ -92,77 +102,78 @@ export default function Ristorante({ ristorante }) {
       bgPosition="center"
       bgRepeat="no-repeat"
     >
-    <Layout>
-      <Center>
-        <VStack 
-        bgColor="white" 
-        mt={10} 
-        rounded={20} 
-        alignItems="center" 
-        w="55%" 
-        p={4} 
-        spacing={4}>
-          <HStack spacing={5}>
-            <ReturnIcon />
-            <ChakraNextImage
-              borderRadius={20}
-              alt={ristorante.nome}
-              src={`data:image/jpg;base64,${ristorante.immagine}`}
-              width={200}
-              height={200}
-            />
-            <Spacer />
-            <VStack alignItems="start">
-              <Text fontSize={20} fontWeight="bold">
-                {ristorante.nome}
-              </Text>
-              <HStack spacing={2}>
-                {[...Array(5).keys()].map((i) =>
-                  i < ristorante.valutazione ? (
-                    <StarIcon boxSize={6} key={i} color="yellow.500" />
-                  ) : (
-                    <StarIcon boxSize={6} key={i} color="gainsboro" />
-                  )
-                )}
-              </HStack>
-
-              <HStack>
-                <GoLocation width={3} height={3} />
-                <Text>{ristorante.indirizzo}</Text>
-              </HStack>
-              <HStack>
-                <ImAlarm width={3} height={3} />
-                <Text>{ristorante.orariApertura}</Text>
-              </HStack>
-              <HStack>
-                <FaPhoneAlt width={3} height={3} />
-                <Text>{ristorante.telefono}</Text>
-              </HStack>
-              <HStack>
-                <MdEmail width={3} height={3} />
-                <Text>{ristorante.email}</Text>
-            </HStack>
-            </VStack>
-            <Spacer />
-            {session?.user?.isGestore ? <ModificaRistorante /> : null}
-          </HStack>
-          <Divider borderColor="black" />
-          <Tabs
-            align="center"
-            colorScheme="orange"
-            size="md"
-            variant="soft-rounded"
+      <Layout>
+        <Center>
+          <VStack
+            alignItems="center"
+            w="55%"
+            mt={10}
+            p={4}
+            bgColor="white"
+            rounded={20}
+            spacing={4}
           >
-            <TabList>
-              {Object.values(TipologiaMenu).map((tipologia) => (
-                <Tab key={tipologia}>{tipologia}</Tab>
-              ))}
-            </TabList>
-            <MenuTabs data={session} menus={menus} />
-          </Tabs>
-        </VStack>
-      </Center>
-    </Layout>
+            <HStack spacing={5}>
+              <ReturnIcon />
+              <ChakraNextImage
+                borderRadius={20}
+                alt={ristorante.nome}
+                src={`data:image/jpg;base64,${ristorante.immagine}`}
+                width={200}
+                height={200}
+              />
+              <Spacer />
+              <VStack alignItems="start">
+                <Text fontSize={20} fontWeight="bold">
+                  {ristorante.nome}
+                </Text>
+                <HStack spacing={2}>
+                  {[...Array(5).keys()].map((i) =>
+                    i < ristorante.valutazione ? (
+                      <StarIcon boxSize={6} key={i} color="yellow.500" />
+                    ) : (
+                      <StarIcon boxSize={6} key={i} color="gainsboro" />
+                    )
+                  )}
+                </HStack>
+
+                <HStack>
+                  <GoLocation width={3} height={3} />
+                  <Text>{ristorante.indirizzo}</Text>
+                </HStack>
+                <HStack>
+                  <ImAlarm width={3} height={3} />
+                  <Text>{ristorante.orariApertura}</Text>
+                </HStack>
+                <HStack>
+                  <FaPhoneAlt width={3} height={3} />
+                  <Text>{ristorante.telefono}</Text>
+                </HStack>
+                <HStack>
+                  <MdEmail width={3} height={3} />
+                  <Text>{ristorante.email}</Text>
+                </HStack>
+              </VStack>
+              <Spacer />
+              {session?.user?.isGestore ? <ModificaRistorante /> : null}
+            </HStack>
+            <Divider borderColor="black" />
+            <Tabs
+              align="center"
+              colorScheme="orange"
+              size="md"
+              variant="soft-rounded"
+            >
+              <TabList>
+                {Object.values(TipologiaMenu).map((tipologia) => (
+                  <Tab key={tipologia}>{tipologia}</Tab>
+                ))}
+              </TabList>
+              <MenuTabs data={session} menus={menus} />
+            </Tabs>
+          </VStack>
+        </Center>
+      </Layout>
     </Box>
   );
 }

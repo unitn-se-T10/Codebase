@@ -68,33 +68,43 @@ const UserMenu: React.FC<{ user: Session["user"] }> = ({ user }) => {
   return (
     <Menu>
       <MenuButton as={Button} minW={0} rounded="full" variant="link">
-      {session?.user?.isGestore ?
+        {session?.user?.isGestore ? (
           <Avatar
             size="sm"
             src="https://avatars.dicebear.com/api/male/beard/white/surprised03/username.svg"
-          /> :
+          />
+        ) : (
           <Avatar
             size="sm"
             src="https://avatars.dicebear.com/api/male/username.svg"
-          />}
+          />
+        )}
       </MenuButton>
       <MenuList alignItems={"center"}>
         <br />
         <Center>
           <VStack>
-          {session?.user?.isGestore ? 
-          <Text fontWeight="bold" fontSize={20} textAlign="center">Gestore</Text> 
-          : <Text fontWeight="bold" fontSize={20} textAlign="center">Cliente</Text>} 
-          
-          {session?.user?.isGestore ?
-          <Avatar
-            size="2xl"
-            src="https://avatars.dicebear.com/api/male/beard/white/surprised03/username.svg"
-          /> :
-          <Avatar
-            size="2xl"
-            src="https://avatars.dicebear.com/api/male/username.svg"
-          />}
+            {session?.user?.isGestore ? (
+              <Text fontSize={20} fontWeight="bold" textAlign="center">
+                Gestore
+              </Text>
+            ) : (
+              <Text fontSize={20} fontWeight="bold" textAlign="center">
+                Cliente
+              </Text>
+            )}
+
+            {session?.user?.isGestore ? (
+              <Avatar
+                size="2xl"
+                src="https://avatars.dicebear.com/api/male/beard/white/surprised03/username.svg"
+              />
+            ) : (
+              <Avatar
+                size="2xl"
+                src="https://avatars.dicebear.com/api/male/username.svg"
+              />
+            )}
           </VStack>
         </Center>
         <br />
@@ -106,17 +116,31 @@ const UserMenu: React.FC<{ user: Session["user"] }> = ({ user }) => {
         <MenuItem onClick={() => router.push("/utente")}>
           Il mio profilo
         </MenuItem>
-        {session?.user?.isGestore ? <MenuItem onClick={() => router.push("/utente/ristoranti")}>
-          I miei ristoranti
-        </MenuItem> : <MenuItem onClick={() => router.push("/utente/preferiti")}>
-          I miei preferiti
-        </MenuItem>}
-        {session?.user?.isGestore ? null
-        : <MenuItem onClick={() => router.push("/carrello/1")}> Carrello </MenuItem>}
-        <MenuItem onClick={() => {
-                signOut() 
-                router.push("/")} // FIXME: redirect to homepage
-                }>Sign out</MenuItem>
+        {session?.user?.isGestore ? (
+          <MenuItem onClick={() => router.push("/utente/ristoranti")}>
+            I miei ristoranti
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={() => router.push("/utente/preferiti")}>
+            I miei preferiti
+          </MenuItem>
+        )}
+        {session?.user?.isGestore ? null : (
+          <MenuItem onClick={() => router.push("/carrello/1")}>
+            {" "}
+            Carrello{" "}
+          </MenuItem>
+        )}
+        <MenuItem
+          onClick={
+            () => {
+              signOut();
+              router.push("/");
+            } // FIXME: redirect to homepage
+          }
+        >
+          Sign out
+        </MenuItem>
       </MenuList>
     </Menu>
   );

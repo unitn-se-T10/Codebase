@@ -34,35 +34,37 @@ export default function Home() {
       bgRepeat="no-repeat"
     >
       <Layout>
-
-          <Flex mt={10} ml={64} align="center" direction="column" w="70%">
-            <VStack
-              align="self-start"
-              w="70%"
-              p={10}
-              shadow="1px 1px 5px 1px gray"
-              bgColor="white"
-              divider={<StackDivider borderColor="gray.200" />}
-              rounded={20}
-              spacing={5}
+        <Flex align="center" direction="column" w="70%" mt={10} ml={64}>
+          <VStack
+            align="self-start"
+            w="70%"
+            p={10}
+            shadow="1px 1px 5px 1px gray"
+            bgColor="white"
+            divider={<StackDivider borderColor="gray.200" />}
+            rounded={20}
+            spacing={5}
+          >
+            <Text
+              color="black"
+              fontSize={20}
+              fontWeight="bold"
+              textAlign="center"
             >
-              <Text
-                color="black"
-                fontSize={20}
-                fontWeight="bold"
-                textAlign="center"
-              >
-                I miei Preferiti
-              </Text>
-              {thumbnails ? (
-                thumbnails.map((thumbnail) => (
-                  <RestaurantPreferitiCard key={thumbnail.id} thumbnail={thumbnail} />
-                ))
-              ) : (
-                <Spinner />
-              )}
-            </VStack>
-          </Flex>
+              I miei Preferiti
+            </Text>
+            {thumbnails ? (
+              thumbnails.map((thumbnail) => (
+                <RestaurantPreferitiCard
+                  key={thumbnail.id}
+                  thumbnail={thumbnail}
+                />
+              ))
+            ) : (
+              <Spinner />
+            )}
+          </VStack>
+        </Flex>
       </Layout>
     </Box>
   );

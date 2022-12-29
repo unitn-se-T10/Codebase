@@ -191,22 +191,22 @@ export default function Home() {
                     <Spacer my={4} />
                     <HStack justify="center" spacing={10}>
                       <Link href="/utente">
-                      <Button
-                        bgColor="#FF3D00"
-                        isLoading={props.isSubmitting}
-                        type="submit"
-                      >
-                        Applica modifiche
-                      </Button>
+                        <Button
+                          bgColor="#FF3D00"
+                          isLoading={props.isSubmitting}
+                          type="submit"
+                        >
+                          Applica modifiche
+                        </Button>
                       </Link>
                       <Link href="/">
-                      <Button
-                        _hover={{ bgColor: "black" }}
-                        bgColor="gray.500"
-                        onClick={() => router.reload()}
-                      >
-                        Annulla
-                      </Button>
+                        <Button
+                          _hover={{ bgColor: "black" }}
+                          bgColor="gray.500"
+                          onClick={() => router.reload()}
+                        >
+                          Annulla
+                        </Button>
                       </Link>
                     </HStack>
                   </VStack>

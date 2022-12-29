@@ -76,21 +76,33 @@ const Copertina = ({ dish, id, setPietanze, pietanze }) => {
               {quantita}
             </Text>
             <VStack spacing={1}>
-              <Button size="xs" _active={{ bgColor: "transparent"}} _hover={{ bgColor: "transparent" }} bgColor="transparent">
-              <TriangleUpIcon color="black"
-                onClick={function () {
-                  setPrezzo(prezzo);
-                  setQuantita(quantita + 1);
-                }}
-              />
+              <Button
+                _hover={{ bgColor: "transparent" }}
+                _active={{ bgColor: "transparent" }}
+                bgColor="transparent"
+                size="xs"
+              >
+                <TriangleUpIcon
+                  color="black"
+                  onClick={function () {
+                    setPrezzo(prezzo);
+                    setQuantita(quantita + 1);
+                  }}
+                />
               </Button>
-              <Button size="xs" _active={{ bgColor: "transparent"}} _hover={{ bgColor: "transparent" }} bgColor="transparent">
-              <TriangleDownIcon color="black"
-                onClick={function () {
-                  setPrezzo(prezzo);
-                  setQuantita(Math.max(1, quantita - 1));
-                }}
-              />
+              <Button
+                _hover={{ bgColor: "transparent" }}
+                _active={{ bgColor: "transparent" }}
+                bgColor="transparent"
+                size="xs"
+              >
+                <TriangleDownIcon
+                  color="black"
+                  onClick={function () {
+                    setPrezzo(prezzo);
+                    setQuantita(Math.max(1, quantita - 1));
+                  }}
+                />
               </Button>
             </VStack>
           </HStack>
@@ -172,11 +184,10 @@ const NormalText = ({ children }) => {
   );
 };
 
-const Pagamento = ({total}) => {
+const Pagamento = ({ total }) => {
   const subTotale = total;
   const sconto = 0;
-  const totale = subTotale-sconto;
-  console.log(total)
+  const totale = subTotale - sconto;
 
   return (
     <Container shadow="md" bgColor="#565ABB" rounded={20}>
@@ -307,15 +318,30 @@ const Pagamento = ({total}) => {
 
 const CarrelloPage = () => {
   const [pietanze, setPietanze] = useState(carrello);
-  const tot = pietanze.reduce((acc, curr) => acc + curr.prezzo*curr.quantita, 0); 
-  console.log(tot)
+  const tot = pietanze.reduce(
+    (acc, curr) => acc + curr.prezzo * curr.quantita,
+    0
+  );
   return (
-    <Stack w="95%" alignItems="center" direction={{ base: "column", lg: "row" }} p={10}>
-      <VStack bgColor="white" rounded={20} alignItems="left" p={5} spacing={3}>
+    <Stack
+      alignItems="center"
+      direction={{ base: "column", lg: "row" }}
+      w="95%"
+      p={10}
+    >
+      <VStack alignItems="left" p={5} bgColor="white" rounded={20} spacing={3}>
         <HStack>
           <Link href="http://localhost:3000/ristorante/6d87b60f-1c65-4406-948f-3046a0a0d5de">
-            <Button bgColor={"white"} _hover={{color:"transparent"}} _active={{color:"transparent"}}>
-              <ArrowBackIcon boxSize={5} color="black" _hover={{color:"gray"}}/>
+            <Button
+              _hover={{ color: "transparent" }}
+              _active={{ color: "transparent" }}
+              bgColor={"white"}
+            >
+              <ArrowBackIcon
+                boxSize={5}
+                color="black"
+                _hover={{ color: "gray" }}
+              />
             </Button>
           </Link>
           <Text as="b" fontSize={18} fontStyle="Arial">
@@ -349,7 +375,7 @@ const CarrelloPage = () => {
         ))}
       </VStack>
       <Spacer />
-      <Pagamento total={tot}/>
+      <Pagamento total={tot} />
     </Stack>
   );
 };
@@ -362,9 +388,9 @@ export default function Ristorante() {
       bgPosition="center"
       bgRepeat="no-repeat"
     >
-    <Layout>
-      <CarrelloPage />
-    </Layout>
+      <Layout>
+        <CarrelloPage />
+      </Layout>
     </Box>
   );
 }

@@ -35,58 +35,58 @@ export default function Home() {
     >
       <Layout>
         <Center>
-        <HStack w="60%" align="top" p={10} spacing={20}>
-          <VStack
-            align="self-start"
-            w="full"
-            p={10}
-            shadow="1px 1px 5px 1px gray"
-            bgColor="white"
-            divider={<StackDivider borderColor="gray.200" />}
-            rounded={20}
-            spacing={5}
-          >
-            <Text fontSize={20} fontWeight="bold">
-              I miei Ristoranti
-            </Text>
-            {thumbnails ? (
-              thumbnails.map((thumbnail) => (
-                <RestaurantCard
-                  key={thumbnail.id}
-                  thumbnail={thumbnail}
-                  isGestore
-                />
-              ))
-            ) : (
-              <Spinner />
-            )}
-            <Box
-              w={125}
-              h={125}
-              borderWidth="1px"
-              borderColor="gray"
-              borderRadius={40}
-              borderBottomLeftRadius={4}
+          <HStack align="top" w="60%" p={10} spacing={20}>
+            <VStack
+              align="self-start"
+              w="full"
+              p={10}
+              shadow="1px 1px 5px 1px gray"
+              bgColor="white"
+              divider={<StackDivider borderColor="gray.200" />}
+              rounded={20}
+              spacing={5}
             >
-              <Center>
-                <ChakraNextLink href="/utente/aggiungiristorante">
-                  <Button
-                    w={100}
-                    h={100}
-                    mt={3}
-                    color="black"
-                    fontSize={40}
-                    _active={{ bgColor: "transparent" }}
-                    _hover={{ color: "gainsboro" }}
-                    bgColor="white"
-                  >
-                    +
-                  </Button>
-                </ChakraNextLink>
-              </Center>
-            </Box>
-          </VStack>
-        </HStack>
+              <Text fontSize={20} fontWeight="bold">
+                I miei Ristoranti
+              </Text>
+              {thumbnails ? (
+                thumbnails.map((thumbnail) => (
+                  <RestaurantCard
+                    key={thumbnail.id}
+                    thumbnail={thumbnail}
+                    isGestore
+                  />
+                ))
+              ) : (
+                <Spinner />
+              )}
+              <Box
+                w={125}
+                h={125}
+                borderWidth="1px"
+                borderColor="gray"
+                borderRadius={40}
+                borderBottomLeftRadius={4}
+              >
+                <Center>
+                  <ChakraNextLink href="/utente/aggiungiristorante">
+                    <Button
+                      w={100}
+                      h={100}
+                      mt={3}
+                      color="black"
+                      fontSize={40}
+                      _hover={{ color: "gainsboro" }}
+                      _active={{ bgColor: "transparent" }}
+                      bgColor="white"
+                    >
+                      +
+                    </Button>
+                  </ChakraNextLink>
+                </Center>
+              </Box>
+            </VStack>
+          </HStack>
         </Center>
       </Layout>
     </Box>

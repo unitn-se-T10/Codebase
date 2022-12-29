@@ -12,15 +12,14 @@ import {
   ModalHeader,
   Checkbox,
   ModalFooter,
-  Center,
   ModalBody,
   ModalCloseButton,
   Input,
   Spacer,
   Icon,
+  IconProps,
 } from "@chakra-ui/react";
-import { useToast } from '@chakra-ui/react';
-import { useSession } from "next-auth/react";
+import { useToast } from "@chakra-ui/react";
 import { useNumberInput } from "@chakra-ui/react";
 import {
   GiBigEgg,
@@ -39,8 +38,8 @@ import { useDisclosure } from "@chakra-ui/react";
 import { ChakraNextImage } from "components/utils";
 import { IconContext } from "react-icons";
 
-const Frutta_a_guscio = (props) => (
-  <Icon viewBox="500px 500px 500px 500px" {...props}>
+const Frutta_a_guscio = (props: IconProps) => (
+  <Icon viewBox="0 0 13 13" {...props}>
     <path
       fill="currentColor"
       d="m 6.1938821,12.936278 c -1.887613,-0.2363 -3.720395,-1.5343 -4.535586,-3.2121999 -0.486771,-1.002 -0.64378,-1.6728 -0.644592,-2.7542 -7.67e-4,-1.0137 0.182387,-1.8027 0.621891,-2.6792 0.332229,-0.6626 0.554455,-0.9631 1.161647,-1.5711 1.152233,-1.1537 2.558778,-1.7194 4.275247,-1.7194 4.0177369,0 6.8604009,3.975 5.6201199,7.8588 -0.6983,2.1866999 -2.682384,3.8063999 -5.0025669,4.0838999 -0.650271,0.078 -0.827808,0.077 -1.49616,-0.01 z m 2.092834,-1.2653 c 0.886655,-0.2497 1.585751,-0.6817 2.2505079,-1.3905 0.550082,-0.5864999 0.939754,-1.2703999 1.155745,-2.0284999 0.204435,-0.7175 0.202508,-1.824 -0.0045,-2.5695 -0.138136,-0.4975 -0.673897,-1.5509 -0.812257,-1.597 -0.03536,-0.012 -0.335448,0.2518 -0.666853,0.5857 -0.3314039,0.3338 -0.6241169,0.6077 -0.6504729,0.6084 -0.02636,0 -0.0486,-0.1351 -0.04944,-0.3021 -8.73e-4,-0.173 -0.06913,-0.4679 -0.158744,-0.686 l -0.157229,-0.3825 0.350424,-0.3541 c 0.192732,-0.1948 0.350423,-0.3854 0.350423,-0.4236 0,-0.038 -0.109252,-0.1418 -0.242782,-0.2302 -1.845605,-1.2214 -4.292861,-1.0223 -5.92587,0.4821 -1.785926,1.6453 -2.11821,4.192 -0.813644,6.236 l 0.220111,0.3449 0.55509,-0.5525 c 0.3053,-0.3039 0.571535,-0.5526 0.591633,-0.5526 0.0201,0 0.06912,0.1079 0.108937,0.2396 0.03982,0.1318 0.171204,0.3834 0.291971,0.5591 l 0.219577,0.3195 -0.425617,0.4339999 -0.425617,0.4341 0.159732,0.1267 c 0.41268,0.3273 1.445468,0.7368 2.140416,0.8487 0.396679,0.064 1.476176,-0.019 1.938428,-0.1497 z m -1.977895,-1.5547 c -0.5782,-0.2158999 -0.991379,-0.6038999 -1.254031,-1.1775999 -0.232526,-0.5079 -0.217565,-1.0291 0.05236,-1.824 l 0.21264,-0.6263 -0.108418,-0.6284 c -0.08385,-0.4861 -0.0939,-0.705 -0.04436,-0.9663 0.272855,-1.4388 1.973252,-2.0207 3.057067,-1.0463 0.547071,0.4919 0.725204,1.1096 0.557975,1.9349 -0.119362,0.5891 -0.09262,0.8696 0.14105,1.4794 0.313646,0.8185 0.184158,1.6414 -0.352168,2.2379 -0.428244,0.4763 -0.818197,0.6548999 -1.487884,0.6814999 -0.349831,0.014 -0.625345,-0.01 -0.774237,-0.065 z m 0.912965,-0.5323999 c 0.243649,-0.2205 0.104553,-0.4448 -0.355295,-0.5729 -0.144447,-0.04 -0.354634,-0.1111 -0.467082,-0.1573 -0.181247,-0.075 -0.219317,-0.071 -0.335438,0.034 -0.18405,0.1665 -0.16569,0.3852 0.04472,0.5325 0.38382,0.2687 0.911098,0.3461 1.113096,0.1633 z m -1.27786,-1.214 c 0.146419,-0.1325 0.156353,-0.5484 0.01644,-0.6883 -0.229356,-0.2294 -0.538527,-0.027 -0.538527,0.3522 0,0.3878 0.27167,0.5628 0.522086,0.3361 z m 2.002421,-3.688 c 0.188072,-0.2871 -0.148678,-0.6798 -0.505981,-0.5901 -0.256669,0.064 -0.287379,0.3232 -0.06581,0.5544 0.218235,0.2278 0.436953,0.2415 0.571787,0.036 z"
@@ -48,8 +47,8 @@ const Frutta_a_guscio = (props) => (
   </Icon>
 );
 
-const Soia = (props) => (
-  <Icon viewBox="500px 500px 500px 500px" {...props}>
+const Soia = (props: IconProps) => (
+  <Icon viewBox="0 0 23 23" {...props}>
     <path
       fill="currentColor"
       d="M20,9.19722436 C20,10.3234988 19.437117,11.3752554 18.5,12 C17.562883,12.6247446 17,13.6765012 17,14.8027756 L17,15 C17,16.1754137 16.2000338,17.1999916 15.059715,17.4850713 L14.7489493,17.5627627 C13.6235704,17.8441074 12.64346,18.5348101 12,19.5 C11.3752554,20.437117 10.3234988,21 9.19722436,21 L5,21 C5.64028925,20.3597108 6,19.4912922 6,18.5857864 L6,17.8027756 C6,16.6765012 6.56288303,15.6247446 7.5,15 C8.46518994,14.35654 9.15589261,13.3764296 9.43723732,12.2510507 L9.63619656,11.4552138 C9.85000633,10.5999747 10.6184397,10 11.5,10 C12.4192991,10 13.2596973,9.48060532 13.6708204,8.65835921 L14.1055728,7.78885438 C14.6537369,6.69252624 15.7742679,6 17,6 L17.5857864,6 C18.4912922,6 19.3597108,5.64028925 20,5 L20,9.19722436 Z M8.43933983,18.5606602 C8.16789322,18.2892136 8,17.9142136 8,17.5 C8,16.6715729 8.67157288,16 9.5,16 C9.91421356,16 10.2892136,16.1678932 10.5606602,16.4393398 M12.0857864,14.9142136 C11.7238576,14.5522847 11.5,14.0522847 11.5,13.5 C11.5,12.3954305 12.3954305,11.5 13.5,11.5 C14.0522847,11.5 14.5522847,11.7238576 14.9142136,12.0857864 M15.9393398,10.5606602 C15.6678932,10.2892136 15.5,9.91421356 15.5,9.5 C15.5,8.67157288 16.1715729,8 17,8 C17.4142136,8 17.7892136,8.16789322 18.0606602,8.43933983 M5.5,11 C6.32842712,11 7,10.3284271 7,9.5 C7,8.67157288 6.32842712,8 5.5,8 C4.67157288,8 4,8.67157288 4,9.5 C4,10.3284271 4.67157288,11 5.5,11 Z M5.5,6 C6.32842712,6 7,5.32842712 7,4.5 C7,3.67157288 6.32842712,3 5.5,3 C4.67157288,3 4,3.67157288 4,4.5 C4,5.32842712 4.67157288,6 5.5,6 Z M10.5,7 C11.3284271,7 12,6.32842712 12,5.5 C12,4.67157288 11.3284271,4 10.5,4 C9.67157288,4 9,4.67157288 9,5.5 C9,6.32842712 9.67157288,7 10.5,7 Z"
@@ -57,7 +56,8 @@ const Soia = (props) => (
   </Icon>
 );
 
-const Lupini = (props) => (
+const Lupini = (props: IconProps) => (
+  // FIXME: l'icona non e' renderizzata bene
   <Icon viewBox="500px 500px 500px 500px" {...props}>
     <path
       fill="currentColor"
@@ -74,7 +74,8 @@ const Lupini = (props) => (
   </Icon>
 );
 
-const Mostarda = (props) => (
+const Mostarda = (props: IconProps) => (
+  // FIXME: l'icona non e' renderizzata bene
   <Icon viewBox="500px 500px 500px 500px" {...props}>
     <path
       fill="currentColor"
@@ -89,8 +90,8 @@ const Mostarda = (props) => (
   </Icon>
 );
 
-const Sedano = (props) => (
-  <Icon viewBox="500px 500px 500px 500px" {...props}>
+const Sedano = (props: IconProps) => (
+  <Icon viewBox="0 0 23 23" {...props}>
     <path
       fill="currentColor"
       d="M11.2738628,1.24712328 C12.052307,1.24712328 12.6833607,1.87817699 12.6833607,2.65662118 L12.6827291,3.03312328 L13.0765681,2.90107348 C13.5714095,2.7343376 14.1077238,3.00031968 14.2744597,3.49516107 C14.3544192,3.73246611 14.3369726,3.99179963 14.2259483,4.2162563 L13.7817291,5.11312328 L13.8708317,5.0843773 C14.3289757,4.96521428 14.813805,5.20576744 14.989186,5.65781703 C15.1240269,6.00537318 15.042052,6.39971881 14.7798704,6.66474359 L13.873156,7.57993702 C13.7594388,7.53123862 13.6351314,7.50442794 13.5062586,7.50373294 C12.9840891,7.50091691 12.5585043,7.92193604 12.5556883,8.44410549 L12.5556883,8.44410549 L12.4847852,21.591484 C12.4830412,21.9148704 12.3161354,22.2149328 12.0423042,22.3869742 L12.0423042,22.3869742 L11.1992365,22.9161233 L10.3560151,22.3869742 C10.0821838,22.2149328 9.91527798,21.9148704 9.91353398,21.591484 L9.86323653,12.3421233 L9.86372908,8.83212328 L9.84423653,8.81312328 L9.84263095,8.44410549 C9.83981492,7.92193604 9.41423011,7.50091691 8.89206066,7.50373294 C8.79027074,7.50428189 8.69132897,7.52112335 8.59820417,7.55217399 L7.59536609,6.5390186 C7.23040317,6.17009789 7.23361159,5.57516766 7.6025323,5.21020474 C7.88122028,4.93450653 8.30178457,4.86079684 8.65762143,5.02528582 L8.67772908,5.03512328 L8.27366439,4.2162563 C8.04215037,3.74820702 8.23390009,3.18109893 8.70194936,2.94958491 C8.92640603,2.83856057 9.18573955,2.82111399 9.42304458,2.90107348 L9.86372908,3.04912328 L9.86436489,2.65662118 C9.86436489,1.87817699 10.4954186,1.24712328 11.2738628,1.24712328 Z M11.2498063,4.85989572 L11.2498063,6.20319402 M3.22149157,6.95890356 C2.70252878,7.47786636 2.70252878,8.3192713 3.22149157,8.83823409 L3.86565649,9.48116282 L3.39424548,9.71508871 C2.9264397,9.94709434 2.73528591,10.5144036 2.96729155,10.9822094 C3.07855165,11.2065493 3.27426474,11.3775892 3.51148563,11.4577979 L4.45821197,11.7778456 L4.3764452,11.8205469 C3.9682275,12.0602426 3.79549819,12.5731654 3.99113242,13.0168259 C4.14154485,13.3579321 4.47835434,13.5788115 4.85114555,13.580822 L7.98095833,13.5977008 L8.02182035,21.1746471 C8.0274095,22.21103 8.86618255,23.0498031 9.90256545,23.0553922 L11.4330458,23.063646 L10.3560151,22.3869742 C10.0821838,22.2149328 9.91527798,21.9148704 9.91353398,21.591484 L9.84263095,8.44410549 C9.83981492,7.92193604 9.41423011,7.50091691 8.89206066,7.50373294 C8.50083962,7.50584277 8.15169105,7.74862323 8.01316716,8.11379356 L7.72038594,7.24889762 C7.55313025,6.75423167 7.01653675,6.48881322 6.5218708,6.6560689 C6.28464991,6.73627766 6.08893682,6.90731757 5.97767672,7.13165746 L5.7444392,7.6023801 L5.10082211,6.95890356 C4.58185931,6.43994077 3.74045437,6.43994077 3.22149157,6.95890356 Z M6.07105759,9.80846958 L7.02091292,10.7583249 M8.45486699,15.5055228 L14.0928586,15.5055228 M19.1768276,6.95890356 C19.6957904,7.47786636 19.6957904,8.3192713 19.1768276,8.83823409 L18.5326627,9.48116282 L19.0040737,9.71508871 C19.4718795,9.94709434 19.6630333,10.5144036 19.4310277,10.9822094 C19.3197676,11.2065493 19.1240545,11.3775892 18.8868336,11.4577979 L17.9401072,11.7778456 L18.021874,11.8205469 C18.4300917,12.0602426 18.602821,12.5731654 18.4071868,13.0168259 C18.2567744,13.3579321 17.9199649,13.5788115 17.5471737,13.580822 L14.4173609,13.5977009 L14.3764989,21.1746471 C14.3709097,22.21103 13.5321367,23.0498031 12.4957538,23.0553922 L10.9652734,23.063646 L12.0423042,22.3869742 C12.3161354,22.2149328 12.4830412,21.9148704 12.4847852,21.591484 L12.5556883,8.44410549 C12.5585043,7.92193604 12.9840891,7.50091691 13.5062586,7.50373294 C13.8974796,7.50584277 14.2466282,7.74862323 14.3851521,8.11379356 L14.6779333,7.24889762 C14.845189,6.75423167 15.3817825,6.48881322 15.8764484,6.6560689 C16.1136693,6.73627767 16.3093824,6.90731757 16.4206425,7.13165746 L16.65388,7.6023801 L17.2974971,6.95890356 C17.8164599,6.43994077 18.6578648,6.43994077 19.1768276,6.95890356 Z M16.3272616,9.80846958 L15.3774063,10.7583249"
@@ -101,17 +102,17 @@ const Sedano = (props) => (
 export const AllergeneIcon = ({ allergene }: { allergene: Allergene }) => {
   const icons = {
     [Allergene.ARACHIDI_E_DERIVATI]: <GiPeanut size="2.25rem" />,
-    [Allergene.FRUTTA_A_GUSCIO]: <Frutta_a_guscio size="2.25rem" />,
+    [Allergene.FRUTTA_A_GUSCIO]: <Frutta_a_guscio boxSize="2.25rem" />,
     [Allergene.LATTE_E_DERIVATI]: <GiMilkCarton size="2.25rem" />,
     [Allergene.MOLLUSCHI]: <GiSwirledShell size="2.25rem" />,
     [Allergene.PESCE]: <GiFriedFish size="2.25rem" />,
     [Allergene.SESAMO]: <GiSesame size="2.25rem" />,
-    [Allergene.SOIA]: <Soia size="2.25rem" />,
+    [Allergene.SOIA]: <Soia boxSize="2.25rem" />,
     [Allergene.CROSTACEI]: <GiSadCrab size="2.25rem" />,
     [Allergene.GLUTINE]: <GiWheat size="2.25rem" />,
-    [Allergene.LUPINI]: <Lupini size="2.25rem" />,
-    [Allergene.SENAPE]: <Mostarda size="2.25rem" />,
-    [Allergene.SEDANO]: <Sedano size="2.25rem" />,
+    [Allergene.LUPINI]: <Lupini boxSize="2.25rem" />,
+    [Allergene.SENAPE]: <Mostarda boxSize="2.25rem" />,
+    [Allergene.SEDANO]: <Sedano boxSize="2.25rem" />,
     [Allergene.ANIDRIDE_SOLFOROSA_E_SOLFITI]: <GiAcid size="2.25rem" />,
     [Allergene.UOVA_E_DERIVATI]: <GiBigEgg size="2.25rem" />,
   };
@@ -130,91 +131,109 @@ function HookUsage() {
       defaultValue: 1,
       min: 1,
       step: 1,
-    })
+    });
 
-  const inc = getIncrementButtonProps()
-  const dec = getDecrementButtonProps()
-  const input = getInputProps()
+  const inc = getIncrementButtonProps();
+  const dec = getDecrementButtonProps();
+  const input = getInputProps();
 
   return (
-    <HStack maxW='320px'>
+    <HStack maxW="320px">
       <Button {...dec}>-</Button>
-      <Input _focusVisible={{bgColor:"gray.100"}} textAlign="center" {...input} />
+      <Input
+        textAlign="center"
+        _focusVisible={{ bgColor: "gray.100" }}
+        {...input}
+      />
       <Button {...inc}>+</Button>
     </HStack>
-  )
+  );
 }
 
-function BasicUsage( {dish}) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const toast = useToast()
+function BasicUsage({ dish }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   return (
-    <Button bgColor="transparent" _hover={{bgColor:"transparent"}} _active={{bgColor:"transparent"}}>
-    <IconContext.Provider value={{ color: "tomato", size: "2.25rem" }}>
-      <GiShoppingCart onClick={onOpen} />
-    </IconContext.Provider>
-    
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader textAlign="center">{dish.nome}</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
+    <Button
+      _hover={{ bgColor: "transparent" }}
+      _active={{ bgColor: "transparent" }}
+      bgColor="transparent"
+    >
+      <IconContext.Provider value={{ color: "tomato", size: "2.25rem" }}>
+        <GiShoppingCart onClick={onOpen} />
+      </IconContext.Provider>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader textAlign="center">{dish.nome}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack alignItems="left">
+              <Divider borderColor="black" />
+              <Text fontSize="xl" fontWeight="bold">
+                Rimuovi ingredienti
+              </Text>
               <VStack alignItems="left">
-                <Divider borderColor="black" />
-                <Text fontSize="xl" fontWeight="bold" >Rimuovi ingredienti</Text>
-                <VStack alignItems="left">
-                  {dish.ingredienti.map((ingredienti: String) => (
-                  <HStack>
-                    <Checkbox colorScheme='red' />
-                    <Text>{ingredienti}</Text>
+                {dish.ingredienti.map((ingrediente: string) => (
+                  <HStack key={ingrediente}>
+                    <Checkbox colorScheme="red" />
+                    <Text>{ingrediente}</Text>
                   </HStack>
                 ))}
-                </VStack>
-                <Divider borderColor="black" />
-                <Text fontSize="xl" fontWeight="bold" >Aggiungi ingredienti</Text>
-                <VStack alignItems="left">
-                  <HStack>
-                    <Checkbox colorScheme='red' />
-                    <Text>grana gadano</Text>
-                  </HStack>
-                  <HStack>
-                    <Checkbox colorScheme='red' />
-                    <Text>pancetta</Text>
-                  </HStack>
-                </VStack>
-                <Divider borderColor="black" />
-                  <HStack>
-                    <Text fontSize="xl" fontWeight="bold">Kcal:</Text>
-                    <Text fontSize="xl" fontWeight="bold" color="red.500">{dish.calorie}</Text>
-                  </HStack>
-                <Divider borderColor="black" />
-                <HookUsage />
               </VStack>
-            </ModalBody>
+              <Divider borderColor="black" />
+              <Text fontSize="xl" fontWeight="bold">
+                Aggiungi ingredienti
+              </Text>
+              <VStack alignItems="left">
+                <HStack>
+                  <Checkbox colorScheme="red" />
+                  <Text>grana gadano</Text>
+                </HStack>
+                <HStack>
+                  <Checkbox colorScheme="red" />
+                  <Text>pancetta</Text>
+                </HStack>
+              </VStack>
+              <Divider borderColor="black" />
+              <HStack>
+                <Text fontSize="xl" fontWeight="bold">
+                  Kcal:
+                </Text>
+                <Text color="red.500" fontSize="xl" fontWeight="bold">
+                  {dish.calorie}
+                </Text>
+              </HStack>
+              <Divider borderColor="black" />
+              <HookUsage />
+            </VStack>
+          </ModalBody>
 
-            <ModalFooter>         
-              <Button onClick={() => {
+          <ModalFooter>
+            <Button
+              onClick={() => {
                 toast({
-                  title: 'Pietanza aggiunta.',
+                  title: "Pietanza aggiunta.",
                   description: "La pietanza è stata aggiunta al carrello.",
-                  status: 'success',
+                  status: "success",
                   duration: 9000,
                   isClosable: true,
-                }) 
-                onClose()} 
-                }>
-                  Aggiungi al carrello</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-        </Button>
-  )
+                });
+                onClose();
+              }}
+            >
+              Aggiungi al carrello
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Button>
+  );
 }
 
 export const DishCard = ({ dish, session }) => {
-
-  return(
+  return (
     <Box
       w={400}
       p={5}
@@ -242,7 +261,7 @@ export const DishCard = ({ dish, session }) => {
           </HStack>
         </VStack>
         <Spacer />
-        <Flex direction="column" align="left">
+        <Flex align="left" direction="column">
           <Box
             w={70}
             h={70}
@@ -257,9 +276,9 @@ export const DishCard = ({ dish, session }) => {
             </Flex>
           </Box>
           <Spacer />
-          {session?.user?.isGestore ? null : <BasicUsage dish={dish}/>}
+          {session?.user?.isGestore ? null : <BasicUsage dish={dish} />}
         </Flex>
       </Flex>
     </Box>
-  )
-}
+  );
+};
