@@ -28,8 +28,35 @@ import {
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { unstable_getServerSession } from "next-auth/next";
+import { addRstSchema } from "lib/yupSchemas";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { FormField } from "components/authentication";
+import * as Yup from "yup";
+
+type addValues = {
+  rstName: string;
+  rstTypo: string;
+  indirizzo: string;
+  comune: string;
+  provincia: string;
+  telefono: string;
+  email: string;
+  remember: boolean;
+};
+
+let errorFromServer = null;
+
+async function handleSubmit(values: addValues) {
+  //copia incollata, non so come modificarla
+  const status = await signIn("credentials", {
+    redirect: false,
+    email: values.email,
+    password: values.password,
+    callbackUrl: "/",
+  });
+  errorFromServer = status.error;
+  if (!status.error) router.push(status.url);
+}
 
 const Number = () => {
   return (
@@ -159,7 +186,6 @@ const TipoRistorante = () => {
 };
 
 export default function Home() {
-  // TODO: bisognerebbe far fare la richiesta all'API...
   return (
     <Box
       bgImage="/sfondo2.jpg"
@@ -180,10 +206,58 @@ export default function Home() {
               Inserire dati ristorante
             </Text>
             <Formik
+              validationSchema={Yup.object().shape({
+                rstName: addRstSchema.rstName.test(
+                  "Server",
+                  () => errorFromServer,
+                  () => !errorFromServer
+                ),
+
+                rstTypo: addRstSchema.rstTypo.test(
+                  "Server",
+                  () => errorFromServer,
+                  () => !errorFromServer
+                ),
+
+                indirizzo: addRstSchema.indirizzo.test(
+                  "Server",
+                  () => errorFromServer,
+                  () => !errorFromServer
+                ),
+
+                comune: addRstSchema.comune.test(
+                  "Server",
+                  () => errorFromServer,
+                  () => !errorFromServer
+                ),
+
+                provincia: addRstSchema.provincia.test(
+                  "Server",
+                  () => errorFromServer,
+                  () => !errorFromServer
+                ),
+
+                telefono: addRstSchema.telefono.test(
+                  "Server",
+                  () => errorFromServer,
+                  () => !errorFromServer
+                ),
+
+                email: addRstSchema.email.test(
+                  "Server",
+                  () => errorFromServer,
+                  () => !errorFromServer
+                ),
+              })}
               initialValues={{
-                oldPassword: "",
-                newPassword: "",
-                newPasswordConfirm: "",
+                rstName: "", //nome ristorante
+                rstTypo: "Tipologia", //tipologia ristorante
+                indirizzo: "", //indirizzo
+                comune: "", //comune
+                provincia: "", //provincia
+                telefono: "", //telefono
+                email: "", //email
+                remember: false,
               }}
               onSubmit={async (values, actions) => {
                 await handleSubmit(values);
@@ -196,7 +270,7 @@ export default function Home() {
                   <VStack spacing={4}>
                     <HStack w="full">
                       <FormField
-                        fieldName="nome"
+                        fieldName="rstName"
                         label="Nome del ristorante"
                         placeholder="Inserire nome ristorante"
                         type="text"
@@ -242,7 +316,12 @@ export default function Home() {
                       <Text textAlign="left">Giorni di apertura</Text>
                       <Days />
                     </VStack>
-                    <FormField fieldName="image" label="Immagine" type="file" />
+                    <FormField
+                      placeholder=""
+                      fieldName="image"
+                      label="Immagine"
+                      type="file"
+                    />
 
                     <Spacer my={4} />
                     <HStack justify="center" spacing={10}>

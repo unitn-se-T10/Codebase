@@ -8,6 +8,18 @@ const nameSchema = Yup.string()
   .max(50, "Name too long! (max: 50)")
   .matches(/^[\w]*$/, "Name contains invalid chararcter");
 
+const typoSchema = Yup.string()
+  .required("This field is required")
+  .matches(/(Tipologia)/, "Tipologia can't be empty");
+
+const provinciaSchema = Yup.string()
+  .required("This field is required")
+  .length(2, "Provincia must be 2 characters long");
+
+const telSchema = Yup.string()
+  .required("This field is required")
+  .length(10, "Phone number must be 10 digits");
+
 const emailSchema = Yup.string()
   .required("Email is required!")
   .email("Invalid email");
@@ -21,6 +33,10 @@ const pwdLoginSchema = Yup.string()
   .required("Password is essential!")
   .matches(/^[\w\!\@\#\$\%\^\&\*\.\-]*$/, "Password contains invalid character")
   .max(64, "Password too long! (max: 64)");
+
+const addressSchema = Yup.string()
+  .required("This field is required")
+  .max(50, "Address too long! (max: 50)");
 
 const usrRegSchema = Yup.string()
   .required("Username is required!")
@@ -61,6 +77,17 @@ export const regSchema = {
   email: emailSchema,
   username: usrRegSchema,
   password: pwdRegSchema,
+};
+
+export const addRstSchema = {
+  //rst => restaurant
+  rstName: nameSchema,
+  rstTypo: typoSchema,
+  indirizzo: addressSchema,
+  comune: addressSchema,
+  provincia: provinciaSchema,
+  telefono: telSchema,
+  email: emailSchema,
 };
 
 export const secretCodeSchema = Yup.string()

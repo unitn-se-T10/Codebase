@@ -72,8 +72,8 @@ export default function Ristorante({ ristorante }) {
   return (
     <Layout>
       <Center>
-        <VStack alignItems="center" p={4} spacing={4}>
-          <Flex align="center">
+        <VStack alignItems="center" w="80%" p={4} spacing={4}>
+          <HStack spacing={5}>
             <ChakraNextImage
               borderRadius={20}
               alt={ristorante.nome}
@@ -98,7 +98,7 @@ export default function Ristorante({ ristorante }) {
               <Text>Indirizzo: {ristorante.indirizzo}</Text>
               <HStack>
                 <Text>
-                  Orari:
+                  {"Orari: "}
                   {
                     ristorante.orariApertura /* TODO: definire tipo di orariApertura */
                   }
@@ -116,7 +116,7 @@ export default function Ristorante({ ristorante }) {
             </VStack>
             <Spacer />
             {session?.user?.isGestore ? <ModificaRistorante /> : null}
-          </Flex>
+          </HStack>
           <Divider borderColor="black" />
           <Tabs
             align="center"
