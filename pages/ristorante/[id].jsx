@@ -19,8 +19,6 @@ import { TipologiaMenu } from "lib/typings";
 import { DishCard } from "components/dish";
 import { ChakraNextImage } from "components/utils";
 import { useSession } from "next-auth/react";
-import { ChakraNextImage } from "components/utils";
-import { useSession } from "next-auth/react";
 import useSWR from "swr";
 
 const DishList = ({ menu }) =>
@@ -52,7 +50,7 @@ const MenuTabs = ({ menus }) => {
 
 const ModificaRistorante = () => {
   return (
-    <Link href="http://localhost:3000/gestore/aggiungiristorante">
+    <Link href="/utente/aggiungiristorante">
       <Button bgColor="tomato">Modifica</Button>
     </Link>
   );

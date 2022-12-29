@@ -12,9 +12,10 @@ import {
 import useSWR from "swr";
 import { RestaurantCard } from "components/restaurant";
 import ChakraNextLink from "components/chakraNextLink";
-import { signIn, useSession } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
-const GestorePage = () => {
+export default function Home() {
   const fetcher = (url) =>
     fetch(url)
       .then((r) => r.json())
@@ -67,7 +68,7 @@ const GestorePage = () => {
               borderBottomLeftRadius={4}
             >
               <Center>
-                <ChakraNextLink href="/gestore/aggiungiristorante">
+                <ChakraNextLink href="/utente/aggiungiristorante">
                   <Button
                     w={100}
                     h={100}
@@ -87,24 +88,27 @@ const GestorePage = () => {
       </Layout>
     </Box>
   );
-};
+}
 
-const UtentePage = () => (
-  <Layout>
-    <Text>Non sei autorizzato a visualizzare questa pagina</Text>
-  </Layout>
-);
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
-export default function Home() {
-  const { data: session } = useSession();
-
-  if (session === undefined) {
-    return <Spinner />;
+  if (!session?.user?.isGestore) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
   }
 
-  if (session === null) {
-    signIn();
-  }
-
-  return session?.user?.isGestore ? <GestorePage /> : <UtentePage />;
+  return {
+    props: {
+      session,
+    },
+  };
 }

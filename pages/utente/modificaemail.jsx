@@ -1,102 +1,77 @@
 import Layout from "components/layout";
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Flex,
   VStack,
   Text,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   Spacer,
   Button,
-  Divider,
   HStack,
-  InputRightElement,
-  InputGroup,
-  Link,
-  IconButton,
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-
-const LabelForm = ({ label, type }) => {
-  return (
-    <FormControl>
-      <FormLabel>{label}</FormLabel>
-      <Input type={type} />
-    </FormControl>
-  );
-};
-
-const PasswordForm = ({ label }) => {
-  const [show, setShow] = useState(false);
-
-  return (
-    <FormControl>
-      <FormLabel>{label}</FormLabel>
-      <InputGroup>
-        <Input type={show ? "text" : "password"} />
-        <InputRightElement>
-          <IconButton
-            color="black"
-            aria-label="Toggle password visibility"
-            bgColor="transparent"
-            icon={show ? <ViewIcon /> : <ViewOffIcon />}
-            onClick={() => setShow(!show)}
-            size="sm"
-          />
-        </InputRightElement>
-      </InputGroup>
-    </FormControl>
-  );
-};
-
-const Modifica = ({ email }) => {
-  return (
-    <Flex direction="column" w="35%" p={10} bgColor="white" rounded={40}>
-      <Text align="center" p={2} color="black" fontSize={40} fontWeight="bold">
-        Modifica Email
-      </Text>
-      <Spacer />
-      <VStack alignItems="left" spacing={-1}>
-        <Text>Attuale indirizzo email</Text>
-        <Text>{email}</Text>
-      </VStack>
-      <VStack spacing={3}>
-        <Spacer />
-        <LabelForm label={"Nuova email"} type="text" />
-        <Spacer />
-        <LabelForm label={"Conferma nuova email"} type="text" />
-        <Spacer />
-        <PasswordForm label={"Password"} />
-      </VStack>
-      <Text
-        align="center"
-        color="whiteAlpha.100"
-        fontSize={50}
-        fontWeight="bold"
-      >
-        Il mio profilo
-      </Text>
-      <HStack justify="center" spacing={10}>
-        <Button bgColor="#FF3D00">Applica modifiche</Button>
-        <Link href="http://localhost:3000/utente/1">
-          <Button _hover={{ bgColor: "black" }} bgColor="gray.500">
-            Annulla
-          </Button>
-        </Link>
-      </HStack>
-    </Flex>
-  );
-};
+import { useRouter } from "next/router";
+import { Form, Formik } from "formik";
+import { FormField } from "components/authentication";
+import * as Yup from "yup";
+import { loginSchema } from "lib/yupSchemas";
+import { useSession } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
 export default function Home() {
-  const utente = {
-    email: "a@b.c",
-    password: "Bocchi1.",
-  };
+  const router = useRouter();
+
+  const { data: session } = useSession();
+
+  let emailUsedError = null;
+  let errorFromServer = null;
+
+  async function handleSubmit(values) {
+    // TODO: implement API call
+    //
+    // try {
+    //   const res = await fetch("/api/auth/signup", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(values),
+    //   });
+    //   if (res.status === 200) {
+    //     signIn("credentials", {
+    //       redirect: false,
+    //       email: values.email,
+    //       password: values.password,
+    //     });
+    //   } else {
+    //     throw new Error(await res.text());
+    //   }
+    // } catch (error) {
+    //   emailUsedError = error.message;
+    //   if (process.env.NODE_ENV === "development")
+    //     console.error("An unexpected error happened occurred:", error);
+    // }
+  }
+
+  const formList = [
+    {
+      fieldName: "email",
+      label: "Nuova Email",
+      type: "email",
+      placeholder: "Inserisci la tua email",
+    },
+    {
+      fieldName: "emailConfirm",
+      label: "Conferma Nuova Email",
+      type: "email",
+      placeholder: "Conferma la tua email",
+    },
+    {
+      fieldName: "password",
+      label: "Password",
+      type: "password",
+      placeholder: "Inserisci la tua password",
+    },
+  ];
 
   return (
     <Box
@@ -107,9 +82,104 @@ export default function Home() {
     >
       <Layout>
         <VStack alignItems="center" p={20} spacing={10}>
-          <Modifica email={utente.email} />
+          <Flex direction="column" w="35%" p={10} bgColor="white" rounded={40}>
+            <Text
+              align="center"
+              p={2}
+              color="black"
+              fontSize={40}
+              fontWeight="bold"
+            >
+              Modifica Email
+            </Text>
+            <Spacer />
+            <Formik
+              validationSchema={Yup.object().shape({
+                email: loginSchema.email.test(
+                  "Server",
+                  () => emailUsedError,
+                  () => !emailUsedError
+                ),
+                emailConfirm: Yup.string()
+                  .required("This field is very important.")
+                  .oneOf([Yup.ref("email")], "Emails don't match!"),
+
+                password: loginSchema.password.test(
+                  "Server",
+                  () => errorFromServer,
+                  () => !errorFromServer
+                ),
+              })}
+              initialValues={{ email: "", emailConfirm: "", password: "" }}
+              onSubmit={async (values, actions) => {
+                await handleSubmit(values);
+                await actions.validateForm();
+                emailUsedError = null;
+                errorFromServer = null;
+                actions.setSubmitting(false);
+              }}
+            >
+              {(props) => (
+                <Form>
+                  <VStack spacing={4}>
+                    <VStack alignItems="left" w="full" spacing={-1}>
+                      <Text>Attuale indirizzo email</Text>
+                      <Input
+                        isReadOnly
+                        type="email"
+                        value={session.user.email}
+                      />
+                    </VStack>
+                    {formList.map((formItem) => (
+                      <FormField key={formItem.fieldName} {...formItem} />
+                    ))}
+                    <Spacer my={4} />
+                    <HStack justify="center" spacing={10}>
+                      <Button
+                        bgColor="#FF3D00"
+                        isLoading={props.isSubmitting}
+                        type="submit"
+                      >
+                        Applica modifiche
+                      </Button>
+                      <Button
+                        _hover={{ bgColor: "black" }}
+                        bgColor="gray.500"
+                        onClick={() => router.push("/utente")}
+                      >
+                        Annulla
+                      </Button>
+                    </HStack>
+                  </VStack>
+                </Form>
+              )}
+            </Formik>
+          </Flex>
         </VStack>
       </Layout>
     </Box>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/signin",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
 }

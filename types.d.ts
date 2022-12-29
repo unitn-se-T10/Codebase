@@ -5,6 +5,7 @@ declare module "next-auth" {
     user?: DefaultUser & {
       isGestore: boolean;
       uid: string;
+      surname: string;
     };
   }
 }
@@ -13,5 +14,6 @@ declare module "next-auth/jwt/types" {
   interface JWT {
     isGestore: boolean;
     uid: string;
+    surname: string;
   }
 }

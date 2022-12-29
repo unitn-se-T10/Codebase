@@ -1,4 +1,4 @@
-import { SearchIcon } from "@chakra-ui/icons";
+import { MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
@@ -8,6 +8,7 @@ import {
   Collapse,
   Flex,
   HStack,
+  IconButton,
   Input,
   InputGroup,
   InputRightElement,
@@ -19,6 +20,7 @@ import {
   Spinner,
   Stack,
   StackProps,
+  useColorMode,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -27,6 +29,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { Session } from "next-auth";
 
 const Searchbar: React.FC<BoxProps> = (props) => {
   const [search, setSearch] = useState("");
@@ -56,7 +59,7 @@ const Searchbar: React.FC<BoxProps> = (props) => {
 };
 
 // TODO: set user type
-const UserMenu: React.FC<{ user }> = ({ user }) => {
+const UserMenu: React.FC<{ user: Session["user"] }> = ({ user }) => {
   const router = useRouter();
 
   return (
@@ -87,8 +90,6 @@ const UserMenu: React.FC<{ user }> = ({ user }) => {
         <MenuItem onClick={() => router.push("/utente/preferiti")}>
           I miei Preferiti
         </MenuItem>
-        {/*<MenuItem onClick={() => router.push("/page3")}>Page 3</MenuItem>
-         */}
         <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
       </MenuList>
     </Menu>
@@ -127,6 +128,7 @@ const PagesList: React.FC<StackProps> = (props) => {
 };
 
 const Navbar: React.FC<BoxProps> = (props) => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const searchbar = useDisclosure();
   const menu = useDisclosure();
 
@@ -144,6 +146,13 @@ const Navbar: React.FC<BoxProps> = (props) => {
           </Link>
         </Flex>
         <HStack spacing={3}>
+          <IconButton
+            aria-label="toggleColorMode"
+            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+            isRound
+            onClick={toggleColorMode}
+            variant="ghost"
+          />
           <ShowLogin />
         </HStack>
       </Flex>
