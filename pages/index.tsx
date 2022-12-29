@@ -9,8 +9,11 @@ import {
   Flex,
   Button,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <Box
       bgImage="/sfondo2.jpg"
@@ -52,7 +55,12 @@ export default function Home() {
                   type="type"
                 />
                 <InputRightElement w="9rem" p={1}>
-                  <Button h="1.75rem" borderRadius={20} size="sm">
+                  <Button
+                    h="1.75rem"
+                    borderRadius={20}
+                    onClick={() => router.push("/ristoranti")}
+                    size="sm"
+                  >
                     Trova Ristoranti
                   </Button>
                 </InputRightElement>

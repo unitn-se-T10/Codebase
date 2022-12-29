@@ -110,16 +110,16 @@ const ShowLogin: React.FC = () => {
 
 const PagesList: React.FC<StackProps> = (props) => {
   const links = [
-    { href: "/ristoranti", text: "Ristoranti" },
-    { href: "/page2", text: "Page 2" },
-    { href: "/page3", text: "Page 3" },
-    { href: "/page4", text: "Page 4" },
+    // { href: "/ristoranti", text: "Ristoranti" },
+    { href: "/api-doc", text: "API Doc" },
+    // { href: "/page3", text: "Page 3" },
+    // { href: "/page4", text: "Page 4" },
   ];
 
   return (
     <Stack {...props}>
       {links.map(({ href, text }) => (
-        <Link href={href} variant="ghostText" key={href}>
+        <Link href={href} variant="ghostText" key={href} color="white">
           {text}
         </Link>
       ))}
@@ -144,6 +144,10 @@ const Navbar: React.FC<BoxProps> = (props) => {
           <Link href="/">
             <Image src="/logo.png" alt="logo" width={75} height={75} />
           </Link>
+
+          <Box display={{ base: "none", lg: "flex" }} px={3}>
+            <PagesList direction="row" spacing={6} />
+          </Box>
         </Flex>
         <HStack spacing={3}>
           <IconButton
