@@ -125,7 +125,12 @@ const UserMenu: React.FC<{ user: Session["user"] }> = ({ user }) => {
             I miei preferiti
           </MenuItem>
         )}
-        {session?.user?.isGestore ? null : (
+        {session?.user?.isGestore ? (
+          <MenuItem onClick={() => router.push("/utente/ordini")}>
+            {" "}
+            I miei ordini{" "}
+          </MenuItem>
+        ) : (
           <MenuItem onClick={() => router.push("/carrello/1")}>
             {" "}
             Carrello{" "}
@@ -210,7 +215,6 @@ const Navbar: React.FC<BoxProps> = (props) => {
           <ShowLogin />
         </HStack>
       </Flex>
-
       <Collapse animateOpacity in={searchbar.isOpen}>
         <Box display={{ md: "none" }} pb={4}>
           <Searchbar />

@@ -8,12 +8,10 @@ import {
   Center,
   Wrap,
   WrapItem,
-  Flex,
   Spinner,
   Box,
   Link,
   Spacer,
-  TagLeftIcon,
 } from "@chakra-ui/react";
 import { StarIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
@@ -124,9 +122,15 @@ export default function Ristorante({ ristorante }) {
               />
               <Spacer />
               <VStack alignItems="start">
-                <Text fontSize={20} fontWeight="bold">
-                  {ristorante.nome}
-                </Text>
+                <HStack spacing={10}>
+                  <Text fontSize={20} fontWeight="bold">
+                    {ristorante.nome}
+                  </Text>
+
+                  <Text color="tomato" fontSize={20} fontWeight="semibold">
+                    {ristorante.tipologia}
+                  </Text>
+                </HStack>
                 <HStack spacing={2}>
                   {[...Array(5).keys()].map((i) =>
                     i < ristorante.valutazione ? (

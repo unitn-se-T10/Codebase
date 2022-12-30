@@ -18,9 +18,34 @@ import { CgOptions } from "react-icons/cg";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { TipologiaRistorante } from "lib/typings";
 import useSWR from "swr";
-import { RestaurantCard } from "components/restaurant";
+import { RestaurantCard2 } from "components/restaurant";
+import { useSession } from "next-auth/react";
 
-const ChooseRestaurants = () => {
+function ordina(ristoranti, ordine) {
+  if (ordine === "Crescente") {
+    ristoranti.sort((a, b) => {
+      if (a.nome < b.nome) {
+        return -1;
+      }
+      if (a.nome > b.nome) {
+        return 1;
+      }
+      return 0;
+    });
+  } else if (ordine === "Decrescente") {
+    ristoranti.sort((a, b) => {
+      if (a.nome < b.nome) {
+        return 1;
+      }
+      if (a.nome > b.nome) {
+        return -1;
+      }
+      return 0;
+    });
+  }
+}
+
+const ChooseRestaurants = ({}) => {
   const [tipologia, setTipologia] = useState("Tipologia");
   const [ordine, setOrdine] = useState("None");
 
@@ -28,6 +53,7 @@ const ChooseRestaurants = () => {
     <Flex
       justify="space-evenly"
       direction="column"
+      maxH={400}
       p={5}
       shadow="1px 1px 5px 1px gray"
       bgColor="white"
@@ -44,13 +70,19 @@ const ChooseRestaurants = () => {
       </Flex>
       <OrderButton
         bgColor={ordine === "Crescente" ? "yellow.300" : "white"}
-        onClick={() => setOrdine("Crescente")}
+        onClick={() => {
+          setOrdine("Crescente");
+          //ordina(rst, ordine);
+        }}
       >
         Ordine Alfabetico Crescente (A,Z)
       </OrderButton>
       <OrderButton
         bgColor={ordine === "Decrescente" ? "yellow.300" : "white"}
-        onClick={() => setOrdine("Decrescente")}
+        onClick={() => {
+          setOrdine("Decrescente");
+          //ordina(rst, ordine);
+        }}
       >
         Ordine Alfabetico Decrescente (Z,A)
       </OrderButton>
@@ -129,6 +161,10 @@ export default function Home() {
     `${process.env.NEXT_PUBLIC_SITE_URL}/api/thumbnails?start=${start}&num=${num}`,
     fetcher
   );
+  const { data: session } = useSession();
+
+  /*var [ristoranti, setRistoranti] = useState(thumbnails);
+  ordina(ristoranti, "Crescente");*/
 
   return (
     <Box
@@ -152,7 +188,16 @@ export default function Home() {
           >
             {thumbnails ? (
               thumbnails.map((thumbnail) => (
-                <RestaurantCard key={thumbnail.id} thumbnail={thumbnail} />
+                <>
+                  {
+                    //console.log(ristoranti)
+                  }
+                  <RestaurantCard2
+                    sessione={session}
+                    key={thumbnail.id}
+                    thumbnail={thumbnail}
+                  />
+                </>
               ))
             ) : (
               <Spinner />

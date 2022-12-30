@@ -10,6 +10,8 @@ import {
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogBody,
+  Flex,
+  Spacer,
   AlertDialogFooter,
 } from "@chakra-ui/react";
 import { ChakraNextImage } from "components/utils";
@@ -143,8 +145,9 @@ function DeleteDialog() {
 export const RestaurantCard: React.FC<{
   thumbnail: RistoranteThumbnail;
   isGestore: boolean;
-}> = ({ thumbnail, isGestore = false }) => (
-  <HStack alignItems="top" spacing={3}>
+  sessione;
+}> = ({ thumbnail, isGestore, sessione }) => (
+  <HStack alignItems="top" w="55rem" spacing={3}>
     <ChakraNextImage
       borderRadius={20}
       alt={thumbnail.nome}
@@ -154,9 +157,11 @@ export const RestaurantCard: React.FC<{
     />
     <VStack align="start">
       <NextLink href={`/ristorante/${thumbnail.id}`}>
-        <Box h={10} fontWeight="bold" fontStyle="oblique">
-          {thumbnail.nome}
-        </Box>
+        <HStack>
+          <Box h={10} fontWeight="bold" fontStyle="oblique">
+            {thumbnail.nome}
+          </Box>
+        </HStack>
         <HStack>
           <GoLocation width={3} height={3} />
           <Box h={5}>{thumbnail.indirizzo}</Box>
@@ -171,7 +176,46 @@ export const RestaurantCard: React.FC<{
         </HStack>
       </NextLink>
     </VStack>
+    <Spacer />
+    {sessione?.user?.isGestore ? <DeleteDialog /> : <Preferiti />}
+  </HStack>
+);
 
-    {isGestore ? <DeleteDialog /> : <Preferiti />}
+export const RestaurantCard2: React.FC<{
+  thumbnail: RistoranteThumbnail;
+  isGestore: boolean;
+  sessione;
+}> = ({ thumbnail, isGestore, sessione }) => (
+  <HStack alignItems="top" w="55rem" spacing={3}>
+    <ChakraNextImage
+      borderRadius={20}
+      alt={thumbnail.nome}
+      src={`data:image/jpg;base64,${thumbnail.immagine}`}
+      width={200}
+      height={200}
+    />
+    <VStack align="start">
+      <NextLink href={`/ristorante/${thumbnail.id}`}>
+        <HStack>
+          <Box h={10} fontWeight="bold" fontStyle="oblique">
+            {thumbnail.nome}
+          </Box>
+        </HStack>
+        <HStack>
+          <GoLocation width={3} height={3} />
+          <Box h={5}>{thumbnail.indirizzo}</Box>
+        </HStack>
+        <HStack>
+          <FaPhoneAlt width={3} height={3} />
+          <Box h={5}>{thumbnail.telefono}</Box>
+        </HStack>
+        <HStack>
+          <MdEmail width={3} height={3} />
+          <Box h={5}>{thumbnail.email}</Box>
+        </HStack>
+      </NextLink>
+    </VStack>
+    <Spacer />
+    {sessione?.user?.isGestore ? null : <Preferiti />}
   </HStack>
 );
