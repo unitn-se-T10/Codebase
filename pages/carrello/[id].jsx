@@ -331,7 +331,7 @@ const CarrelloPage = () => {
     >
       <VStack alignItems="left" p={5} bgColor="white" rounded={20} spacing={3}>
         <HStack>
-          <Link href="http://localhost:3000/ristorante/6d87b60f-1c65-4406-948f-3046a0a0d5de">
+          <Link href="/ristorante/ce4b9005-bbcf-4451-a435-46d2cfa9307b">
             <Button
               _hover={{ color: "transparent" }}
               _active={{ color: "transparent" }}

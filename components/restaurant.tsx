@@ -4,6 +4,7 @@ import {
   VStack,
   useDisclosure,
   Box,
+  Text,
   Button,
   AlertDialog,
   AlertDialogOverlay,
@@ -158,10 +159,13 @@ export const RestaurantCard: React.FC<{
     <VStack align="start">
       <NextLink href={`/ristorante/${thumbnail.id}`}>
         <HStack>
-          <Box h={10} fontWeight="bold" fontStyle="oblique">
+          <Box h={7} fontWeight="bold" fontStyle="oblique">
             {thumbnail.nome}
           </Box>
         </HStack>
+        <Text color="tomato" fontWeight="bold" fontStyle="oblique">
+          {thumbnail.tipologia}
+        </Text>
         <HStack>
           <GoLocation width={3} height={3} />
           <Box h={5}>{thumbnail.indirizzo}</Box>
@@ -197,10 +201,13 @@ export const RestaurantCard2: React.FC<{
     <VStack align="start">
       <NextLink href={`/ristorante/${thumbnail.id}`}>
         <HStack>
-          <Box h={10} fontWeight="bold" fontStyle="oblique">
+          <Box h={7} fontWeight="bold" fontStyle="oblique">
             {thumbnail.nome}
           </Box>
         </HStack>
+        <Text color="tomato" fontWeight="bold" fontStyle="oblique">
+          {thumbnail.tipologia}
+        </Text>
         <HStack>
           <GoLocation width={3} height={3} />
           <Box h={5}>{thumbnail.indirizzo}</Box>

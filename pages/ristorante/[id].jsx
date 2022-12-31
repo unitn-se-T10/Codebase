@@ -39,7 +39,7 @@ const DishList = ({ menu, session }) =>
   );
 
 const MenuTabs = ({ menus, session }) => {
-  if (!menus) return <Spinner />;
+  if (!menus) return <Text>Al momento non ci sono menu disponibili</Text>;
   return (
     <TabPanels>
       {Object.values(TipologiaMenu).map((tipologia) => {
@@ -174,7 +174,7 @@ export default function Ristorante({ ristorante }) {
                 {/* NOTE: Janky workaround */}
                 {Object.values(TipologiaMenu).map((tipologia) =>
                   menus?.find((menu) => menu.tipologia === tipologia) ? (
-                    <Tab key={tipologia}>{tipologia}</Tab>
+                    <Tab key={tipologia}>{menus.at(tipologia).nome}</Tab>
                   ) : null
                 )}
               </TabList>

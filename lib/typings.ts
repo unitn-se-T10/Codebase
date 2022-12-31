@@ -33,6 +33,7 @@ export enum TipologiaMenu {
   CONTORNI = "contorni",
   DOLCI = "dolci",
   BEVANDE = "bevande",
+  PIZZE_CLASSICHE = "pizze classiche",
 }
 
 export type RistoranteThumbnail = {

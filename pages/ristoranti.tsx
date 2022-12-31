@@ -21,7 +21,7 @@ import useSWR from "swr";
 import { RestaurantCard2 } from "components/restaurant";
 import { useSession } from "next-auth/react";
 
-function ordina(ristoranti, ordine) {
+/*function ordina(ristoranti, ordine) {
   if (ordine === "Crescente") {
     ristoranti.sort((a, b) => {
       if (a.nome < b.nome) {
@@ -43,13 +43,13 @@ function ordina(ristoranti, ordine) {
       return 0;
     });
   }
-}
+}*/
 
 const ChooseRestaurants = ({ restaurant }) => {
   const [tipologia, setTipologia] = useState("Tipologia");
   const [ordine, setOrdine] = useState("None");
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (restaurant) {
       if (ordine === "Crescente") {
         ordina(restaurant, "Crescente");
@@ -57,7 +57,7 @@ const ChooseRestaurants = ({ restaurant }) => {
         ordina(restaurant, "Decrescente");
       }
     }
-  }, [ordine, restaurant]);
+  }, [ordine, restaurant]);*/
 
   return (
     <Flex
