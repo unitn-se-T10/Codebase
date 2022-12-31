@@ -91,7 +91,7 @@ export const RestaurantPreferitiCard: React.FC<{
 );
 
 function DeleteDialog() {
-  const { isOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
 
   return (
@@ -105,6 +105,7 @@ function DeleteDialog() {
         _hover={{ bgColor: "transparent" }}
         _active={{ bgColor: "gainsboro" }}
         bgColor="transparent"
+        onClick={onOpen}
       >
         <DeleteIcon color="red.600" boxSize={7} />
       </Button>
