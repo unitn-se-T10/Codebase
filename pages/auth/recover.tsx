@@ -5,7 +5,6 @@ import {
   Flex,
   Divider,
   VStack,
-  Center,
   Text,
   FormControl,
   Input,
@@ -47,7 +46,7 @@ export default function Home() {
             </Text>
             <Spacer />
             <Text align="center" color="black" fontSize={14}>
-              Se hai dimenticato la password del tuo account, quest'area ti
+              Se hai dimenticato la password del tuo account, quest&apos;area ti
               permette di recuperarla.
             </Text>
             <Spacer />

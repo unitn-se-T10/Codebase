@@ -27,6 +27,9 @@ import { RistoranteThumbnail } from "lib/typings";
  *         immagine:
  *           type: binary
  *           description: Image of the restaurant
+ *         tipologia:
+ *           type: string
+ *           description: Type of the restaurant
  *     ThumbnailsResponse:
  *       properties:
  *         success:
@@ -100,6 +103,7 @@ async function thumbnailsHandler(
       telefono: ristorante.telefono,
       email: ristorante.email,
       immagine: ristorante.immagine,
+      tipologia: ristorante.tipologia,
     };
   });
 

@@ -42,4 +42,5 @@ export type RistoranteThumbnail = {
   telefono: string;
   email: string;
   immagine: string;
+  tipologia: string;
 };

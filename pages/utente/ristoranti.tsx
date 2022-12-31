@@ -14,9 +14,13 @@ import { RestaurantCard } from "components/restaurant";
 import ChakraNextLink from "components/chakraNextLink";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
+import { GetServerSideProps } from "next";
+import { useSession } from "next-auth/react";
+import { URL } from "url";
 
 export default function Home() {
-  const fetcher = (url) =>
+  const { data: session } = useSession();
+  const fetcher = (url: URL) =>
     fetch(url)
       .then((r) => r.json())
       .then((j) => j.ristoranti);
@@ -54,6 +58,7 @@ export default function Home() {
                   <RestaurantCard
                     key={thumbnail.id}
                     thumbnail={thumbnail}
+                    session={session}
                     isGestore
                   />
                 ))
@@ -93,7 +98,7 @@ export default function Home() {
   );
 }
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -110,8 +115,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {
-      session,
-    },
+    props: {},
   };
-}
+};

@@ -1,5 +1,5 @@
 import Layout from "components/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Text,
@@ -45,9 +45,19 @@ function ordina(ristoranti, ordine) {
   }
 }
 
-const ChooseRestaurants = ({}) => {
+const ChooseRestaurants = ({ restaurant }) => {
   const [tipologia, setTipologia] = useState("Tipologia");
   const [ordine, setOrdine] = useState("None");
+
+  useEffect(() => {
+    if (restaurant) {
+      if (ordine === "Crescente") {
+        ordina(restaurant, "Crescente");
+      } else {
+        ordina(restaurant, "Decrescente");
+      }
+    }
+  }, [ordine, restaurant]);
 
   return (
     <Flex
@@ -70,19 +80,13 @@ const ChooseRestaurants = ({}) => {
       </Flex>
       <OrderButton
         bgColor={ordine === "Crescente" ? "yellow.300" : "white"}
-        onClick={() => {
-          setOrdine("Crescente");
-          //ordina(rst, ordine);
-        }}
+        onClick={() => setOrdine("Crescente")}
       >
         Ordine Alfabetico Crescente (A,Z)
       </OrderButton>
       <OrderButton
         bgColor={ordine === "Decrescente" ? "yellow.300" : "white"}
-        onClick={() => {
-          setOrdine("Decrescente");
-          //ordina(rst, ordine);
-        }}
+        onClick={() => setOrdine("Decrescente")}
       >
         Ordine Alfabetico Decrescente (Z,A)
       </OrderButton>
@@ -108,7 +112,7 @@ const ChooseRestaurants = ({}) => {
           _expanded={{ bg: "yellow.400" }}
           transition="all 0.2s"
         >
-          {tipologia} <ChevronDownIcon />{" "}
+          {tipologia} <ChevronDownIcon />
         </MenuButton>
         <MenuList>
           {Object.values(TipologiaRistorante).map((tipo) => (
@@ -163,9 +167,6 @@ export default function Home() {
   );
   const { data: session } = useSession();
 
-  /*var [ristoranti, setRistoranti] = useState(thumbnails);
-  ordina(ristoranti, "Crescente");*/
-
   return (
     <Box
       bgImage="/sfondo2.jpg"
@@ -175,7 +176,7 @@ export default function Home() {
     >
       <Layout>
         <HStack align="top" w="80%" p={10} spacing={20}>
-          <ChooseRestaurants />
+          <ChooseRestaurants restaurant={thumbnails} />
           <VStack
             align="self-start"
             w="full"
@@ -187,17 +188,12 @@ export default function Home() {
             spacing={5}
           >
             {thumbnails ? (
-              thumbnails.map((thumbnail) => (
-                <>
-                  {
-                    //console.log(ristoranti)
-                  }
-                  <RestaurantCard2
-                    sessione={session}
-                    key={thumbnail.id}
-                    thumbnail={thumbnail}
-                  />
-                </>
+              thumbnails.map((ristorante) => (
+                <RestaurantCard2
+                  sessione={session}
+                  key={ristorante.id}
+                  thumbnail={ristorante}
+                />
               ))
             ) : (
               <Spinner />

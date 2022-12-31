@@ -10,7 +10,6 @@ import {
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogBody,
-  Flex,
   Spacer,
   AlertDialogFooter,
 } from "@chakra-ui/react";
@@ -24,6 +23,7 @@ import { IconContext } from "react-icons/lib";
 import { useState } from "react";
 import { RistoranteThumbnail } from "lib/typings";
 import { DeleteIcon } from "@chakra-ui/icons";
+import { Session } from "next-auth";
 
 const Preferiti: React.FC = () => {
   const [isPressed, setIsPressed] = useState(false);
@@ -145,8 +145,8 @@ function DeleteDialog() {
 export const RestaurantCard: React.FC<{
   thumbnail: RistoranteThumbnail;
   isGestore: boolean;
-  sessione;
-}> = ({ thumbnail, isGestore, sessione }) => (
+  session: Session;
+}> = ({ thumbnail, isGestore, session }) => (
   <HStack alignItems="top" w="55rem" spacing={3}>
     <ChakraNextImage
       borderRadius={20}
@@ -177,14 +177,14 @@ export const RestaurantCard: React.FC<{
       </NextLink>
     </VStack>
     <Spacer />
-    {sessione?.user?.isGestore ? <DeleteDialog /> : <Preferiti />}
+    {session?.user?.isGestore ? <DeleteDialog /> : <Preferiti />}
   </HStack>
 );
 
 export const RestaurantCard2: React.FC<{
   thumbnail: RistoranteThumbnail;
-  isGestore: boolean;
-  sessione;
+  isGestore?: boolean;
+  sessione: Session;
 }> = ({ thumbnail, isGestore, sessione }) => (
   <HStack alignItems="top" w="55rem" spacing={3}>
     <ChakraNextImage

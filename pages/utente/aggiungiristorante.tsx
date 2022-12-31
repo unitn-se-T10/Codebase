@@ -33,6 +33,7 @@ import { addRstSchema } from "lib/yupSchemas";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { FormField } from "components/authentication";
 import * as Yup from "yup";
+import { GetServerSideProps } from "next";
 
 type addValues = {
   rstName: string;
@@ -342,7 +343,7 @@ export default function Home() {
   );
 }
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -359,8 +360,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {
-      session,
-    },
+    props: {},
   };
-}
+};

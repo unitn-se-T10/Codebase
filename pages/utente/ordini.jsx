@@ -3,11 +3,8 @@ import {
   VStack,
   Box,
   Text,
-  Input,
   Avatar,
   Divider,
-  InputGroup,
-  InputRightElement,
   Flex,
   Button,
   ModalOverlay,
@@ -22,11 +19,9 @@ import {
   Image,
   Heading,
   Center,
-  StackDivider,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
-import { useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 
 const piatto1 = {
@@ -215,8 +210,6 @@ const UtenteCard = ({ utente, id }) => {
 };
 
 export default function Home() {
-  const router = useRouter();
-
   return (
     <Box
       bgImage="/sfondo2.jpg"

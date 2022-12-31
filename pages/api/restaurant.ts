@@ -165,6 +165,16 @@ async function getRestaurantInfo(
  *               tipologia:
  *                 type: string
  *                 description: The type of the restaurant
+ *               valutazione:
+ *                 type: number
+ *                 description: The rating of the restaurant
+ *                 default: 0
+ *                 minimum: 0
+ *                 maximum: 5
+ *               immagine:
+ *                 type: string
+ *                 description: The image of the restaurant
+ *                 format: base64
  *     responses:
  *       200:
  *         description: Menu added
@@ -212,6 +222,7 @@ async function addRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
     descrizione,
     tipologia,
     immagine,
+    valutazione,
   } = req.body;
   // NOTE: should use YUP
   if (
@@ -245,7 +256,7 @@ async function addRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
       tipologia,
       gestoreId: session.user.id,
       immagine,
-      valutazione: 0,
+      valutazione: valutazione ? valutazione : 0,
       menuIds: [],
     });
     return res.status(200).send({ success: true, ristoranteId: restaurant.id });

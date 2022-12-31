@@ -43,7 +43,7 @@ const Register: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
-      if (res.status === 200) {
+      if (res.status === 201) {
         signIn("credentials", {
           redirect: false,
           email: values.email,

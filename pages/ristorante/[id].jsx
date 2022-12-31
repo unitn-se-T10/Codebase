@@ -25,12 +25,12 @@ import { ChakraNextImage } from "components/utils";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 
-const DishList = ({ menu, sessione }) =>
+const DishList = ({ menu, session }) =>
   menu ? (
     <Wrap justify="space-evenly" p={5} spacing={10}>
       {menu.piatti.map((dish) => (
         <WrapItem key={dish.id}>
-          <DishCard dish={dish} session={sessione} />
+          <DishCard dish={dish} session={session} />
         </WrapItem>
       ))}
     </Wrap>
@@ -38,18 +38,20 @@ const DishList = ({ menu, sessione }) =>
     <Text>Non ci sono piatti in questo menu</Text>
   );
 
-const MenuTabs = ({ menus, data }) => {
+const MenuTabs = ({ menus, session }) => {
   if (!menus) return <Spinner />;
   return (
     <TabPanels>
-      {Object.values(TipologiaMenu).map((tipologia) => (
-        <TabPanel key={tipologia}>
-          <DishList
-            sessione={data}
-            menu={menus.find((menu) => menu.tipologia === tipologia)}
-          />
-        </TabPanel>
-      ))}
+      {Object.values(TipologiaMenu).map((tipologia) => {
+        // NOTE: Janky workaround
+        const menu = menus.find((menu) => menu.tipologia === tipologia);
+
+        return menu ? (
+          <TabPanel key={tipologia}>
+            <DishList session={session} menu={menu} />
+          </TabPanel>
+        ) : null;
+      })}
     </TabPanels>
   );
 };
@@ -169,11 +171,14 @@ export default function Ristorante({ ristorante }) {
               variant="soft-rounded"
             >
               <TabList>
-                {Object.values(TipologiaMenu).map((tipologia) => (
-                  <Tab key={tipologia}>{tipologia}</Tab>
-                ))}
+                {/* NOTE: Janky workaround */}
+                {Object.values(TipologiaMenu).map((tipologia) =>
+                  menus?.find((menu) => menu.tipologia === tipologia) ? (
+                    <Tab key={tipologia}>{tipologia}</Tab>
+                  ) : null
+                )}
               </TabList>
-              <MenuTabs data={session} menus={menus} />
+              <MenuTabs session={session} menus={menus} />
             </Tabs>
           </VStack>
         </Center>
