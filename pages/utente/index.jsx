@@ -1,5 +1,4 @@
 import Layout from "components/layout";
-// import { useState } from "react";
 import {
   Button,
   Text,
@@ -11,8 +10,6 @@ import {
   Divider,
   Link,
 } from "@chakra-ui/react";
-// import { Editable, EditablePreview, EditableInput } from "@chakra-ui/react";
-// import { CheckIcon, EditIcon } from "@chakra-ui/icons";
 import { regSchema } from "lib/yupSchemas";
 import { Form, Formik } from "formik";
 import { FormField } from "components/authentication";
@@ -21,60 +18,6 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
-
-// const LabelText = ({ label, txt }) => {
-//   const [NotEditable, setNotEditable] = useState(true);
-//
-//   return (
-//     <VStack alignItems="left">
-//       <Text fontSize={15} fontWeight="semibold">
-//         {label}
-//       </Text>
-//       <Flex>
-//         <Editable
-//           w="full"
-//           color="gray"
-//           defaultValue={txt}
-//           isDisabled={NotEditable}
-//           selectAllOnFocus={NotEditable}
-//         >
-//           <EditablePreview />
-//           <EditableInput />
-//         </Editable>
-//         <Spacer />
-//         {NotEditable ? (
-//           <Button
-//             _hover="transparent"
-//             _active="transparent"
-//             bgColor="transparent"
-//           >
-//             <EditIcon
-//               color="black"
-//               onClick={() => {
-//                 setNotEditable(!NotEditable);
-//               }}
-//             />
-//           </Button>
-//         ) : (
-//           <Button
-//             _hover="transparent"
-//             _active="transparent"
-//             bgColor="transparent"
-//           >
-//             <CheckIcon
-//               color="black"
-//               onClick={() => {
-//                 setNotEditable(!NotEditable);
-//               }}
-//             ></CheckIcon>
-//           </Button>
-//         )}
-//       </Flex>
-//       <Divider borderColor="gray.400" />
-//       <Divider borderColor="white" />
-//     </VStack>
-//   );
-// };
 
 const ModificaText = ({ label, placeholder, href }) => {
   return (
@@ -235,6 +178,7 @@ export async function getServerSideProps(context) {
       },
     };
   }
+  session.user.image = null;
 
   return {
     props: {

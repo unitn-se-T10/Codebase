@@ -176,6 +176,7 @@ export async function getServerSideProps(context) {
       },
     };
   }
+  session.user.image = null;
 
   return {
     props: {

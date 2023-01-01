@@ -1,17 +1,17 @@
 import Layout from "components/layout";
 import {
-  VStack,
-  HStack,
-  Text,
-  Button,
-  Divider,
-  Center,
-  Wrap,
-  WrapItem,
-  Spinner,
   Box,
+  Button,
+  Center,
+  Divider,
+  HStack,
   Link,
   Spacer,
+  Spinner,
+  Text,
+  VStack,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import { StarIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
@@ -25,23 +25,25 @@ import { ChakraNextImage } from "components/utils";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 
-const DishList = ({ menu, session }) =>
-  menu ? (
-    <Wrap justify="space-evenly" p={5} spacing={10}>
-      {menu.piatti.map((dish) => (
-        <WrapItem key={dish.id}>
-          <DishCard dish={dish} session={session} />
-        </WrapItem>
-      ))}
-    </Wrap>
-  ) : (
-    <Text>Non ci sono piatti in questo menu</Text>
-  );
+const DishList = ({ menu, session }) => (
+  <Wrap justify="space-evenly" p={5} spacing={10}>
+    {menu.piatti.map((dish) => (
+      <WrapItem key={dish.id}>
+        <DishCard dish={dish} session={session} />
+      </WrapItem>
+    ))}
+  </Wrap>
+);
 
 const MenuTabs = ({ menus, session }) => {
   if (!menus) return <Text>Al momento non ci sono menu disponibili</Text>;
   return (
     <TabPanels>
+      {menus.map((menu) => (
+        <TabPanel key={menu.id}>
+          <DishList menu={menu} session={session} />
+        </TabPanel>
+      ))}
       {Object.values(TipologiaMenu).map((tipologia) => {
         // NOTE: Janky workaround
         const menu = menus.find((menu) => menu.tipologia === tipologia);
@@ -170,15 +172,24 @@ export default function Ristorante({ ristorante }) {
               size="md"
               variant="soft-rounded"
             >
-              <TabList>
-                {/* NOTE: Janky workaround */}
-                {Object.values(TipologiaMenu).map((tipologia) =>
-                  menus?.find((menu) => menu.tipologia === tipologia) ? (
-                    <Tab key={tipologia}>{menus.at(tipologia).nome}</Tab>
-                  ) : null
-                )}
-              </TabList>
-              <MenuTabs session={session} menus={menus} />
+              {menus ? (
+                <>
+                  <TabList>
+                    {menus.map((menu) => (
+                      <Tab key={menu.id}>{menu.nome}</Tab>
+                    ))}
+                    {/* NOTE: Janky workaround */}
+                    {/* {Object.values(TipologiaMenu).map((tipologia) => */}
+                    {/*   menus?.find((menu) => menu.tipologia === tipologia) ? ( */}
+                    {/*     <Tab key={tipologia}>{menus.at(tipologia).nome}</Tab> */}
+                    {/*   ) : null */}
+                    {/* )} */}
+                  </TabList>
+                  <MenuTabs session={session} menus={menus} />
+                </>
+              ) : (
+                <Spinner />
+              )}
             </Tabs>
           </VStack>
         </Center>

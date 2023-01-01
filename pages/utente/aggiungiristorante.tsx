@@ -358,8 +358,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+  session.user.image = null;
 
   return {
-    props: {},
+    props: {
+      session,
+    },
   };
 };
