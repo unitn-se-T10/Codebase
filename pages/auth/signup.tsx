@@ -8,15 +8,15 @@ import {
   VStack,
   Checkbox,
 } from "@chakra-ui/react";
-import { AuthLayout, FormField } from "components/authentication";
-import Layout from "components/layout";
 import { Field, Form, Formik } from "formik";
-import { regSchema } from "lib/yupSchemas";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import * as Yup from "yup";
 import { signIn, useSession } from "next-auth/react";
+import { regSchema } from "lib/yupSchemas";
+import Layout from "components/layout";
+import { AuthLayout, FormField } from "components/authentication";
 
 type FormValues = {
   name: string;

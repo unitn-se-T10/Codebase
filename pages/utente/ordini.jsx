@@ -1,4 +1,3 @@
-import Layout from "components/layout";
 import {
   VStack,
   Box,
@@ -19,9 +18,10 @@ import {
   Image,
   Heading,
   Center,
+  useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { useToast } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
+import Layout from "components/layout";
 
 const piatto1 = {
   image: "/carbonara.jpg",
@@ -60,6 +60,7 @@ const utente1 = {
   cognome: "Bianchi",
   email: "alessandro.bianchi@gmail.com",
   avatar: "https://avatars.dicebear.com/api/male/beard/white/username.svg",
+  ristorante: "Ristorante da Mario",
   pietanze: [piatto1, piatto2, piatto3],
 };
 
@@ -68,6 +69,7 @@ const utente2 = {
   cognome: "Rossi",
   email: "matteo.rossi@gmail.com",
   avatar: "https://avatars.dicebear.com/api/male/white/surprised0/username.svg",
+  ristorante: "Ristorante da Mario",
   pietanze: [piatto1, piatto4],
 };
 
@@ -76,6 +78,7 @@ const utente3 = {
   cognome: "Verdi",
   email: "matilde.verdi@gmail.com",
   avatar: "https://avatars.dicebear.com/api/female/glasses/username.svg",
+  ristorante: "Ristorante da Mario",
   pietanze: [piatto2, piatto3],
 };
 
@@ -147,13 +150,12 @@ const UtenteCard = ({ utente, id }) => {
       </VStack>
       <Spacer />
       <Button onClick={onOpen}>
-        {" "}
         Visualizza ordine
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent maxW="56rem">
             <ModalHeader>
-              Ordine di {utente.nome} {utente.cognome}
+              Ordine di {utente.nome} {utente.cognome} - {utente.ristorante}
             </ModalHeader>
             <ModalCloseButton />
             <ModalBody>

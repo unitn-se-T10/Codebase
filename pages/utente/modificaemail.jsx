@@ -1,4 +1,3 @@
-import Layout from "components/layout";
 import React from "react";
 import {
   Box,
@@ -12,11 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { Form, Formik } from "formik";
-import { FormField } from "components/authentication";
 import * as Yup from "yup";
-import { loginSchema } from "lib/yupSchemas";
 import { useSession } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
+import { loginSchema } from "lib/yupSchemas";
+import { FormField } from "components/authentication";
+import Layout from "components/layout";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 
 export default function Home() {

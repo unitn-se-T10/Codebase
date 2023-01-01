@@ -1,9 +1,9 @@
 import { compare } from "bcrypt";
-import dbConnect from "lib/dbConnect";
-import UserSchema from "lib/models/user";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import UserSchema from "lib/models/user";
+import dbConnect from "lib/dbConnect";
 
 /**
  * @swagger

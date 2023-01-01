@@ -1,4 +1,3 @@
-import Layout from "components/layout";
 import React from "react";
 import {
   Box,
@@ -14,6 +13,7 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import Layout from "components/layout";
 
 export default function Home() {
   const router = useRouter();

@@ -10,11 +10,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { AuthLayout, FormField } from "components/authentication";
-import Link from "components/chakraNextLink";
-import Layout from "components/layout";
 import { Field, Form, Formik } from "formik";
-import { loginSchema } from "lib/yupSchemas";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -22,6 +18,10 @@ import * as Yup from "yup";
 import { signIn, useSession } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
+import { loginSchema } from "lib/yupSchemas";
+import Layout from "components/layout";
+import Link from "components/chakraNextLink";
+import { AuthLayout, FormField } from "components/authentication";
 
 type LoginValues = {
   email: string;

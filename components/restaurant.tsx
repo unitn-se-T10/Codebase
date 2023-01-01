@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   HStack,
   VStack,
@@ -14,17 +14,16 @@ import {
   Spacer,
   AlertDialogFooter,
 } from "@chakra-ui/react";
-import { ChakraNextImage } from "components/utils";
 import { GoLocation } from "react-icons/go";
 import { FaPhoneAlt } from "react-icons/fa";
 import NextLink from "next/link";
 import { MdEmail } from "react-icons/md";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { IconContext } from "react-icons/lib";
-import { useState } from "react";
-import { RistoranteThumbnail } from "lib/typings";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Session } from "next-auth";
+import { RistoranteThumbnail } from "lib/typings";
+import { ChakraNextImage } from "components/utils";
 
 const Preferiti: React.FC = () => {
   const [isPressed, setIsPressed] = useState(false);
@@ -57,34 +56,35 @@ const PreferitiTrue: React.FC = () => {
 export const RestaurantPreferitiCard: React.FC<{
   thumbnail: RistoranteThumbnail;
 }> = ({ thumbnail }) => (
-  <HStack alignItems="top" spacing={3}>
-    <ChakraNextImage
-      borderRadius={20}
-      alt={thumbnail.nome}
-      src={`data:image/jpg;base64,${thumbnail.immagine}`}
-      width={200}
-      height={200}
-    />
-    <VStack align="start">
-      <NextLink href={`/ristorante/${thumbnail.id}`}>
-        <Box h={10} fontWeight="bold" fontStyle="oblique">
-          {thumbnail.nome}
-        </Box>
-        <HStack>
-          <GoLocation width={3} height={3} />
-          <Box h={5}>{thumbnail.indirizzo}</Box>
-        </HStack>
-        <HStack>
-          <FaPhoneAlt width={3} height={3} />
-          <Box h={5}>{thumbnail.telefono}</Box>
-        </HStack>
-        <HStack>
-          <MdEmail width={3} height={3} />
-          <Box h={5}>{thumbnail.email}</Box>
-        </HStack>
-      </NextLink>
-    </VStack>
-
+  <HStack justify="space-between" w="full">
+    <HStack alignItems="top" spacing={3}>
+      <ChakraNextImage
+        borderRadius={20}
+        alt={thumbnail.nome}
+        src={`data:image/jpg;base64,${thumbnail.immagine}`}
+        width={200}
+        height={200}
+      />
+      <VStack align="start">
+        <NextLink href={`/ristorante/${thumbnail.id}`}>
+          <Box h={10} fontWeight="bold" fontStyle="oblique">
+            {thumbnail.nome}
+          </Box>
+          <HStack>
+            <GoLocation width={3} height={3} />
+            <Box h={5}>{thumbnail.indirizzo}</Box>
+          </HStack>
+          <HStack>
+            <FaPhoneAlt width={3} height={3} />
+            <Box h={5}>{thumbnail.telefono}</Box>
+          </HStack>
+          <HStack>
+            <MdEmail width={3} height={3} />
+            <Box h={5}>{thumbnail.email}</Box>
+          </HStack>
+        </NextLink>
+      </VStack>
+    </HStack>
     <PreferitiTrue />
   </HStack>
 );
@@ -142,39 +142,40 @@ export const RestaurantCard: React.FC<{
   thumbnail: RistoranteThumbnail;
   session: Session;
 }> = ({ thumbnail, session }) => (
-  <HStack alignItems="top" w="55rem" spacing={3}>
-    <ChakraNextImage
-      borderRadius={20}
-      alt={thumbnail.nome}
-      src={`data:image/jpg;base64,${thumbnail.immagine}`}
-      width={200}
-      height={200}
-    />
-    <VStack align="start">
-      <NextLink href={`/ristorante/${thumbnail.id}`}>
-        <HStack>
-          <Box h={7} fontWeight="bold" fontStyle="oblique">
-            {thumbnail.nome}
-          </Box>
-        </HStack>
-        <Text color="tomato" fontWeight="bold" fontStyle="oblique">
-          {thumbnail.tipologia}
-        </Text>
-        <HStack>
-          <GoLocation width={3} height={3} />
-          <Box h={5}>{thumbnail.indirizzo}</Box>
-        </HStack>
-        <HStack>
-          <FaPhoneAlt width={3} height={3} />
-          <Box h={5}>{thumbnail.telefono}</Box>
-        </HStack>
-        <HStack>
-          <MdEmail width={3} height={3} />
-          <Box h={5}>{thumbnail.email}</Box>
-        </HStack>
-      </NextLink>
-    </VStack>
-    <Spacer />
+  <HStack justify="space-between" w="full">
+    <HStack alignItems="top" spacing={3}>
+      <ChakraNextImage
+        borderRadius={20}
+        alt={thumbnail.nome}
+        src={`data:image/jpg;base64,${thumbnail.immagine}`}
+        width={200}
+        height={200}
+      />
+      <VStack align="start">
+        <NextLink href={`/ristorante/${thumbnail.id}`}>
+          <HStack>
+            <Box h={7} fontWeight="bold" fontStyle="oblique">
+              {thumbnail.nome}
+            </Box>
+          </HStack>
+          <Text color="tomato" fontWeight="bold" fontStyle="oblique">
+            {thumbnail.tipologia}
+          </Text>
+          <HStack>
+            <GoLocation width={3} height={3} />
+            <Box h={5}>{thumbnail.indirizzo}</Box>
+          </HStack>
+          <HStack>
+            <FaPhoneAlt width={3} height={3} />
+            <Box h={5}>{thumbnail.telefono}</Box>
+          </HStack>
+          <HStack>
+            <MdEmail width={3} height={3} />
+            <Box h={5}>{thumbnail.email}</Box>
+          </HStack>
+        </NextLink>
+      </VStack>
+    </HStack>
     {session?.user?.isGestore ? <DeleteDialog /> : <Preferiti />}
   </HStack>
 );
@@ -183,39 +184,41 @@ export const RestaurantCard2: React.FC<{
   thumbnail: RistoranteThumbnail;
   sessione: Session;
 }> = ({ thumbnail, sessione }) => (
-  <HStack alignItems="top" w="55rem" spacing={3}>
-    <ChakraNextImage
-      borderRadius={20}
-      alt={thumbnail.nome}
-      src={`data:image/jpg;base64,${thumbnail.immagine}`}
-      width={200}
-      height={200}
-    />
-    <VStack align="start">
-      <NextLink href={`/ristorante/${thumbnail.id}`}>
-        <HStack>
-          <Box h={7} fontWeight="bold" fontStyle="oblique">
-            {thumbnail.nome}
-          </Box>
-        </HStack>
-        <Text color="tomato" fontWeight="bold" fontStyle="oblique">
-          {thumbnail.tipologia}
-        </Text>
-        <HStack>
-          <GoLocation width={3} height={3} />
-          <Box h={5}>{thumbnail.indirizzo}</Box>
-        </HStack>
-        <HStack>
-          <FaPhoneAlt width={3} height={3} />
-          <Box h={5}>{thumbnail.telefono}</Box>
-        </HStack>
-        <HStack>
-          <MdEmail width={3} height={3} />
-          <Box h={5}>{thumbnail.email}</Box>
-        </HStack>
-      </NextLink>
-    </VStack>
-    <Spacer />
+  <HStack justify="space-between" w="full">
+    <HStack alignItems="top" spacing={3}>
+      <ChakraNextImage
+        borderRadius={20}
+        alt={thumbnail.nome}
+        src={`data:image/jpg;base64,${thumbnail.immagine}`}
+        width={200}
+        height={200}
+      />
+      <VStack align="start">
+        <NextLink href={`/ristorante/${thumbnail.id}`}>
+          <HStack>
+            <Box h={7} fontWeight="bold" fontStyle="oblique">
+              {thumbnail.nome}
+            </Box>
+          </HStack>
+          <Text color="tomato" fontWeight="bold" fontStyle="oblique">
+            {thumbnail.tipologia}
+          </Text>
+          <HStack>
+            <GoLocation width={3} height={3} />
+            <Box h={5}>{thumbnail.indirizzo}</Box>
+          </HStack>
+          <HStack>
+            <FaPhoneAlt width={3} height={3} />
+            <Box h={5}>{thumbnail.telefono}</Box>
+          </HStack>
+          <HStack>
+            <MdEmail width={3} height={3} />
+            <Box h={5}>{thumbnail.email}</Box>
+          </HStack>
+        </NextLink>
+      </VStack>
+      <Spacer />
+    </HStack>
     {sessione?.user?.isGestore ? null : <Preferiti />}
   </HStack>
 );

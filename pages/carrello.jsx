@@ -1,4 +1,3 @@
-import Layout from "components/layout";
 import React, { useState } from "react";
 import {
   TriangleDownIcon,
@@ -15,25 +14,18 @@ import {
   Stack,
   Image,
   Heading,
-  Input,
   Button,
   VStack,
   HStack,
   Center,
   Container,
-  StackDivider,
   Avatar,
   Divider,
-  FormControl,
-  FormLabel,
   Link,
-  IconButton,
 } from "@chakra-ui/react";
-import { IconContext } from "react-icons/lib";
-import { SlPaypal } from "react-icons/sl";
-import { RiVisaFill } from "react-icons/ri";
-import { FaCcMastercard } from "react-icons/fa";
-import { SiAmericanexpress } from "react-icons/si";
+import { unstable_getServerSession } from "next-auth/next";
+import Layout from "components/layout";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
 const piatto = {
   image: "/carbonara.jpg",
@@ -136,46 +128,6 @@ const Copertina = ({ dish, id, setPietanze, pietanze }) => {
   );
 };
 
-const TipoPagamento = () => {
-  const paymentMethods = {
-    mastercard: (
-      <IconContext.Provider value={{ color: "white", size: "50px" }}>
-        <FaCcMastercard />
-      </IconContext.Provider>
-    ),
-    visa: (
-      <IconContext.Provider value={{ color: "white", size: "50px" }}>
-        <RiVisaFill />
-      </IconContext.Provider>
-    ),
-    paypal: (
-      <IconContext.Provider value={{ color: "white", size: "40px" }}>
-        <SlPaypal />
-      </IconContext.Provider>
-    ),
-    americanexpress: (
-      <IconContext.Provider value={{ color: "white", size: "40px" }}>
-        <SiAmericanexpress />
-      </IconContext.Provider>
-    ),
-  };
-
-  return (
-    <Flex justify="space-around">
-      {Object.entries(paymentMethods).map(([key, value]) => (
-        <IconButton
-          key={key}
-          w={20}
-          h={12}
-          bgColor="#7376DA"
-          icon={value}
-          size="lg"
-        />
-      ))}
-    </Flex>
-  );
-};
-
 const NormalText = ({ children }) => {
   return (
     <Text color="white" fontFamily="Arial" fontSize={18}>
@@ -194,7 +146,7 @@ const Pagamento = ({ total }) => {
       <VStack alignItems="left" p={5}>
         <Flex>
           <Text as="b" color="white" fontFamily="Arial" fontSize={30}>
-            Dettagli Carta
+            Totale carrello
           </Text>
           <Spacer />
           <Avatar
@@ -202,67 +154,6 @@ const Pagamento = ({ total }) => {
             src="https://avatars.dicebear.com/api/male/username.svg"
           />
         </Flex>
-        <StackDivider />
-        <NormalText>Tipologia Carta</NormalText>
-        <TipoPagamento />
-
-        <FormControl>
-          <FormLabel color="white" fontFamily="Arial" fontSize={18}>
-            Nome sulla carta
-          </FormLabel>
-          <Input
-            color="gainsboro"
-            _placeholder={{ color: "gainsboro" }}
-            bgColor="#7376DA"
-            placeholder="Nome Cognome"
-            type="text"
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel color="white" fontFamily="Arial" fontSize={18}>
-            Numero Carta
-          </FormLabel>
-          <Input
-            color="gainsboro"
-            _placeholder={{ color: "gainsboro" }}
-            bgColor="#7376DA"
-            inputmode="numeric"
-            maxlength="16"
-            placeholder="1111 2222 3333 4444"
-            type="tel"
-          />
-        </FormControl>
-
-        <HStack sapcing={5}>
-          <FormControl>
-            <FormLabel color="white" fontFamily="Arial" fontSize={18}>
-              Data di scadenza
-            </FormLabel>
-            <Input
-              color="gainsboro"
-              _placeholder={{ color: "gainsboro" }}
-              bgColor="#7376DA"
-              placeholder="mm/yy"
-              type="text"
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel color="white" fontFamily="Arial" fontSize={18}>
-              CVV
-            </FormLabel>
-            <Input
-              color="gainsboro"
-              _placeholder={{ color: "gainsboro" }}
-              bgColor="#7376DA"
-              maxlength="3"
-              placeholder="123"
-              type="tel"
-            />
-          </FormControl>
-        </HStack>
-        <Divider borderColor="#565ABB" />
         <Divider borderColor="#7376DA" />
 
         <Flex>
@@ -308,7 +199,7 @@ const Pagamento = ({ total }) => {
             }
             <NormalText>{totale}€</NormalText>
             <Spacer />
-            <NormalText>Checkout</NormalText>
+            <NormalText>Checkout con PayPal</NormalText>
           </Flex>
         </Button>
       </VStack>
@@ -394,3 +285,27 @@ export default function Ristorante() {
     </Box>
   );
 }
+
+export const getServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  if (!session || session.user.isGestore) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  session.user.image = null;
+
+  return {
+    props: {
+      session,
+    },
+  };
+};

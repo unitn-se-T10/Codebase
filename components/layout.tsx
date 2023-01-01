@@ -1,7 +1,7 @@
 import { Box, theme, useColorModeValue } from "@chakra-ui/react";
+import Head from "next/head";
 import Footer from "components/footer";
 import Navbar from "components/navbar";
-import Head from "next/head";
 // import type { UserHook } from "lib/hooks";
 
 const Layout: React.FC<{

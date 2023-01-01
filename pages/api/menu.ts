@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { v4 as uuidv4 } from "uuid";
+import { unstable_getServerSession } from "next-auth/next";
+import { Session } from "next-auth";
 import dbConnect from "lib/dbConnect";
 import MenuSchema, { MenuDocType } from "lib/models/menu";
 import RistoranteSchema from "lib/models/ristorante";
 import { PietanzaDocType } from "lib/models/pietanza";
-import { v4 as uuidv4 } from "uuid";
-import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
-import { Session } from "next-auth";
 
 /**
  * @swagger

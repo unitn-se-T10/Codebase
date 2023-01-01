@@ -18,9 +18,10 @@ import {
   Spacer,
   Icon,
   IconProps,
+  useToast,
+  useNumberInput,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { useToast } from "@chakra-ui/react";
-import { useNumberInput } from "@chakra-ui/react";
 import {
   GiBigEgg,
   GiFriedFish,
@@ -33,10 +34,9 @@ import {
   GiSwirledShell,
   GiWheat,
 } from "react-icons/gi";
-import { Allergene } from "lib/typings";
-import { useDisclosure } from "@chakra-ui/react";
-import { ChakraNextImage } from "components/utils";
 import { IconContext } from "react-icons";
+import { Allergene } from "lib/typings";
+import { ChakraNextImage } from "components/utils";
 
 const Frutta_a_guscio = (props: IconProps) => (
   <Icon viewBox="0 0 13 13" {...props}>

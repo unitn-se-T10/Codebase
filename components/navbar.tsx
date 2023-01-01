@@ -26,12 +26,12 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import Link from "components/chakraNextLink";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { Session } from "next-auth";
+import Link from "components/chakraNextLink";
 
 const Searchbar: React.FC<BoxProps> = (props) => {
   const [search, setSearch] = useState("");

@@ -1,4 +1,3 @@
-import Layout from "components/layout";
 import {
   Box,
   Button,
@@ -12,17 +11,22 @@ import {
   VStack,
   Wrap,
   WrapItem,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react";
 import { StarIcon, ArrowBackIcon } from "@chakra-ui/icons";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { ImAlarm } from "react-icons/im";
 import { FaPhoneAlt } from "react-icons/fa";
-import { DishCard } from "components/dish";
 import { MdEmail } from "react-icons/md";
 import { GoLocation } from "react-icons/go";
-import { ChakraNextImage } from "components/utils";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
+import { ChakraNextImage } from "components/utils";
+import { DishCard } from "components/dish";
+import Layout from "components/layout";
 
 const DishList = ({ menu, session }) => (
   <Wrap justify="space-evenly" p={5} spacing={10}>

@@ -1,7 +1,6 @@
 import { ColorModeScript } from "@chakra-ui/react";
 import createEmotionServer from "@emotion/server/create-instance";
 import * as React from "react";
-import emotionCache from "lib/emotion-cache";
 import Document, {
   DocumentContext,
   Head,
@@ -9,6 +8,7 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
+import emotionCache from "lib/emotion-cache";
 
 /**
  * @see https://griko.id/blog/prevent-fouc-on-next-js-chakra-ui

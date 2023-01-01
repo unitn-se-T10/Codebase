@@ -1,4 +1,4 @@
-import Layout from "components/layout";
+import { URL } from "url";
 import {
   Button,
   Text,
@@ -10,13 +10,13 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import useSWR from "swr";
-import { RestaurantCard } from "components/restaurant";
-import ChakraNextLink from "components/chakraNextLink";
 import { unstable_getServerSession } from "next-auth/next";
-import { authOptions } from "pages/api/auth/[...nextauth]";
 import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
-import { URL } from "url";
+import Layout from "components/layout";
+import { RestaurantCard } from "components/restaurant";
+import ChakraNextLink from "components/chakraNextLink";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
 export default function Home() {
   const { data: session } = useSession();

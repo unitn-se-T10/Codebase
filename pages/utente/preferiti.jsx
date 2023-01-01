@@ -1,4 +1,3 @@
-import Layout from "components/layout";
 import {
   Text,
   Box,
@@ -8,7 +7,10 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import useSWR from "swr";
+import { unstable_getServerSession } from "next-auth/next";
+import Layout from "components/layout";
 import { RestaurantPreferitiCard } from "components/restaurant";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
 export default function Home() {
   // TODO: cambiare l'API
@@ -68,3 +70,27 @@ export default function Home() {
     </Box>
   );
 }
+
+export const getServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  if (!session || session.user.isGestore) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  session.user.image = null;
+
+  return {
+    props: {
+      session,
+    },
+  };
+};

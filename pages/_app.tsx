@@ -1,8 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import theme from "theme/index";
 import type { AppProps } from "next/app";
 import { SessionProvider, useSession } from "next-auth/react";
 import type { Session } from "next-auth";
+import theme from "theme/index";
 
 // function Auth({ children }) {
 //   // if `{ required: true }` is supplied, `status` can only be "loading" or "authenticated"

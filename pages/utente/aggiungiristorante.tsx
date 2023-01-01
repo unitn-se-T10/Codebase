@@ -1,8 +1,6 @@
-import Layout from "components/layout";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { TipologiaRistorante } from "lib/typings";
 import {
   VStack,
   Box,
@@ -29,11 +27,13 @@ import {
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { unstable_getServerSession } from "next-auth/next";
+import * as Yup from "yup";
+import { GetServerSideProps } from "next";
 import { addRstSchema } from "lib/yupSchemas";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { FormField } from "components/authentication";
-import * as Yup from "yup";
-import { GetServerSideProps } from "next";
+import { TipologiaRistorante } from "lib/typings";
+import Layout from "components/layout";
 
 type addValues = {
   rstName: string;

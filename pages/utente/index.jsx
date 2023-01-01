@@ -1,4 +1,3 @@
-import Layout from "components/layout";
 import {
   Button,
   Text,
@@ -10,13 +9,14 @@ import {
   Divider,
   Link,
 } from "@chakra-ui/react";
-import { regSchema } from "lib/yupSchemas";
 import { Form, Formik } from "formik";
-import { FormField } from "components/authentication";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth/next";
+import { FormField } from "components/authentication";
+import { regSchema } from "lib/yupSchemas";
+import Layout from "components/layout";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 
 const ModificaText = ({ label, placeholder, href }) => {

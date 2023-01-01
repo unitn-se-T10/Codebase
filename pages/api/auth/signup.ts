@@ -1,10 +1,10 @@
 import { hash } from "bcrypt";
-import dbConnect from "lib/dbConnect";
-import UserSchema from "lib/models/user";
-import { regSchema } from "lib/yupSchemas";
 import type { NextApiRequest, NextApiResponse } from "next";
 import * as Yup from "yup";
 import { v4 as uuidv4 } from "uuid";
+import dbConnect from "lib/dbConnect";
+import UserSchema from "lib/models/user";
+import { regSchema } from "lib/yupSchemas";
 
 // const BASE_URI = process.env.BASE_URI;
 //
@@ -86,12 +86,6 @@ async function signupHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
     password: regSchema.password,
   });
 
-  // if (!(await VerifyCaptcha(req.body.captcha))) {
-  //   return res.status(400).send("Invalid captcha");
-  // }
-
-  await dbConnect();
-
   try {
     await schema.validate(req.body);
 
@@ -107,7 +101,6 @@ async function signupHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
     }
     const isUnitn = email.endsWith("@studenti.unitn.it");
 
-    // TODO: implementare register del gestore
     await UserSchema.create({
       id: uuidv4(),
       name,
@@ -117,16 +110,6 @@ async function signupHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
       isGestore,
       isUnitn,
     });
-    // await createUser(req.body);
-
-    // const encodedUsername = encodeURIComponent(username);
-    // const encodedVerifyEmail = encodeURIComponent(verifyEmail);
-    //
-    // const verificationLink = `${BASE_URI}api/verifyEmail?username=${encodedUsername}&verifyEmail=${encodedVerifyEmail}`;
-    //
-    // if (process.env.NODE_ENV !== "development") {
-    //   await sendVerifyMail(req.body.email, { username, verificationLink });
-    // } else console.log("Email verification link: " + verificationLink);
 
     return res.status(201).send({ success: true, isUnitn });
   } catch (error) {

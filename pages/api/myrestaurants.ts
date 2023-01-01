@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { unstable_getServerSession } from "next-auth/next";
 import dbConnect from "lib/dbConnect";
 import RistoranteSchema, { RistoranteDocType } from "lib/models/ristorante";
-import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 
 /**

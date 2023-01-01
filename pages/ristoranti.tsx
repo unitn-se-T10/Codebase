@@ -1,4 +1,3 @@
-import Layout from "components/layout";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -10,16 +9,20 @@ import {
   Spacer,
   Flex,
   Spinner,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
-import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { IconContext } from "react-icons/lib";
 import { MdFastfood } from "react-icons/md";
 import { CgOptions } from "react-icons/cg";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { TipologiaRistorante } from "lib/typings";
 import useSWR from "swr";
-import { RestaurantCard2 } from "components/restaurant";
 import { useSession } from "next-auth/react";
+import { TipologiaRistorante } from "lib/typings";
+import { RestaurantCard2 } from "components/restaurant";
+import Layout from "components/layout";
 
 /*function ordina(ristoranti, ordine) {
   if (ordine === "Crescente") {

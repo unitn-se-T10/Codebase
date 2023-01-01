@@ -1,4 +1,3 @@
-import Layout from "components/layout";
 import {
   VStack,
   Box,
@@ -10,6 +9,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import Layout from "components/layout";
 
 export default function Home() {
   const router = useRouter();
