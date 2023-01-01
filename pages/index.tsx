@@ -10,11 +10,9 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 
 export default function Home() {
   const router = useRouter();
-  const session = useSession();
 
   return (
     <Box
@@ -53,7 +51,7 @@ export default function Home() {
                   pr="4.5rem"
                   borderRadius={20}
                   _focus={{ bgColor: "white" }}
-                  placeholder="Indrizzo di consegna"
+                  placeholder="Indirizzo"
                   type="type"
                 />
                 <InputRightElement w="9rem" p={1}>

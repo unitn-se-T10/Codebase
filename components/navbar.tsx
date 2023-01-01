@@ -127,14 +127,10 @@ const UserMenu: React.FC<{ user: Session["user"] }> = ({ user }) => {
         )}
         {session?.user?.isGestore ? (
           <MenuItem onClick={() => router.push("/utente/ordini")}>
-            {" "}
-            I miei ordini{" "}
+            I miei ordini
           </MenuItem>
         ) : (
-          <MenuItem onClick={() => router.push("/carrello/1")}>
-            {" "}
-            Carrello{" "}
-          </MenuItem>
+          <MenuItem onClick={() => router.push("/carrello")}>Carrello</MenuItem>
         )}
         <MenuItem
           onClick={

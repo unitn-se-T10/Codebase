@@ -59,7 +59,6 @@ export default function Home() {
                     key={thumbnail.id}
                     thumbnail={thumbnail}
                     session={session}
-                    isGestore
                   />
                 ))
               ) : (

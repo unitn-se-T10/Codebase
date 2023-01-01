@@ -27,15 +27,6 @@ export enum TipologiaRistorante {
   FAST_FOOD = "fast food",
 }
 
-export enum TipologiaMenu {
-  PRIMI = "primi",
-  SECONDI = "secondi",
-  CONTORNI = "contorni",
-  DOLCI = "dolci",
-  BEVANDE = "bevande",
-  PIZZE_CLASSICHE = "pizze classiche",
-}
-
 export type RistoranteThumbnail = {
   id: string;
   nome: string;

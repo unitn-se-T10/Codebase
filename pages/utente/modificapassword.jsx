@@ -82,7 +82,7 @@ export default function Home() {
               fontSize={40}
               fontWeight="bold"
             >
-              Cambia Password
+              Modifica Password
             </Text>
             <Spacer />
             <Formik

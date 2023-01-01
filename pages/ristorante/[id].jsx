@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 import { StarIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import { TipologiaMenu } from "lib/typings";
 import { ImAlarm } from "react-icons/im";
 import { FaPhoneAlt } from "react-icons/fa";
 import { DishCard } from "components/dish";
@@ -44,16 +43,6 @@ const MenuTabs = ({ menus, session }) => {
           <DishList menu={menu} session={session} />
         </TabPanel>
       ))}
-      {Object.values(TipologiaMenu).map((tipologia) => {
-        // NOTE: Janky workaround
-        const menu = menus.find((menu) => menu.tipologia === tipologia);
-
-        return menu ? (
-          <TabPanel key={tipologia}>
-            <DishList session={session} menu={menu} />
-          </TabPanel>
-        ) : null;
-      })}
     </TabPanels>
   );
 };
@@ -85,8 +74,11 @@ const ReturnIcon = () => {
 };
 
 export default function Ristorante({ ristorante }) {
-  function arrayFetcher(...urlArr) {
-    const f = (u) => fetch(u).then((r) => r.json().then((j) => j.menu));
+  function arrayFetcher(urlArr) {
+    const f = (u) =>
+      fetch(u)
+        .then((r) => r.json())
+        .then((j) => j.menu);
     return Promise.all(urlArr.map(f));
   }
 
@@ -178,12 +170,6 @@ export default function Ristorante({ ristorante }) {
                     {menus.map((menu) => (
                       <Tab key={menu.id}>{menu.nome}</Tab>
                     ))}
-                    {/* NOTE: Janky workaround */}
-                    {/* {Object.values(TipologiaMenu).map((tipologia) => */}
-                    {/*   menus?.find((menu) => menu.tipologia === tipologia) ? ( */}
-                    {/*     <Tab key={tipologia}>{menus.at(tipologia).nome}</Tab> */}
-                    {/*   ) : null */}
-                    {/* )} */}
                   </TabList>
                   <MenuTabs session={session} menus={menus} />
                 </>

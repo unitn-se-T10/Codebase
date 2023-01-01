@@ -56,8 +56,7 @@ const PreferitiTrue: React.FC = () => {
 
 export const RestaurantPreferitiCard: React.FC<{
   thumbnail: RistoranteThumbnail;
-  isGestore: boolean;
-}> = ({ thumbnail, isGestore = false }) => (
+}> = ({ thumbnail }) => (
   <HStack alignItems="top" spacing={3}>
     <ChakraNextImage
       borderRadius={20}
@@ -96,11 +95,6 @@ function DeleteDialog() {
 
   return (
     <>
-      {/*<Button align="top" colorScheme="red" onClick={onOpen}>
-        X
-      </Button>
-      */}
-
       <Button
         _hover={{ bgColor: "transparent" }}
         _active={{ bgColor: "gainsboro" }}
@@ -146,9 +140,8 @@ function DeleteDialog() {
 
 export const RestaurantCard: React.FC<{
   thumbnail: RistoranteThumbnail;
-  isGestore: boolean;
   session: Session;
-}> = ({ thumbnail, isGestore, session }) => (
+}> = ({ thumbnail, session }) => (
   <HStack alignItems="top" w="55rem" spacing={3}>
     <ChakraNextImage
       borderRadius={20}
@@ -188,9 +181,8 @@ export const RestaurantCard: React.FC<{
 
 export const RestaurantCard2: React.FC<{
   thumbnail: RistoranteThumbnail;
-  isGestore?: boolean;
   sessione: Session;
-}> = ({ thumbnail, isGestore, sessione }) => (
+}> = ({ thumbnail, sessione }) => (
   <HStack alignItems="top" w="55rem" spacing={3}>
     <ChakraNextImage
       borderRadius={20}

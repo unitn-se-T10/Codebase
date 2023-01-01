@@ -50,9 +50,6 @@ import { Session } from "next-auth";
  *           type: string
  *           description: Id of the restaurant
  *           format: uuid
- *         tipologia:
- *           type: string
- *           description: Type of the menu
  *         piatti:
  *           type: array
  *           description: Array of dishes
@@ -158,9 +155,6 @@ async function getMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
  *               nome:
  *                 type: string
  *                 description: Name of the menu
- *               tipologia:
- *                 type: string
- *                 description: Type of the menu
  *               piatti:
  *                 type: array
  *                 description: Array of dishes
@@ -202,8 +196,8 @@ async function addMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
     });
   }
 
-  const { nome, tipologia, ristoranteId, piatti } = req.body;
-  if (!nome || !tipologia || !ristoranteId || !piatti) {
+  const { nome, ristoranteId, piatti } = req.body;
+  if (!nome || !ristoranteId || !piatti) {
     return res.status(400).send({
       success: false,
       error: "Insufficient arguments",
@@ -220,7 +214,6 @@ async function addMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
     const menu = await MenuSchema.create({
       id: uuidv4(),
       nome,
-      tipologia,
       ristoranteId,
       piatti: piattiData,
     });
@@ -257,9 +250,6 @@ async function addMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
  *               nome:
  *                 type: string
  *                 description: Name of the menu
- *               tipologia:
- *                 type: string
- *                 description: Type of the menu
  *               piatti:
  *                 type: array
  *                 description: Array of dishes
@@ -293,7 +283,7 @@ async function addMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
  */
 async function editMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
   const session = await unstable_getServerSession(req, res, authOptions);
-  const { id, nome, tipologia, piatti } = req.body;
+  const { id, nome, piatti } = req.body;
   if (!id) {
     return res.status(400).send({
       success: false,
@@ -306,7 +296,6 @@ async function editMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
   dbConnect();
   const menu = await MenuSchema.findOne({ id }).exec();
   if (nome) menu.nome = nome;
-  if (tipologia) menu.tipologia = tipologia;
   if (piatti) menu.piatti = piatti;
   await menu.save();
 
