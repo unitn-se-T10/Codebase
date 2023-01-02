@@ -7,9 +7,14 @@ import dbConnect from "lib/dbConnect";
 
 /**
  * @swagger
+ * tags:
+ *   - name: Auth
+ *     description: Authentication endpoints
  * /api/auth/signout:
  *   post:
- *     description: Sign out
+ *     summary: Log out
+ *     tags:
+ *       - Auth
  *     requestBody:
  *       required: true
  *       content:
@@ -25,7 +30,9 @@ import dbConnect from "lib/dbConnect";
  *         description: User logged out
  * /api/auth/csrf:
  *   get:
- *     description: Get CSRF token
+ *     summary: Get CSRF token
+ *     tags:
+ *       - Auth
  *     responses:
  *       200:
  *         description: CSRF token
@@ -39,7 +46,9 @@ import dbConnect from "lib/dbConnect";
  *                   description: CSRF token
  * /api/auth/callback/credentials:
  *   post:
- *     description: Sign in with credentials
+ *     summary: Log in with credentials
+ *     tags:
+ *       - Auth
  *     requestBody:
  *       required: true
  *       content:
@@ -76,7 +85,9 @@ import dbConnect from "lib/dbConnect";
  *                   description: callbackUrl
  * /api/auth/session:
  *   get:
- *     description: Get session
+ *     summary: Get session
+ *     tags:
+ *       - Auth
  *     responses:
  *       200:
  *         description: Session

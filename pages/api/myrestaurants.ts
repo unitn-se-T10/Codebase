@@ -91,7 +91,9 @@ type Data = {
  * @swagger
  * /api/myrestaurants:
  *   get:
- *     description: Get list data of restaurants
+ *     summary: Get list data of restaurants
+ *     tags:
+ *       - Misc
  *     responses:
  *       200:
  *         description: List of restaurants

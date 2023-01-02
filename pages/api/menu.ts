@@ -10,6 +10,9 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 
 /**
  * @swagger
+ * tags:
+ *   - name: Menu
+ *     description: Menu management
  * components:
  *   schemas:
  *     PietanzaDocType:
@@ -85,7 +88,9 @@ async function checkPermission(
  * @swagger
  * /api/menu:
  *   get:
- *     description: Get a menu
+ *     summary: Get a menu
+ *     tags:
+ *       - Menu
  *     parameters:
  *       - name: id
  *         in: query
@@ -144,7 +149,9 @@ async function getMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
  * @swagger
  * /api/menu:
  *   post:
- *     description: Add a menu
+ *     summary: Add a menu
+ *     tags:
+ *       - Menu
  *     requestBody:
  *       required: true
  *       content:
@@ -234,7 +241,9 @@ async function addMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
  * @swagger
  * /api/menu:
  *   put:
- *     description: Update a menu
+ *     summary: Update a menu
+ *     tags:
+ *       - Menu
  *     requestBody:
  *       required: true
  *       content:
@@ -306,7 +315,9 @@ async function editMenu(req: NextApiRequest, res: NextApiResponse<Data>) {
  * @swagger
  * /api/menu:
  *   delete:
- *     description: Delete a menu
+ *     summary: Delete a menu
+ *     tags:
+ *       - Menu
  *     parameters:
  *       - name: id
  *         in: query

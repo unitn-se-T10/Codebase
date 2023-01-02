@@ -8,6 +8,9 @@ import MenuSchema from "lib/models/menu";
 
 /**
  * @swagger
+ * tags:
+ *   - name: Restaurant
+ *     description: Restaurant management
  * components:
  *   schemas:
  *     RistoranteDocType:
@@ -69,7 +72,9 @@ type Data = {
  * @swagger
  * /api/restaurant:
  *   get:
- *     description: Get the info of a restaurant
+ *     summary: Get the info of a restaurant
+ *     tags:
+ *       - Restaurant
  *     parameters:
  *       - name: id
  *         in: query
@@ -131,7 +136,9 @@ async function getRestaurantInfo(
  * @swagger
  * /api/restaurant:
  *   post:
- *     description: Add a new restaurant
+ *     summary: Add a new restaurant
+ *     tags:
+ *       - Restaurant
  *     requestBody:
  *       required: true
  *       content:
@@ -272,7 +279,9 @@ async function addRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
  * @swagger
  * /api/restaurant:
  *   put:
- *     description: Update a restaurant
+ *     summary: Update a restaurant
+ *     tags:
+ *       - Restaurant
  *     requestBody:
  *       required: true
  *       content:
@@ -405,7 +414,9 @@ async function editRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
  * @swagger
  * /api/restaurant:
  *   delete:
- *     description: Delete a restaurant
+ *     summary: Delete a restaurant
+ *     tags:
+ *       - Restaurant
  *     parameters:
  *       - name: id
  *         in: query

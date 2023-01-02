@@ -5,6 +5,9 @@ import { RistoranteThumbnail } from "lib/typings";
 
 /**
  * @swagger
+ * tags:
+ *   - name: Misc
+ *     description: Miscellaneous endpoints
  * components:
  *   schemas:
  *     RistoranteThumbnail:
@@ -51,7 +54,9 @@ type Data = {
  * @swagger
  * /api/thumbnails:
  *   get:
- *     description: Get list data of restaurants
+ *     summary: Get list data of restaurants
+ *     tags:
+ *       - Misc
  *     parameters:
  *       - name: start
  *         description: Number of the first restaurant to get

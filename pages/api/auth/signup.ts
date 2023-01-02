@@ -20,7 +20,9 @@ type Data = {
  * @swagger
  * /api/auth/signup:
  *   post:
- *     description: Sign up a new user
+ *     summary: Register a new user
+ *     tags:
+ *       - Auth
  *     requestBody:
  *       required: true
  *       content:
