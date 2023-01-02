@@ -95,11 +95,21 @@ async function thumbnailsHandler(
   const start = parseInt(req.query.start as string);
   const num = parseInt(req.query.num as string);
 
+  if (isNaN(start) || isNaN(num)) {
+    return res.status(400).send({
+      success: false,
+      error: "start and num must be numbers",
+    });
+  }
+  if (start < 0 || num < 1) {
+    return res.status(400).send({
+      success: false,
+      error: "start must be >= 0 and num must be >= 1",
+    });
+  }
+
   dbConnect();
-  const ristoranti = await RistoranteSchema.find({})
-    .skip(start)
-    .limit(num)
-    .exec();
+  const ristoranti = await RistoranteSchema.find().skip(start).limit(num);
   const ristorantiData = ristoranti.map((ristorante) => {
     return {
       id: ristorante.id,
@@ -112,7 +122,7 @@ async function thumbnailsHandler(
     };
   });
 
-  return res.status(200).json({ success: true, ristoranti: ristorantiData });
+  return res.status(200).send({ success: true, ristoranti: ristorantiData });
 }
 
 export default thumbnailsHandler;

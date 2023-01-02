@@ -102,7 +102,7 @@ type Data = {
  *             schema:
  *               $ref: '#/components/schemas/Error'
  *       404:
- *         description: Menu not found
+ *         description: Restaurant not found
  *         content:
  *           application/json:
  *             schema:
@@ -184,7 +184,7 @@ async function getRestaurantInfo(
  *                 format: base64
  *     responses:
  *       200:
- *         description: Menu added
+ *         description: Restaurant added
  *         content:
  *           application/json:
  *             schema:
@@ -204,7 +204,7 @@ async function getRestaurantInfo(
  *             schema:
  *               $ref: '#/components/schemas/Error'
  *       401:
- *         description: Unauthorized or menu not found
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
@@ -296,7 +296,7 @@ async function addRestaurant(req: NextApiRequest, res: NextApiResponse<Data>) {
  *                 required: true
  *               nome:
  *                 type: string
- *                 description: Name of the menu
+ *                 description: The name of the restaurant
  *               indirizzo:
  *                 type: string
  *                 description: The address of the restaurant

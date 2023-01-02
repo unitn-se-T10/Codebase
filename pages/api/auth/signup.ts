@@ -6,10 +6,6 @@ import dbConnect from "lib/dbConnect";
 import UserSchema from "lib/models/user";
 import { regSchema } from "lib/yupSchemas";
 
-// const BASE_URI = process.env.BASE_URI;
-//
-// if (!BASE_URI) throw new Error("BASE_URI local variable not set");
-
 type Data = {
   success: boolean;
   error?: string;
